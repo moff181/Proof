@@ -15,6 +15,7 @@
         public void Add(T[] toAdd)
         {
             Array.Copy(toAdd, 0, Items, Index, toAdd.Count());
+            Index += toAdd.Length;
         }
 
         public void Add(T toAdd)
