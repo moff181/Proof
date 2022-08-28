@@ -17,6 +17,11 @@
             Array.Copy(toAdd, 0, Items, Index, toAdd.Count());
         }
 
+        public void Add(T toAdd)
+        {
+            Items[Index++] = toAdd;
+        }
+
         public int Capacity()
         {
             return Items.Length;
