@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Proof.Logging
+﻿namespace Proof.Core.Logging
 {
     public class ConsoleLogger : ALogger
     {

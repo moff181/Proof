@@ -1,4 +1,4 @@
-﻿using Proof.Logging;
+﻿using Proof.Core.Logging;
 using Proof.OpenGL;
 using Proof.Render;
 

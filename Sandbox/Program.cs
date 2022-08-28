@@ -1,5 +1,5 @@
 ﻿using Proof;
-using Proof.Logging;
+using Proof.Core.Logging;
 
 namespace Sandbox
 {

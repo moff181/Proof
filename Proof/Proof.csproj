@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Logging\" />
+    <Folder Include="Core\Logging\" />
   </ItemGroup>
 
   <ItemGroup>

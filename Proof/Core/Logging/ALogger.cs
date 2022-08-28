@@ -1,7 +1,6 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
-namespace Proof.Logging
+namespace Proof.Core.Logging
 {
     public abstract class ALogger
     {

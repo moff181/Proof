@@ -1,5 +1,5 @@
 ﻿using GLFW;
-using Proof.Logging;
+using Proof.Core.Logging;
 using Proof.OpenGL;
 using Exception = System.Exception;
 
