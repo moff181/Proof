@@ -9,13 +9,21 @@ namespace Proof
         {
             ALogger logger = GetLogger();
 
-            logger.LogInfo("Application starting...");
-
-            using var window = new Window(logger, 1280, 720, "Title");
-
-            while (!window.IsClosing())
+            try
             {
-                window.Update();
+                
+                logger.LogInfo("Application starting...");
+
+                using var window = new Window(logger, 1280, 720, "Title");
+
+                while (!window.IsClosing())
+                {
+                    window.Update();
+                }
+            }
+            catch(Exception e)
+            {
+                logger.LogError("Top level exception caught:", e);
             }
         }
 
