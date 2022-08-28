@@ -28,6 +28,8 @@ namespace Proof
 
                 using var shader = new Shader(logger, "res/shaders/Static.vertex", "res/shaders/Static.frag");
 
+                uint frames = 0;
+                DateTime lastUpdate = DateTime.Now;
                 while (!window.ShouldClose())
                 {
                     window.Update();
@@ -38,6 +40,15 @@ namespace Proof
                     shader.Bind();
                     vertexBuffer.Flush(layout);
                     indexBuffer.Flush();
+
+                    frames++;
+                    if((DateTime.Now - lastUpdate).TotalMilliseconds >= 1000)
+                    {
+                        logger.LogDebug($"{frames} fps ({Math.Round(1000.0f / frames, 2)} ms/frame)");
+
+                        frames = 0;
+                        lastUpdate = DateTime.Now;
+                    }
                 }
             }
             catch(Exception e)
