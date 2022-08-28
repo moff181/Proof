@@ -1,5 +1,6 @@
 ﻿using GLFW;
 using Proof.Logging;
+using Proof.OpenGL;
 using Exception = System.Exception;
 
 namespace Proof.Render
@@ -7,9 +8,9 @@ namespace Proof.Render
     internal class Window : IDisposable
     {
         private readonly ALogger _logger;
-        private readonly NativeWindow _nativeWindow;
+        private readonly GLFW.Window _glfwWindow;
 
-        public Window(ALogger logger, int width, int height, string title)
+        public Window(ALogger logger, int width, int height, string title, bool fullScreen)
         {
             _logger = logger;
 
@@ -17,7 +18,17 @@ namespace Proof.Render
 
             try
             {
-                _nativeWindow = new NativeWindow(width, height, title);
+                _glfwWindow = Glfw.CreateWindow(
+                    width,
+                    height,
+                    title,
+                    fullScreen ? Glfw.PrimaryMonitor : GLFW.Monitor.None,
+                    GLFW.Window.None);
+
+                _logger.LogInfo("Binding GL imports...");
+                Glfw.MakeContextCurrent(_glfwWindow);
+                GL.Import(Glfw.GetProcAddress);
+                _logger.LogInfo("GL binding completed.");
             }
             catch(Exception e)
             {
@@ -30,18 +41,18 @@ namespace Proof.Render
         public void Dispose()
         {
             _logger.LogInfo("Disposing of window...");
-            _nativeWindow.Dispose();
+            Glfw.Terminate();
             _logger.LogInfo("Window disposed of successfully.");
         }
 
-        public bool IsClosing()
+        public bool ShouldClose()
         {
-            return _nativeWindow.IsClosing;
+            return Glfw.WindowShouldClose(_glfwWindow);
         }
 
         public void Update()
         {
-            _nativeWindow.SwapBuffers();
+            Glfw.SwapBuffers(_glfwWindow);
             Glfw.PollEvents();
         }
     }

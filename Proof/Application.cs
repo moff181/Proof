@@ -1,4 +1,5 @@
 ﻿using Proof.Logging;
+using Proof.OpenGL;
 using Proof.Render;
 
 namespace Proof
@@ -11,12 +12,11 @@ namespace Proof
 
             try
             {
-                
                 logger.LogInfo("Application starting...");
 
-                using var window = new Window(logger, 1280, 720, "Title");
+                using var window = new Window(logger, 1280, 720, "Title", false);
 
-                while (!window.IsClosing())
+                while (!window.ShouldClose())
                 {
                     window.Update();
                 }
