@@ -34,7 +34,7 @@ namespace Proof.Render
             GL.glDeleteShader(vertexShaderId);
             GL.glDeleteShader(fragmentShaderId);
 
-            _logger.LogInfo("Shader created");            
+            _logger.LogInfo("Shader created.");            
         }
 
         public void Dispose()
