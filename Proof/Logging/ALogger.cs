@@ -30,14 +30,12 @@ namespace Proof.Logging
         {
             var sb = new StringBuilder();
             sb.Append(str);
-            sb.Append($" - {e.Message}");
 
-            Exception innerException = e;
-            while(innerException.InnerException != null)
+            Exception? innerException = e;
+            do
             {
-                sb.Append(innerException.InnerException.Message);
-                innerException = innerException.InnerException;
-            }
+                sb.Append($" - {innerException.Message}");
+            } while ((innerException = innerException?.InnerException) != null);
 
             LogError(sb.ToString());
         }

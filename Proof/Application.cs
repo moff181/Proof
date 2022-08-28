@@ -23,7 +23,7 @@ namespace Proof
             }
             catch(Exception e)
             {
-                logger.LogError("Top level exception caught:", e);
+                logger.LogError("Top level exception caught", e);
             }
         }
 
