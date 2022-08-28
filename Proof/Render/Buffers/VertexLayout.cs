@@ -1,6 +1,8 @@
-﻿namespace Proof.Render.Buffers
+﻿using System.Collections;
+
+namespace Proof.Render.Buffers
 {
-    internal class VertexLayout
+    internal class VertexLayout : IEnumerable<int>
     {
         private readonly IList<int> _arraySizes;
 
@@ -27,6 +29,16 @@
         public int Stride()
         {
             return SumOfElements() * sizeof(float);
+        }
+
+        public IEnumerator<int> GetEnumerator()
+        {
+            return _arraySizes.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

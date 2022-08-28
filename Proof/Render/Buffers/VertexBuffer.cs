@@ -41,9 +41,9 @@ namespace Proof.Render.Buffers
             _vertices.Add(vertices);
         }
 
-        public unsafe void Flush()
+        public unsafe void Flush(VertexLayout layout)
         {
-            Bind();
+            Bind(layout);
 
             fixed (void* ptr = _vertices.Items)
             {
@@ -53,9 +53,21 @@ namespace Proof.Render.Buffers
             _vertices.Clear();
         }
 
-        private void Bind()
+        private unsafe void Bind(VertexLayout layout)
         {
-            // TODO
+            GL.glBindVertexArray(_vaoId);
+            GL.glBindBuffer(GL.GL_ARRAY_BUFFER, _vboId);
+
+            uint counter = 0;
+            int total = 0;
+            foreach (int arraySize in layout)
+            {
+                GL.glVertexAttribPointer(counter, arraySize, GL.GL_FLOAT, false, layout.Stride(), (void*)(total * sizeof(float)));
+                GL.glEnableVertexAttribArray(counter);
+
+                total += arraySize;
+                counter++;
+            }
         }
     }
 }
