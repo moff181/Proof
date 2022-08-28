@@ -10,4 +10,12 @@
     <Folder Include="Logging\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="glfw-net" Version="3.3.1" />
+  </ItemGroup>
+
 </Project>
