@@ -11,4 +11,13 @@
     <ProjectReference Include="..\Proof\Proof.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="res\shaders\Static.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="res\shaders\Static.vertex">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
