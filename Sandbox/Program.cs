@@ -1,4 +1,5 @@
-﻿using Proof.Logging;
+﻿using Proof;
+using Proof.Logging;
 
 namespace Sandbox
 {
@@ -6,11 +7,16 @@ namespace Sandbox
     {
         public static void Main(string[] args)
         {
-            ALogger logger = new ConsoleLogger();
-            logger.LogInfo("Test Info");
-            logger.LogWarn("Test Warn");
-            logger.LogError("Test Error");
-            logger.LogDebug("Test Debug");
+            var application = new SandboxApplication();
+            application.Run();
+        }
+    }
+
+    internal class SandboxApplication : Application
+    {
+        protected override ALogger GetLogger()
+        {
+            return new ConsoleLogger();
         }
     }
 }
