@@ -11,7 +11,7 @@ namespace Proof.Entities.Components
         }
 
         public TransformComponent()
-            : this(new Vector2(0, 0), new Vector2(0, 0))
+            : this(new Vector2(0, 0), new Vector2(1, 1))
         { }
 
         public Vector2 Position { get; set; }
