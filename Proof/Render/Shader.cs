@@ -102,7 +102,7 @@ namespace Proof.Render
             GL.glUniform4f(uniformLocation.Value, val.X, val.Y, val.Z, val.W);
         }
 
-        public void LoadUniform(string name, Matrix4x4 val)
+        public unsafe void LoadUniform(string name, Matrix4x4 val)
         {
             int? uniformLocation = GetUniformLocation(name);
             if (!uniformLocation.HasValue)
@@ -110,7 +110,8 @@ namespace Proof.Render
                 return;
             }
 
-            GL.glUniformMatrix4fv(uniformLocation.Value, 1, false, val.ToArray());
+            // Assumes that values in Matrix4x4 are stored contiguously
+            GL.glUniformMatrix4fv(uniformLocation.Value, 1, false, &val.M11);
         }
 
         private int? GetUniformLocation(string name)
