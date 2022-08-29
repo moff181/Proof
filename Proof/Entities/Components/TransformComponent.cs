@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Proof.Entity.Components
+namespace Proof.Entities.Components
 {
     internal class TransformComponent : IComponent
     {

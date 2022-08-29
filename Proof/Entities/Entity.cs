@@ -1,6 +1,6 @@
-﻿using Proof.Entity.Components;
+﻿using Proof.Entities.Components;
 
-namespace Proof.Entity
+namespace Proof.Entities
 {
     internal class Entity
     {
@@ -22,6 +22,11 @@ namespace Proof.Entity
         public void AddComponent(IComponent component)
         {
             _components.Add(component);
+        }
+
+        public T? GetComponent<T>()
+        {
+            return (T?)_components.FirstOrDefault(x => x.GetType() == typeof(T));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Proof.Entity.Components
+﻿namespace Proof.Entities.Components
 {
     internal interface IComponent
     {

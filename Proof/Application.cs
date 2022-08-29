@@ -1,4 +1,6 @@
 ﻿using Proof.Core.Logging;
+using Proof.Entities;
+using Proof.Entities.Components;
 using Proof.OpenGL;
 using Proof.Render;
 using Proof.Render.Buffers;
@@ -28,6 +30,10 @@ namespace Proof
 
                 using var shader = new Shader(logger, "res/shaders/Static.vertex", "res/shaders/Static.frag");
 
+                var entity = new Entity();
+                entity.AddComponent(new CameraComponent(shader));
+                entity.AddComponent(new TransformComponent(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f)));
+
                 uint frames = 0;
                 DateTime lastUpdate = DateTime.Now;
                 while (!window.ShouldClose())
@@ -37,7 +43,8 @@ namespace Proof
                     renderer.Submit(vertices, indices);
 
                     shader.Bind();
-                    shader.LoadUniform("Transformation", Matrix4x4.CreateTranslation(new Vector3(0.5f, 0.5f, 0.0f)));
+
+                    entity.Update();
 
                     renderer.Flush(layout);
 
