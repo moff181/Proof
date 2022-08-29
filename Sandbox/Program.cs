@@ -7,7 +7,7 @@ namespace Sandbox
     {
         public static void Main(string[] args)
         {
-            var application = new SandboxApplication()
+            var application = new SandboxApplication();
             application.Run();
         }
     }
