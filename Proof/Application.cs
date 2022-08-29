@@ -24,8 +24,7 @@ namespace Proof
                 var layout = new VertexLayout();
                 layout.AddArray(2);
 
-                using var vertexBuffer = new VertexBuffer(logger, 50000);
-                using var indexBuffer = new IndexBuffer(logger, 40000);
+                using var renderer = new Renderer(logger, 50000, 40000);
 
                 using var shader = new Shader(logger, "res/shaders/Static.vertex", "res/shaders/Static.frag");
 
@@ -35,14 +34,12 @@ namespace Proof
                 {
                     window.Update();
 
-                    vertexBuffer.Submit(vertices);
-                    indexBuffer.Submit(indices);
+                    renderer.Submit(vertices, indices);
 
                     shader.Bind();
                     shader.LoadUniform("Transformation", Matrix4x4.CreateTranslation(new Vector3(0.5f, 0.5f, 0.0f)));
 
-                    vertexBuffer.Flush(layout);
-                    indexBuffer.Flush();
+                    renderer.Flush(layout);
 
                     frames++;
                     if((DateTime.Now - lastUpdate).TotalMilliseconds >= 1000)
