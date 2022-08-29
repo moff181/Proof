@@ -24,7 +24,7 @@ namespace Proof
                 int[] indices = { 0, 1, 2 };
                 using var model = new Model(logger, vertices, indices);
 
-                var layout = new VertexLayout();
+                var layout = new VertexLayout(0);
                 layout.AddArray(2);
 
                 using var renderer = new Renderer(logger, 50000, 40000);
@@ -33,10 +33,11 @@ namespace Proof
 
                 var camera = new Entity();
                 camera.AddComponent(new CameraComponent(shader));
-                camera.AddComponent(new TransformComponent(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f)));
+                camera.AddComponent(new TransformComponent(new Vector2(0, 0), new Vector2(1, 1)));
 
                 var entity = new Entity();
-                entity.AddComponent(new RenderableComponent(renderer, model));
+                entity.AddComponent(new RenderableComponent(renderer, layout, model));
+                entity.AddComponent(new TransformComponent(new Vector2(0.5f, 0.5f), new Vector2(1, 1)));
 
                 uint frames = 0;
                 DateTime lastUpdate = DateTime.Now;

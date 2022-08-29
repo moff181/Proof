@@ -6,10 +6,13 @@ namespace Proof.Render.Buffers
     {
         private readonly IList<int> _arraySizes;
 
-        public VertexLayout()
+        public VertexLayout(int positionIndex)
         {
             _arraySizes = new List<int>();
+            PositionIndex = positionIndex;
         }
+
+        public int PositionIndex { get; }
 
         public void AddArray(int arraySize)
         {
