@@ -1,5 +1,7 @@
 ﻿using Proof.Core.Logging;
 using Proof.OpenGL;
+using System.Drawing.Drawing2D;
+using System.Numerics;
 
 namespace Proof.Render
 {
@@ -11,12 +13,17 @@ namespace Proof.Render
             Fragment = GL.GL_FRAGMENT_SHADER,
         }
 
+        private const int UniformNotFound = -1;
+
         private readonly ALogger _logger;
         private readonly uint _programId;
+
+        private readonly Dictionary<string, int?> _uniformLocations;
 
         public Shader(ALogger logger, string vertexFile, string fragmentFile)
         {
             _logger = logger;
+            _uniformLocations = new Dictionary<string, uint?>();
 
             _logger.LogInfo("Creating shader...");
 
@@ -49,6 +56,80 @@ namespace Proof.Render
         public void Bind()
         {
             GL.glUseProgram(_programId);
+        }
+
+        public void LoadUniform(string name, float val)
+        {
+            int? uniformLocation = GetUniformLocation(name);
+            if(!uniformLocation.HasValue)
+            {
+                return;
+            }
+
+            GL.glUniform1f(uniformLocation.Value, val);
+        }
+
+        public void LoadUniform(string name, Vector2 val)
+        {
+            int? uniformLocation = GetUniformLocation(name);
+            if (!uniformLocation.HasValue)
+            {
+                return;
+            }
+
+            GL.glUniform2f(uniformLocation.Value, val.X, val.Y);
+        }
+
+        public void LoadUniform(string name, Vector3 val)
+        {
+            int? uniformLocation = GetUniformLocation(name);
+            if (!uniformLocation.HasValue)
+            {
+                return;
+            }
+
+            GL.glUniform3f(uniformLocation.Value, val.X, val.Y, val.Z);
+        }
+
+        public void LoadUniform(string name, Vector4 val)
+        {
+            int? uniformLocation = GetUniformLocation(name);
+            if (!uniformLocation.HasValue)
+            {
+                return;
+            }
+
+            GL.glUniform4f(uniformLocation.Value, val.X, val.Y, val.Z, val.W);
+        }
+
+        public void LoadUniform(string name, Matrix val)
+        {
+            int? uniformLocation = GetUniformLocation(name);
+            if (!uniformLocation.HasValue)
+            {
+                return;
+            }
+
+            GL.glUniformMatrix4fv(uniformLocation.Value, 1, false, val.Elements);
+        }
+
+        private int? GetUniformLocation(string name)
+        {
+            if(_uniformLocations.TryGetValue(name, out int? value))
+            {
+                return value;
+            }
+
+            int uniformLocation = GL.glGetUniformLocation(_programId, name);
+            if (uniformLocation == UniformNotFound)
+            {
+                _logger.LogWarn($"Could not find uniform in shader: {name}");
+                _uniformLocations.Add(name, null);
+                return null;
+            }
+
+            _uniformLocations.Add(name, uniformLocation);
+            return uniformLocation;
         }
 
         private static uint CreateShader(ALogger logger, ShaderType type, string filePath)
