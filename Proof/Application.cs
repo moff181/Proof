@@ -18,7 +18,7 @@ namespace Proof
             {
                 logger.LogInfo("Application starting...");
 
-                using var window = new Window(logger, 1280, 720, "Title", false);
+                using var window = new Window(logger, 1280, 720, GetTitle(), false);
 
                 float[] vertices = { -0.5f, -0.5f, 0.5f, -0.5f, 0.0f, 0.5f };
                 int[] indices = { 0, 1, 2 };
@@ -69,5 +69,6 @@ namespace Proof
         }
 
         protected abstract ALogger GetLogger();
+        protected abstract string GetTitle();
     }
 }

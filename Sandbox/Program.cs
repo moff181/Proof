@@ -18,5 +18,10 @@ namespace Sandbox
         {
             return new ConsoleLogger();
         }
+
+        protected override string GetTitle()
+        {
+            return "Sandbox";
+        }
     }
 }
