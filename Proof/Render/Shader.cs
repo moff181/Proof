@@ -1,5 +1,4 @@
 ﻿using Proof.Core.Logging;
-using Proof.Core.Maths;
 using Proof.OpenGL;
 using System.Numerics;
 
