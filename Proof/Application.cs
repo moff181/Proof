@@ -31,9 +31,12 @@ namespace Proof
 
                 using var shader = new Shader(logger, "res/shaders/Static.vertex", "res/shaders/Static.frag");
 
+                var camera = new Entity();
+                camera.AddComponent(new CameraComponent(shader));
+                camera.AddComponent(new TransformComponent(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f)));
+
                 var entity = new Entity();
-                entity.AddComponent(new CameraComponent(shader));
-                entity.AddComponent(new TransformComponent(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f)));
+                entity.AddComponent(new RenderableComponent(renderer, model));
 
                 uint frames = 0;
                 DateTime lastUpdate = DateTime.Now;
@@ -41,11 +44,10 @@ namespace Proof
                 {
                     window.Update();
 
-                    renderer.Submit(model.Vertices, model.Indices);
-
                     shader.Bind();
 
                     entity.Update();
+                    camera.Update();
 
                     renderer.Flush(layout);
 
