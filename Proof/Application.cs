@@ -2,6 +2,7 @@
 using Proof.OpenGL;
 using Proof.Render;
 using Proof.Render.Buffers;
+using System.Numerics;
 
 namespace Proof
 {
@@ -38,6 +39,8 @@ namespace Proof
                     indexBuffer.Submit(indices);
 
                     shader.Bind();
+                    shader.LoadUniform("Transformation", Matrix4x4.CreateTranslation(new Vector3(0.5f, 0.5f, 0.0f)));
+
                     vertexBuffer.Flush(layout);
                     indexBuffer.Flush();
 
