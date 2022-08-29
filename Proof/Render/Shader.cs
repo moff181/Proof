@@ -1,6 +1,6 @@
 ﻿using Proof.Core.Logging;
+using Proof.Core.Maths;
 using Proof.OpenGL;
-using System.Drawing.Drawing2D;
 using System.Numerics;
 
 namespace Proof.Render
@@ -23,7 +23,7 @@ namespace Proof.Render
         public Shader(ALogger logger, string vertexFile, string fragmentFile)
         {
             _logger = logger;
-            _uniformLocations = new Dictionary<string, uint?>();
+            _uniformLocations = new Dictionary<string, int?>();
 
             _logger.LogInfo("Creating shader...");
 
@@ -102,7 +102,7 @@ namespace Proof.Render
             GL.glUniform4f(uniformLocation.Value, val.X, val.Y, val.Z, val.W);
         }
 
-        public void LoadUniform(string name, Matrix val)
+        public void LoadUniform(string name, Matrix4x4 val)
         {
             int? uniformLocation = GetUniformLocation(name);
             if (!uniformLocation.HasValue)
@@ -110,7 +110,7 @@ namespace Proof.Render
                 return;
             }
 
-            GL.glUniformMatrix4fv(uniformLocation.Value, 1, false, val.Elements);
+            GL.glUniformMatrix4fv(uniformLocation.Value, 1, false, val.ToArray());
         }
 
         private int? GetUniformLocation(string name)
