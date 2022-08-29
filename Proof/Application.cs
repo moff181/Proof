@@ -22,6 +22,7 @@ namespace Proof
 
                 float[] vertices = { -0.5f, -0.5f, 0.5f, -0.5f, 0.0f, 0.5f };
                 int[] indices = { 0, 1, 2 };
+                using var model = new Model(logger, vertices, indices);
 
                 var layout = new VertexLayout();
                 layout.AddArray(2);
@@ -40,7 +41,7 @@ namespace Proof
                 {
                     window.Update();
 
-                    renderer.Submit(vertices, indices);
+                    renderer.Submit(model.Vertices, model.Indices);
 
                     shader.Bind();
 
