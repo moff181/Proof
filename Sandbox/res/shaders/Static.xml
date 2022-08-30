@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shader>
+	<VertexFile>res/shaders/Static.vertex</VertexFile>
+	<FragmentFile>res/shaders/Static.frag</FragmentFile>
+</Shader>

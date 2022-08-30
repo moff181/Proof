@@ -1,6 +1,8 @@
 ﻿using Proof.Core.Logging;
 using Proof.OpenGL;
 using System.Numerics;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Proof.Render
 {
@@ -132,7 +134,7 @@ namespace Proof.Render
             return uniformLocation;
         }
 
-        private static uint CreateShader(ALogger logger, ShaderType type, string filePath)
+        private uint CreateShader(ALogger logger, ShaderType type, string filePath)
         {
             logger.LogInfo($"Creating {type} shader from {filePath}...");
 
@@ -158,6 +160,38 @@ namespace Proof.Render
             }
 
             return shaderId;
+        }
+
+        public static Shader LoadFromFile(ALogger logger, string filePath)
+        {
+            logger.LogInfo($"Loading shader from {filePath}...");
+
+            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+            {
+                throw new FileNotFoundException($"Shader file does not exists: {filePath}");
+            }
+
+            XDocument doc = XDocument.Load(filePath);
+            
+            XElement? root = doc.Root;
+            if(root == null)
+            {
+                throw new XmlException("Could not find root node in shader file.");
+            }
+
+            XElement? vertexFileNode = root.Element("VertexFile");
+            if (vertexFileNode == null)
+            {
+                throw new XmlException("Could not find VertexFile not in shader file.");
+            }
+
+            XElement? fragmentFileNode = root.Element("FragmentFile");
+            if (fragmentFileNode == null)
+            {
+                throw new XmlException("Could not find FragmentFile not in shader file.");
+            }
+
+            return new Shader(logger, vertexFileNode.Value, fragmentFileNode.Value);
         }
     }
 }

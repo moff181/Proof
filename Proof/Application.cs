@@ -24,8 +24,7 @@ namespace Proof
                 using Model? model = modelLibrary.Get("res/models/Square.model");
 
                 var layout = VertexLayout.LoadFromFile(logger, "res/layouts/Static.xml");
-
-                using var shader = new Shader(logger, "res/shaders/Static.vertex", "res/shaders/Static.frag");
+                using var shader = Shader.LoadFromFile(logger, "res/shaders/Static.xml");
 
                 using var renderer = new Renderer(logger, 50000, 40000);
 
