@@ -91,7 +91,10 @@ namespace Proof.NUnitTests.Core.Logging
                 e = new Exception(s, e);
             }
 
-            _logger.LogError(message, e);
+            if (e != null)
+            {
+                _logger.LogError(message, e);
+            }
 
             var sb = new StringBuilder();
             sb.Append($"[ERROR] {message}");
