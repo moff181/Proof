@@ -37,5 +37,15 @@
         {
             return ref _items[0];
         }
+
+        public T Get(int index)
+        {
+            if(index >= Index)
+            {
+                throw new IndexOutOfRangeException($"Provided index ({index}) must be less than Index.");
+            }
+
+            return _items[index];
+        }
     }
 }
