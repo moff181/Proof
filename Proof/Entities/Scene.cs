@@ -61,10 +61,7 @@ namespace Proof.Entities
             var entities = entitiesNode.Elements("Entity");
             foreach (XElement entityNode in entities)
             {
-                // Move to Entity.LoadFromNode(entityNode)
-                // Load components in this method as well
-                var entity = new Entity();
-
+                Entity entity = Entity.LoadFromNode(entityNode);
                 scene.AddEntity(entity);
             }
 

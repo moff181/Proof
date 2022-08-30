@@ -1,4 +1,5 @@
 ﻿using Proof.Entities.Components;
+using System.Xml.Linq;
 
 namespace Proof.Entities
 {
@@ -27,6 +28,13 @@ namespace Proof.Entities
         public T? GetComponent<T>()
         {
             return (T?)_components.FirstOrDefault(x => x.GetType() == typeof(T));
+        }
+
+        public static Entity LoadFromNode(XElement node)
+        {
+            var entity = new Entity();
+
+            return entity;
         }
     }
 }
