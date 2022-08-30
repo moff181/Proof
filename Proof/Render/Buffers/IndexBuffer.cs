@@ -5,7 +5,7 @@ using System;
 
 namespace Proof.Render.Buffers
 {
-    internal class IndexBuffer : IDisposable
+    public class IndexBuffer : IDisposable
     {
         private readonly ALogger _logger;
 

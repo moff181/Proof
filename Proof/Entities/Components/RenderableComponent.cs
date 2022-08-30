@@ -3,7 +3,7 @@ using Proof.Render.Buffers;
 
 namespace Proof.Entities.Components
 {
-    internal class RenderableComponent : IComponent
+    public class RenderableComponent : IComponent
     {
         private readonly Renderer _renderer;
         private readonly VertexLayout _layout;

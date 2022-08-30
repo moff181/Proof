@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Proof.Entities.Components
 {
-    internal class CameraComponent : IComponent
+    public class CameraComponent : IComponent
     {
         private readonly Shader _shader;
 

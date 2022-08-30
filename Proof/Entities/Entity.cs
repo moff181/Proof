@@ -2,7 +2,7 @@
 
 namespace Proof.Entities
 {
-    internal class Entity
+    public class Entity
     {
         private readonly IList<IComponent> _components;
 

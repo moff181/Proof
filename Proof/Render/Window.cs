@@ -5,7 +5,7 @@ using Exception = System.Exception;
 
 namespace Proof.Render
 {
-    internal class Window : IDisposable
+    public class Window : IDisposable
     {
         private readonly ALogger _logger;
         private readonly GLFW.Window _glfwWindow;

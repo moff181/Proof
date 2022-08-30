@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace Proof.Render
 {
-    internal class Shader : IDisposable
+    public class Shader : IDisposable
     {
         private enum ShaderType
         {

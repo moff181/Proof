@@ -2,7 +2,7 @@
 
 namespace Proof.Render
 {
-    internal class Model : IDisposable
+    public class Model : IDisposable
     {
         private readonly ALogger _logger;
 

@@ -2,7 +2,7 @@
 
 namespace Proof.Entities.Components
 {
-    internal class TransformComponent : IComponent
+    public class TransformComponent : IComponent
     {
         public TransformComponent(Vector2 position, Vector2 scale)
         {

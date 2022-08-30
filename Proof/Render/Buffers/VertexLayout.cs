@@ -2,7 +2,7 @@
 
 namespace Proof.Render.Buffers
 {
-    internal class VertexLayout : IEnumerable<int>
+    public class VertexLayout : IEnumerable<int>
     {
         private readonly IList<int> _arraySizes;
 

@@ -1,6 +1,6 @@
 ﻿namespace Proof.Core.DataStructures
 {
-    internal class FixedList<T> where T : unmanaged
+    public class FixedList<T> where T : unmanaged
     {
         public FixedList(int size)
         {
