@@ -23,12 +23,12 @@ namespace Proof
                 var modelLibrary = new ModelLibrary(logger);
                 using Model? model = modelLibrary.Get("res/models/Square.model");
 
-                var layout = new VertexLayout(0);
-                layout.AddArray(2);
+                var layout = VertexLayout.LoadFromFile(logger, "res/layouts/Static.xml");
+
+                using var shader = new Shader(logger, "res/shaders/Static.vertex", "res/shaders/Static.frag");
 
                 using var renderer = new Renderer(logger, 50000, 40000);
-                using var shader = new Shader(logger, "res/shaders/Static.vertex", "res/shaders/Static.frag");
-                
+
                 using var scene = new Scene(logger);
 
                 var camera = new Entity();

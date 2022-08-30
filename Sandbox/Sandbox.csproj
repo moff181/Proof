@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="res\layouts\Static.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="res\models\Square.model">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

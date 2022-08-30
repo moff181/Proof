@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using Proof.Core.Logging;
+using System.Collections;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Proof.Render.Buffers
 {
@@ -42,6 +45,59 @@ namespace Proof.Render.Buffers
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public static VertexLayout LoadFromFile(ALogger logger, string filePath)
+        {
+            logger.LogInfo($"Loading vertex layout from file: {filePath}");
+
+            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+            {
+                throw new FileNotFoundException($"Could not find vertex layout file at: {filePath}");
+            }
+
+            XDocument doc = XDocument.Load(filePath);
+            XElement? root = doc.Root;
+
+            if(root == null)
+            {
+                throw new XmlException("Could not find root node in vertex layout file.");
+            }
+
+            XElement? positionIndexNode = root.Element("PositionIndex");
+            if(positionIndexNode == null)
+            {
+                throw new XmlException("Could not find PositionIndex node in vertex layout file.");
+            }
+
+            if(!int.TryParse(positionIndexNode.Value, out int positionIndex))
+            {
+                throw new XmlException($"Value stored in PositionIndex node was invalid: {positionIndexNode.Value}");
+            }
+
+            var vertexLayout = new VertexLayout(positionIndex);
+
+            XElement? attribArraysNode = root.Element("AttribArrays");
+            if(attribArraysNode == null)
+            {
+                logger.LogWarn("AttribArrays node was missing in vertex layout file. Skipping adding attrib arrays.");
+                return vertexLayout;
+            }
+
+            var attribArrayCollection = attribArraysNode.Elements("AttribArray");
+            foreach(var attribArray in attribArrayCollection)
+            {
+                if(!int.TryParse(attribArray.Value, out int val))
+                {
+                    logger.LogWarn($"AttribArray had invalid value in vertex layout file ({attribArray.Value}). Ignoring.");
+                    continue;
+                }
+
+                vertexLayout.AddArray(val);
+            }
+
+            logger.LogInfo("Vertex layout loaded.");
+            return vertexLayout;
         }
     }
 }
