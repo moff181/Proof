@@ -28,16 +28,19 @@ namespace Proof
                 layout.AddArray(2);
 
                 using var renderer = new Renderer(logger, 50000, 40000);
-
                 using var shader = new Shader(logger, "res/shaders/Static.vertex", "res/shaders/Static.frag");
+                
+                using var scene = new Scene(logger);
 
                 var camera = new Entity();
                 camera.AddComponent(new CameraComponent(shader));
                 camera.AddComponent(new TransformComponent(new Vector2(0, 0), new Vector2(1, 1)));
+                scene.AddEntity(camera);
 
                 var entity = new Entity();
                 entity.AddComponent(new RenderableComponent(renderer, layout, model));
                 entity.AddComponent(new TransformComponent(new Vector2(0.5f, 0.5f), new Vector2(1, 1)));
+                scene.AddEntity(entity);
 
                 uint frames = 0;
                 DateTime lastUpdate = DateTime.Now;
@@ -47,8 +50,7 @@ namespace Proof
 
                     shader.Bind();
 
-                    entity.Update();
-                    camera.Update();
+                    scene.Update();
 
                     renderer.Flush(layout);
 
