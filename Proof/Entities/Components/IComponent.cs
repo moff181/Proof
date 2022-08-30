@@ -1,6 +1,6 @@
 ﻿namespace Proof.Entities.Components
 {
-    internal interface IComponent
+    public interface IComponent
     {
         void Update(Entity entity);
     }
