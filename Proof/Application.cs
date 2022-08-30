@@ -20,9 +20,8 @@ namespace Proof
 
                 using var window = new Window(logger, 1280, 720, GetTitle(), false);
 
-                float[] vertices = { -0.5f, -0.5f, 0.5f, -0.5f, 0.0f, 0.5f };
-                int[] indices = { 0, 1, 2 };
-                using var model = new Model(logger, vertices, indices);
+                var modelLibrary = new ModelLibrary(logger);
+                using Model? model = modelLibrary.Get("res/models/Square.model");
 
                 var layout = new VertexLayout(0);
                 layout.AddArray(2);
@@ -38,8 +37,11 @@ namespace Proof
                 scene.AddEntity(camera);
 
                 var entity = new Entity();
-                entity.AddComponent(new RenderableComponent(renderer, layout, model));
-                entity.AddComponent(new TransformComponent(new Vector2(0.5f, 0.5f), new Vector2(1, 1)));
+                if (model != null)
+                {
+                    entity.AddComponent(new RenderableComponent(renderer, layout, model));
+                }
+                entity.AddComponent(new TransformComponent(new Vector2(0.0f, 0.0f), new Vector2(1, 1)));
                 scene.AddEntity(entity);
 
                 uint frames = 0;
