@@ -47,7 +47,7 @@ namespace Proof.Render.Buffers
 
         public unsafe void Flush()
         {
-            fixed (void* ptr = _indices.Items)
+            fixed (void* ptr = &_indices.First())
             {
                 GL.glDrawElements(GL.GL_TRIANGLES, _indices.Index, GL.GL_UNSIGNED_INT, ptr);
             }

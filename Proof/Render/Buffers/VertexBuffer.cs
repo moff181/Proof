@@ -45,7 +45,7 @@ namespace Proof.Render.Buffers
         {
             Bind(layout);
 
-            fixed (void* ptr = _vertices.Items)
+            fixed (void* ptr = &_vertices.First())
             {
                 GL.glBufferData(GL.GL_ARRAY_BUFFER, sizeof(float) * _vertices.Index, ptr, GL.GL_STATIC_DRAW);
             }
