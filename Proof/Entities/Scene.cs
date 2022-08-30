@@ -1,4 +1,6 @@
 ﻿using Proof.Core.Logging;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Proof.Entities
 {
@@ -28,6 +30,45 @@ namespace Proof.Entities
         public void AddEntity(Entity e)
         {
             _entities.Add(e);
+        }
+
+        public static Scene LoadFromFile(ALogger logger, string filePath)
+        {
+            logger.LogInfo($"Loading scene from {filePath}...");
+
+            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+            {
+                throw new FileNotFoundException($"Could not find scene file: {filePath}");
+            }
+
+            XDocument doc = XDocument.Load(filePath);
+            
+            XElement? root = doc.Root;
+            if (root == null)
+            {
+                throw new XmlException("Could not find root node while loading scene.");
+            }
+
+            var scene = new Scene(logger);
+
+            XElement? entitiesNode = root.Element("Entities");
+            if (entitiesNode == null)
+            {
+                logger.LogWarn("Could not find Entities node while loading shader. Assuming no elements in scene.");
+                return scene;
+            }
+
+            var entities = entitiesNode.Elements("Entity");
+            foreach (XElement entityNode in entities)
+            {
+                // Move to Entity.LoadFromNode(entityNode)
+                // Load components in this method as well
+                var entity = new Entity();
+
+                scene.AddEntity(entity);
+            }
+
+            return scene;
         }
     }
 }
