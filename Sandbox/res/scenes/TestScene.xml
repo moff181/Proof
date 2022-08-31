@@ -6,8 +6,29 @@
 				<CameraComponent>
 					<Active>true</Active>
 				</CameraComponent>
+				<TransformComponent>
+					<Position>
+						<X>0.0</X>
+						<Y>0.0</Y>
+					</Position>
+					<Scale>
+						<X>1.0</X>
+						<Y>1.0</Y>
+					</Scale>
+				</TransformComponent>
 			</Components>
 		</Element>
-		<Element />
+		<Element>
+			<TransformComponent>
+				<Position>
+					<X>0.0</X>
+					<Y>0.0</Y>
+				</Position>
+				<Scale>
+					<X>1.0</X>
+					<Y>1.0</Y>
+				</Scale>
+			</TransformComponent>
+		</Element>
 	</Elements>
 </Scene>

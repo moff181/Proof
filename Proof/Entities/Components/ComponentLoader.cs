@@ -21,6 +21,8 @@ namespace Proof.Entities.Components
             {
                 case "CameraComponent":
                     return CameraComponent.LoadFromNode(_logger, shader, componentNode);
+                case "TransformComponent":
+                    return TransformComponent.LoadFromNode(_logger, componentNode);
                 default:
                     throw new NotSupportedException($"Unable to component node with name: {componentNode}");
             }
