@@ -5,15 +5,23 @@ namespace Proof.Entities.Components
 {
     public class CameraComponent : IComponent
     {
-        private readonly Shader _shader;
+        public bool Active { get; set; }
 
-        public CameraComponent(Shader shader)
+        private readonly Shader _shader;
+        
+        public CameraComponent(Shader shader, bool active)
         {
             _shader = shader;
+            Active = active;
         }
 
         public void Update(Entity entity)
         {
+            if(!Active)
+            {
+                return;
+            }
+
             var transformComponent = entity.GetComponent<TransformComponent>();
 
             Vector2 position = transformComponent?.Position ?? new Vector2(0, 0);

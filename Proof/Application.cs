@@ -31,7 +31,7 @@ namespace Proof
                 using var scene = new Scene(logger);
 
                 var camera = new Entity();
-                camera.AddComponent(new CameraComponent(shader));
+                camera.AddComponent(new CameraComponent(shader, true));
                 camera.AddComponent(new TransformComponent(new Vector2(0, 0), new Vector2(1, 1)));
                 scene.AddEntity(camera);
 
