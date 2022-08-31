@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Scene>
 	<Elements>
-		<Element />
+		<Element>
+			<Components>
+				<CameraComponent>
+					<Active>true</Active>
+				</CameraComponent>
+			</Components>
+		</Element>
 		<Element />
 	</Elements>
 </Scene>

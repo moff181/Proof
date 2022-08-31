@@ -1,4 +1,5 @@
 ﻿using Proof.Core.Logging;
+using Proof.Render;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -32,7 +33,7 @@ namespace Proof.Entities
             _entities.Add(e);
         }
 
-        public static Scene LoadFromFile(ALogger logger, string filePath)
+        public static Scene LoadFromFile(ALogger logger, Shader shader, string filePath)
         {
             logger.LogInfo($"Loading scene from {filePath}...");
 
@@ -61,7 +62,7 @@ namespace Proof.Entities
             var entities = entitiesNode.Elements("Entity");
             foreach (XElement entityNode in entities)
             {
-                Entity entity = Entity.LoadFromNode(entityNode);
+                Entity entity = Entity.LoadFromNode(logger, shader, entityNode);
                 scene.AddEntity(entity);
             }
 

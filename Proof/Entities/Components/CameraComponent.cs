@@ -1,5 +1,7 @@
-﻿using Proof.Render;
+﻿using Proof.Core.Logging;
+using Proof.Render;
 using System.Numerics;
+using System.Xml.Linq;
 
 namespace Proof.Entities.Components
 {
@@ -32,6 +34,18 @@ namespace Proof.Entities.Components
             Matrix4x4 transformationMat = scaleMat * translationMat;
 
             _shader.LoadUniform("Transformation", transformationMat);
+        }
+
+        public static IComponent LoadFromNode(ALogger logger, Shader shader, XElement componentNode)
+        {
+            XElement? activeNode = componentNode.Element("Active");
+            if(activeNode == null)
+            {
+                logger.LogWarn("Could not fine Active node while loading CameraComponent. Assuming false.");
+            }
+
+            bool active = bool.Parse(activeNode?.Value ?? "false");
+            return new CameraComponent(shader, active);
         }
     }
 }

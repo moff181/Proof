@@ -1,4 +1,6 @@
-﻿namespace Proof.Entities.Components
+﻿using System.Xml.Linq;
+
+namespace Proof.Entities.Components
 {
     public interface IComponent
     {
