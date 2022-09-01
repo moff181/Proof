@@ -32,7 +32,7 @@ namespace Proof.Entities.Components
                 case "TransformComponent":
                     return TransformComponent.LoadFromNode(_logger, componentNode);
                 default:
-                    throw new NotSupportedException($"Unable to component node with name: {componentNode}");
+                    throw new NotSupportedException($"Unable to load component node with name: {componentNode}");
             }
         }
     }

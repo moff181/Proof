@@ -62,7 +62,7 @@ namespace Proof.Entities
             XElement? entitiesNode = root.Element("Entities");
             if (entitiesNode == null)
             {
-                logger.LogWarn("Could not find Entities node while loading shader. Assuming no elements in scene.");
+                logger.LogWarn("Could not find Entities node while loading scene. Assuming no entities in scene.");
                 return scene;
             }
 

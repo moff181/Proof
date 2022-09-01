@@ -28,20 +28,7 @@ namespace Proof
 
                 using var renderer = new Renderer(logger, 50000, 40000);
 
-                using var scene = new Scene(logger);
-
-                var camera = new Entity();
-                camera.AddComponent(new CameraComponent(shader, true));
-                camera.AddComponent(new TransformComponent(new Vector2(0, 0), new Vector2(1, 1)));
-                scene.AddEntity(camera);
-
-                var entity = new Entity();
-                if (model != null)
-                {
-                    entity.AddComponent(new RenderableComponent(renderer, layout, model));
-                }
-                entity.AddComponent(new TransformComponent(new Vector2(0.0f, 0.0f), new Vector2(1, 1)));
-                scene.AddEntity(entity);
+                using var scene = Scene.LoadFromFile(logger, shader, modelLibrary, renderer, layout, "res/scenes/TestScene.xml");
 
                 uint frames = 0;
                 DateTime lastUpdate = DateTime.Now;

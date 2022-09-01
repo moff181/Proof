@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Scene>
-	<Elements>
-		<Element>
+	<Entities>
+		<Entity>
 			<Components>
 				<CameraComponent>
 					<Active>true</Active>
@@ -17,21 +17,23 @@
 					</Scale>
 				</TransformComponent>
 			</Components>
-		</Element>
-		<Element>
-			<RenderableComponent>
-				<Model>res/models/Square.model</Model>
-			</RenderableComponent>
-			<TransformComponent>
-				<Position>
-					<X>0.0</X>
-					<Y>0.0</Y>
-				</Position>
-				<Scale>
-					<X>1.0</X>
-					<Y>1.0</Y>
-				</Scale>
-			</TransformComponent>
-		</Element>
-	</Elements>
+		</Entity>
+		<Entity>
+			<Components>
+				<RenderableComponent>
+					<Model>res/models/Square.model</Model>
+				</RenderableComponent>
+				<TransformComponent>
+					<Position>
+						<X>0.0</X>
+						<Y>0.0</Y>
+					</Position>
+					<Scale>
+						<X>1.0</X>
+						<Y>1.0</Y>
+					</Scale>
+				</TransformComponent>
+			</Components>
+		</Entity>
+	</Entities>
 </Scene>

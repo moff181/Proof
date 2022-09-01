@@ -51,7 +51,7 @@ namespace Proof.Entities
             }
 
             var componentLoader = new ComponentLoader(logger);
-            foreach (XElement componentNode in componentsNode.Elements("Component"))
+            foreach (XElement componentNode in componentsNode.Elements())
             {
                 entity.AddComponent(componentLoader.LoadFromNode(shader, modelLibrary, renderer, layout, componentNode));
             }
