@@ -28,7 +28,7 @@ namespace Proof.Entities.Components
                 case "CameraComponent":
                     return CameraComponent.LoadFromNode(_logger, shader, componentNode);
                 case "RenderableComponent":
-                    return RenderableComponent.LoadFromNode(modelLibrary, renderer, layout, componentNode);
+                    return RenderableComponent.LoadFromNode(_logger, modelLibrary, renderer, layout, componentNode);
                 case "TransformComponent":
                     return TransformComponent.LoadFromNode(_logger, componentNode);
                 default:

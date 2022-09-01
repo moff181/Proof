@@ -12,12 +12,14 @@ namespace Proof.Entities.Components
         private readonly VertexLayout _layout;
 
         private readonly Model _model;
+        private readonly int _layer;
 
-        public RenderableComponent(Renderer renderer, VertexLayout layout, Model model)
+        public RenderableComponent(Renderer renderer, VertexLayout layout, Model model, int layer)
         {
             _renderer = renderer;
             _layout = layout;
             _model = model;
+            _layer = layer;
         }
 
         public void Update(Entity entity)
@@ -35,10 +37,11 @@ namespace Proof.Entities.Components
                 }
             }
 
-            _renderer.Submit(vertices, _model.Indices);
+            _renderer.Submit(vertices, _model.Indices, _layer);
         }
 
         public static IComponent LoadFromNode(
+            ALogger logger,
             ModelLibrary modelLibrary,
             Renderer renderer,
             VertexLayout layout,
@@ -56,7 +59,15 @@ namespace Proof.Entities.Components
                 throw new IOException($"Could not load model from RenderableComponent: {modelNode.Value}");
             }
 
-            return new RenderableComponent(renderer, layout, model);
+            XElement? layerNode = componentNode.Element("Layer");
+            if(layerNode == null)
+            {
+                logger.LogWarn("Could not find Layer node while loading RenderableComponent. Assuming layer = 0.");
+            }
+
+            int layer = int.Parse(layerNode?.Value ?? "0");
+
+            return new RenderableComponent(renderer, layout, model, layer);
         }
     }
 }

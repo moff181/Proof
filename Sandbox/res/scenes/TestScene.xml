@@ -22,6 +22,7 @@
 			<Components>
 				<RenderableComponent>
 					<Model>res/models/Square.model</Model>
+					<Layer>0</Layer>
 				</RenderableComponent>
 				<TransformComponent>
 					<Position>
