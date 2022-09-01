@@ -21,11 +21,8 @@ namespace Proof
                 using var window = new Window(logger, 1280, 720, GetTitle(), false);
 
                 var modelLibrary = new ModelLibrary(logger);
-                using Model? model = modelLibrary.Get("res/models/Square.model");
-
                 var layout = VertexLayout.LoadFromFile(logger, "res/layouts/Static.xml");
                 using var shader = Shader.LoadFromFile(logger, "res/shaders/Static.xml");
-
                 using var renderer = new Renderer(logger, 50000, 40000);
 
                 using var scene = Scene.LoadFromFile(logger, shader, modelLibrary, renderer, layout, "res/scenes/TestScene.xml");
