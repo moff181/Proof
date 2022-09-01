@@ -1,5 +1,8 @@
-﻿using Proof.Render;
+﻿using Proof.Core.Logging;
+using Proof.Render;
 using Proof.Render.Buffers;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Proof.Entities.Components
 {
@@ -7,6 +10,7 @@ namespace Proof.Entities.Components
     {
         private readonly Renderer _renderer;
         private readonly VertexLayout _layout;
+
         private readonly Model _model;
 
         public RenderableComponent(Renderer renderer, VertexLayout layout, Model model)
@@ -32,6 +36,27 @@ namespace Proof.Entities.Components
             }
 
             _renderer.Submit(vertices, _model.Indices);
+        }
+
+        public static IComponent LoadFromNode(
+            ModelLibrary modelLibrary,
+            Renderer renderer,
+            VertexLayout layout,
+            XElement componentNode)
+        {
+            XElement? modelNode = componentNode.Element("Model");
+            if (modelNode == null)
+            {
+                throw new XmlException("Could not find Model node while loading RenderableComponent.");
+            }
+
+            Model? model = modelLibrary.Get(modelNode.Value);
+            if (model == null)
+            {
+                throw new IOException($"Could not load model from RenderableComponent: {modelNode.Value}");
+            }
+
+            return new RenderableComponent(renderer, layout, model);
         }
     }
 }

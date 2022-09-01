@@ -19,6 +19,9 @@
 			</Components>
 		</Element>
 		<Element>
+			<RenderableComponent>
+				<Model>res/models/Square.model</Model>
+			</RenderableComponent>
 			<TransformComponent>
 				<Position>
 					<X>0.0</X>

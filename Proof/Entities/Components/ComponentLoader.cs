@@ -1,5 +1,6 @@
 ﻿using Proof.Core.Logging;
 using Proof.Render;
+using Proof.Render.Buffers;
 using System.Xml.Linq;
 
 namespace Proof.Entities.Components
@@ -13,7 +14,12 @@ namespace Proof.Entities.Components
             _logger = logger;
         }
 
-        public IComponent LoadFromNode(Shader shader, XElement componentNode)
+        public IComponent LoadFromNode(
+            Shader shader,
+            ModelLibrary modelLibrary,
+            Renderer renderer,
+            VertexLayout layout,
+            XElement componentNode)
         {
             string name = componentNode.Name.LocalName;
 
@@ -21,6 +27,8 @@ namespace Proof.Entities.Components
             {
                 case "CameraComponent":
                     return CameraComponent.LoadFromNode(_logger, shader, componentNode);
+                case "RenderableComponent":
+                    return RenderableComponent.LoadFromNode(modelLibrary, renderer, layout, componentNode);
                 case "TransformComponent":
                     return TransformComponent.LoadFromNode(_logger, componentNode);
                 default:

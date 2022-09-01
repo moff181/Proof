@@ -1,6 +1,7 @@
 ﻿using Proof.Core.Logging;
 using Proof.Entities.Components;
 using Proof.Render;
+using Proof.Render.Buffers;
 using System.Xml.Linq;
 
 namespace Proof.Entities
@@ -32,7 +33,13 @@ namespace Proof.Entities
             return (T?)_components.FirstOrDefault(x => x.GetType() == typeof(T));
         }
 
-        public static Entity LoadFromNode(ALogger logger, Shader shader, XElement node)
+        public static Entity LoadFromNode(
+            ALogger logger,
+            Shader shader,
+            ModelLibrary modelLibrary,
+            Renderer renderer,
+            VertexLayout layout,
+            XElement node)
         {
             var entity = new Entity();
 
@@ -46,7 +53,7 @@ namespace Proof.Entities
             var componentLoader = new ComponentLoader(logger);
             foreach (XElement componentNode in componentsNode.Elements("Component"))
             {
-                entity.AddComponent(componentLoader.LoadFromNode(shader, componentNode));
+                entity.AddComponent(componentLoader.LoadFromNode(shader, modelLibrary, renderer, layout, componentNode));
             }
 
             return entity;
