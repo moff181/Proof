@@ -1,6 +1,8 @@
-﻿using Proof.Core.Logging;
+﻿using GLFW;
+using Proof.Core.Logging;
 using Proof.Entities;
 using Proof.Entities.Components;
+using Proof.Input;
 using Proof.OpenGL;
 using Proof.Render;
 using Proof.Render.Buffers;
@@ -18,7 +20,8 @@ namespace Proof
             {
                 logger.LogInfo("Application starting...");
 
-                using var window = new Window(logger, 1280, 720, GetTitle(), false);
+                using var window = new Render.Window(logger, 1280, 720, GetTitle(), false);
+                InputManager inputManager = window.BuildInputManager();
 
                 var modelLibrary = new ModelLibrary(logger);
                 var layout = VertexLayout.LoadFromFile(logger, "res/layouts/Static.xml");
@@ -39,6 +42,8 @@ namespace Proof
 
                     renderer.Flush(layout);
 
+                    inputManager.Update();
+
                     frames++;
                     if((DateTime.Now - lastUpdate).TotalMilliseconds >= 1000)
                     {
@@ -49,7 +54,7 @@ namespace Proof
                     }
                 }
             }
-            catch(Exception e)
+            catch(System.Exception e)
             {
                 logger.LogError("Top level exception caught", e);
             }

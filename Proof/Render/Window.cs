@@ -1,5 +1,6 @@
 ﻿using GLFW;
 using Proof.Core.Logging;
+using Proof.Input;
 using Proof.OpenGL;
 using Exception = System.Exception;
 
@@ -54,6 +55,11 @@ namespace Proof.Render
         {
             Glfw.SwapBuffers(_glfwWindow);
             Glfw.PollEvents();
+        }
+
+        public InputManager BuildInputManager()
+        {
+            return new InputManager(_glfwWindow);
         }
     }
 }
