@@ -1,5 +1,6 @@
 ﻿using Proof.Core.Logging;
 using Proof.Entities.Components;
+using Proof.Input;
 using Proof.Render;
 using Proof.Render.Buffers;
 using System.Xml.Linq;
@@ -39,6 +40,7 @@ namespace Proof.Entities
             ModelLibrary modelLibrary,
             Renderer renderer,
             VertexLayout layout,
+            InputManager inputManager,
             XElement node)
         {
             var entity = new Entity();
@@ -53,7 +55,14 @@ namespace Proof.Entities
             var componentLoader = new ComponentLoader(logger);
             foreach (XElement componentNode in componentsNode.Elements())
             {
-                entity.AddComponent(componentLoader.LoadFromNode(shader, modelLibrary, renderer, layout, componentNode));
+                entity.AddComponent(
+                    componentLoader.LoadFromNode(
+                        shader,
+                        modelLibrary,
+                        renderer,
+                        layout,
+                        inputManager,
+                        componentNode));
             }
 
             return entity;

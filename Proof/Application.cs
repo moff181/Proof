@@ -28,7 +28,14 @@ namespace Proof
                 using var shader = Shader.LoadFromFile(logger, "res/shaders/Static.xml");
                 using var renderer = new Renderer(logger, 50000, 40000);
 
-                using var scene = Scene.LoadFromFile(logger, shader, modelLibrary, renderer, layout, "res/scenes/TestScene.xml");
+                using var scene = Scene.LoadFromFile(
+                    logger,
+                    shader,
+                    modelLibrary,
+                    renderer,
+                    layout,
+                    inputManager,
+                    "res/scenes/TestScene.xml");
 
                 uint frames = 0;
                 DateTime lastUpdate = DateTime.Now;

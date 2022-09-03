@@ -1,6 +1,8 @@
 ﻿using Proof.Core.Logging;
+using Proof.Input;
 using Proof.Render;
 using Proof.Render.Buffers;
+using System.Numerics;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
@@ -21,6 +23,7 @@ namespace Proof.Entities.Components
             ModelLibrary modelLibrary,
             Renderer renderer,
             VertexLayout layout,
+            InputManager inputManager,
             XElement componentNode)
         {
             string name = componentNode.Name.LocalName;
@@ -34,13 +37,13 @@ namespace Proof.Entities.Components
                 case "TransformComponent":
                     return TransformComponent.LoadFromNode(_logger, componentNode);
                 case "ScriptComponent":
-                    return LoadScriptComponent(componentNode);
+                    return LoadScriptComponent(componentNode, inputManager);
                 default:
                     throw new NotSupportedException($"Unable to load component node with name: {componentNode}");
             }
         }
 
-        private IComponent LoadScriptComponent(XElement componentNode)
+        private IComponent LoadScriptComponent(XElement componentNode, InputManager inputManager)
         {
             XElement? classNode = componentNode.Element("Class");
             if (classNode == null)
@@ -67,13 +70,32 @@ namespace Proof.Entities.Components
                 throw new TypeLoadException($"Class specified in ScriptComponent was invalid as it didn't implement IComponent: {className}");
             }
 
-            object? instance = Activator.CreateInstance(t);
-            if (instance == null)
+            foreach(ConstructorInfo constructorInfo in t.GetConstructors())
             {
-                throw new TypeLoadException($"Could not create instance of type specified in ScriptComponent: {className}");
+                if (!constructorInfo.IsPublic)
+                {
+                    continue;
+                }
+
+                ParameterInfo[] paramInfos = constructorInfo.GetParameters();
+                var parameters = new List<object>();
+                foreach (ParameterInfo parameter in paramInfos)
+                {
+                    if(parameter.ParameterType == typeof(InputManager))
+                    {
+                        parameters.Add(inputManager);
+                    }
+                }
+
+                if(parameters.Count() != paramInfos.Length)
+                {
+                    continue;
+                }
+
+                return (IComponent)constructorInfo.Invoke(parameters.ToArray());
             }
 
-            return (IComponent)instance;
+            throw new TypeLoadException($"Could not find a suitable constructor for type specified in ScriptComponent: {className}");
         }
     }
 }

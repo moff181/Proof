@@ -1,4 +1,5 @@
 ﻿using Proof.Core.Logging;
+using Proof.Input;
 using Proof.Render;
 using Proof.Render.Buffers;
 using System.Xml;
@@ -43,6 +44,7 @@ namespace Proof.Entities
             ModelLibrary modelLibrary,
             Renderer renderer,
             VertexLayout layout,
+            InputManager inputManager,
             string filePath)
         {
             logger.LogInfo($"Loading scene from {filePath}...");
@@ -72,7 +74,15 @@ namespace Proof.Entities
             var entities = entitiesNode.Elements("Entity");
             foreach (XElement entityNode in entities)
             {
-                Entity entity = Entity.LoadFromNode(logger, shader, modelLibrary, renderer, layout, entityNode);
+                Entity entity = Entity.LoadFromNode(
+                    logger,
+                    shader,
+                    modelLibrary,
+                    renderer,
+                    layout,
+                    inputManager,
+                    entityNode);
+
                 scene.AddEntity(entity);
             }
 
