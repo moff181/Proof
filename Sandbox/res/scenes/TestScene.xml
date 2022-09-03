@@ -16,6 +16,9 @@
 						<Y>1.0</Y>
 					</Scale>
 				</TransformComponent>
+				<ScriptComponent>
+					<Class>Sandbox.Scripts.CameraScript</Class>
+				</ScriptComponent>
 			</Components>
 		</Entity>
 		<Entity>
