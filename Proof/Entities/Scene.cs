@@ -26,7 +26,10 @@ namespace Proof.Entities
 
         public void Update()
         {
-            _entities.ForEach(e => e.Update());
+            foreach(Entity e in _entities)
+            {
+                e.Update();
+            }
         }
 
         public void AddEntity(Entity e)
