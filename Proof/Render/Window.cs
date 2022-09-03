@@ -55,6 +55,7 @@ namespace Proof.Render
         {
             Glfw.SwapBuffers(_glfwWindow);
             Glfw.PollEvents();
+            GL.glClear(GL.GL_COLOR_BUFFER_BIT);
         }
 
         public InputManager BuildInputManager()
