@@ -14,7 +14,17 @@
 
         public void Add(T[] toAdd)
         {
-            Array.Copy(toAdd, 0, _items, Index, toAdd.Count());
+            if (toAdd.Length > 100)
+            {
+                Array.Copy(toAdd, 0, _items, Index, toAdd.Count());
+            }
+            else
+            {
+                for (int i = 0; i < toAdd.Length; i++)
+                {
+                    _items[i + Index] = toAdd[i];
+                }
+            }
             Index += toAdd.Length;
         }
 
