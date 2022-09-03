@@ -36,13 +36,13 @@ namespace Proof
                 {
                     window.Update();
 
+                    inputManager.Update();
+
                     shader.Bind();
 
                     scene.Update();
 
                     renderer.Flush(layout);
-
-                    inputManager.Update();
 
                     frames++;
                     if((DateTime.Now - lastUpdate).TotalMilliseconds >= 1000)
