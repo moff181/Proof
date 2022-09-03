@@ -47,6 +47,7 @@ namespace Proof.Entities
             InputManager inputManager,
             string filePath)
         {
+            DateTime start = DateTime.Now;
             logger.LogInfo($"Loading scene from {filePath}...");
 
             if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
@@ -85,6 +86,8 @@ namespace Proof.Entities
 
                 scene.AddEntity(entity);
             }
+
+            logger.LogInfo($"Scene took {(DateTime.Now - start).TotalMilliseconds}ms to load.");
 
             return scene;
         }
