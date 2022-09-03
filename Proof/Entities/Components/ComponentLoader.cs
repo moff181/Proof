@@ -117,6 +117,12 @@ namespace Proof.Entities.Components
 
             foreach(PropertyInfo propertyInfo in t.GetProperties())
             {
+                if(propertyInfo.SetMethod == null)
+                {
+                    _logger.LogWarn($"Found property while loading ScriptComponent that had no setter: {propertyInfo.Name} in {t.FullName}");
+                    continue;
+                }
+
                 if(!providedValues.TryGetValue(propertyInfo.Name, out string? value))
                 {
                     continue;
