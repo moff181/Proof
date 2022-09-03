@@ -8,16 +8,16 @@ namespace Proof.Entities
 {
     public class Entity
     {
-        private readonly IList<IComponent> _components;
+        private readonly Dictionary<Type, IComponent> _components;
 
         public Entity()
         {
-            _components = new List<IComponent>();
+            _components = new Dictionary<Type, IComponent>();
         }
 
         public void Update()
         {
-            foreach (IComponent current in _components)
+            foreach (IComponent current in _components.Values)
             {
                 current.Update(this);
             }
@@ -25,12 +25,12 @@ namespace Proof.Entities
 
         public void AddComponent(IComponent component)
         {
-            _components.Add(component);
+            _components.Add(component.GetType(), component);
         }
 
         public T? GetComponent<T>()
         {
-            return (T?)_components.FirstOrDefault(x => x.GetType() == typeof(T));
+            return (T)_components[typeof(T)];
         }
 
         public static Entity LoadFromNode(
