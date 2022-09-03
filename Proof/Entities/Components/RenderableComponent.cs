@@ -27,6 +27,8 @@ namespace Proof.Entities.Components
             _layer = layer;
 
             _verticesBuffer = new float[model.Vertices.Length];
+            Array.Copy(_model.Vertices, _verticesBuffer, _verticesBuffer.Length);
+
             _previousPosition = Vector2.Zero;
             _previousScale = Vector2.One;
         }
