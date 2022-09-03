@@ -8,8 +8,6 @@ namespace Sandbox.Scripts
 {
     public class CameraScript : IComponent
     {
-        private const float Speed = 0.0001f;
-
         private readonly InputManager _inputManager;
 
         private DateTime _lastUpdate;
@@ -18,6 +16,8 @@ namespace Sandbox.Scripts
         {
             _inputManager = inputManager;
         }
+
+        public float Speed { get; set; }
 
         public void Update(Entity entity)
         {
