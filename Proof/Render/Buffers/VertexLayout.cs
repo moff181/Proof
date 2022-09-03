@@ -8,6 +8,7 @@ namespace Proof.Render.Buffers
     public class VertexLayout : IEnumerable<int>
     {
         private readonly IList<int> _arraySizes;
+        private int _sumOfElements;
 
         public VertexLayout(int positionIndex)
         {
@@ -20,6 +21,7 @@ namespace Proof.Render.Buffers
         public void AddArray(int arraySize)
         {
             _arraySizes.Add(arraySize);
+            _sumOfElements = _arraySizes.Sum();
         }
 
         public int Count()
@@ -29,7 +31,7 @@ namespace Proof.Render.Buffers
 
         public int SumOfElements()
         {
-            return _arraySizes.Sum();
+            return _sumOfElements;
         }
 
         public int Stride()
