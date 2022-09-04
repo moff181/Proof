@@ -8,7 +8,7 @@ namespace Sandbox
         public static void Main(string[] args)
         {
             var application = new SandboxApplication();
-            application.Run();
+            application.Run("res/scenes/TestScene.xml");
         }
     }
 

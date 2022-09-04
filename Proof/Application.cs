@@ -8,7 +8,7 @@ namespace Proof
 {
     public abstract class Application
     {
-        public void Run()
+        public void Run(string startupScene)
         {
             ALogger logger = GetLogger();
 
@@ -31,7 +31,7 @@ namespace Proof
                     renderer,
                     layout,
                     inputManager,
-                    "res/scenes/TestScene.xml");
+                    startupScene);
 
                 uint frames = 0;
                 DateTime lastUpdate = DateTime.Now;
