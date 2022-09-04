@@ -20,6 +20,11 @@ namespace Proof.Render
 
             try
             {
+                if(parent != null && parent != IntPtr.Zero)
+                {
+                    Glfw.WindowHint(Hint.Decorated, false);
+                }
+
                 _glfwWindow = Glfw.CreateWindow(
                     width,
                     height,
