@@ -1,12 +1,8 @@
-﻿using GLFW;
-using Proof.Core.Logging;
+﻿using Proof.Core.Logging;
 using Proof.Entities;
-using Proof.Entities.Components;
 using Proof.Input;
-using Proof.OpenGL;
 using Proof.Render;
 using Proof.Render.Buffers;
-using System.Numerics;
 
 namespace Proof
 {
@@ -20,7 +16,7 @@ namespace Proof
             {
                 logger.LogInfo("Application starting...");
 
-                using var window = new Render.Window(logger, 1280, 720, GetTitle(), false);
+                using var window = new Window(logger, 1280, 720, GetTitle(), false);
                 InputManager inputManager = window.BuildInputManager();
 
                 var modelLibrary = new ModelLibrary(logger);
