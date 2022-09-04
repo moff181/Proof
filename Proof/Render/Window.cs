@@ -2,6 +2,7 @@
 using Proof.Core.Logging;
 using Proof.Input;
 using Proof.OpenGL;
+using System.Runtime.InteropServices;
 using Exception = System.Exception;
 
 namespace Proof.Render
@@ -11,7 +12,7 @@ namespace Proof.Render
         private readonly ALogger _logger;
         private readonly GLFW.Window _glfwWindow;
 
-        public Window(ALogger logger, int width, int height, string title, bool fullScreen)
+        public Window(ALogger logger, int width, int height, string title, bool fullScreen, IntPtr? parent = null)
         {
             _logger = logger;
 
@@ -25,6 +26,12 @@ namespace Proof.Render
                     title,
                     fullScreen ? Glfw.PrimaryMonitor : GLFW.Monitor.None,
                     GLFW.Window.None);
+
+                if(parent != null && parent != IntPtr.Zero)
+                {
+                    IntPtr ptr = GetWindowHandle();
+                    SetParent(ptr, parent.Value);
+                }
 
                 _logger.LogInfo("Binding GL imports...");
                 Glfw.MakeContextCurrent(_glfwWindow);
@@ -62,5 +69,13 @@ namespace Proof.Render
         {
             return new InputManager(_glfwWindow);
         }
+
+        private IntPtr GetWindowHandle()
+        {
+            return Native.GetWin32Window(_glfwWindow);
+        }
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
     }
 }
