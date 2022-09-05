@@ -2,4 +2,10 @@
 <Shader>
 	<VertexFile>res/shaders/Static.vertex</VertexFile>
 	<FragmentFile>res/shaders/Static.frag</FragmentFile>
+	<VertexLayout>
+		<AttribArrays>
+			<AttribArray>2</AttribArray>
+		</AttribArrays>
+		<PositionIndex>0</PositionIndex>
+	</VertexLayout>
 </Shader>

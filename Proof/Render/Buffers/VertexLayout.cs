@@ -49,24 +49,9 @@ namespace Proof.Render.Buffers
             return GetEnumerator();
         }
 
-        public static VertexLayout LoadFromFile(ALogger logger, string filePath)
+        public static VertexLayout LoadFromNode(ALogger logger, XElement vertexLayoutNode)
         {
-            logger.LogInfo($"Loading vertex layout from file: {filePath}");
-
-            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
-            {
-                throw new FileNotFoundException($"Could not find vertex layout file at: {filePath}");
-            }
-
-            XDocument doc = XDocument.Load(filePath);
-            XElement? root = doc.Root;
-
-            if(root == null)
-            {
-                throw new XmlException("Could not find root node in vertex layout file.");
-            }
-
-            XElement? positionIndexNode = root.Element("PositionIndex");
+            XElement? positionIndexNode = vertexLayoutNode.Element("PositionIndex");
             if(positionIndexNode == null)
             {
                 throw new XmlException("Could not find PositionIndex node in vertex layout file.");
@@ -79,7 +64,7 @@ namespace Proof.Render.Buffers
 
             var vertexLayout = new VertexLayout(positionIndex);
 
-            XElement? attribArraysNode = root.Element("AttribArrays");
+            XElement? attribArraysNode = vertexLayoutNode.Element("AttribArrays");
             if(attribArraysNode == null)
             {
                 logger.LogWarn("AttribArrays node was missing in vertex layout file. Skipping adding attrib arrays.");

@@ -1,5 +1,6 @@
 ﻿using Proof.Core.Logging;
 using Proof.OpenGL;
+using Proof.Render.Buffers;
 using System.Numerics;
 using System.Xml;
 using System.Xml.Linq;
@@ -21,10 +22,13 @@ namespace Proof.Render
 
         private readonly Dictionary<string, int?> _uniformLocations;
 
-        public Shader(ALogger logger, string vertexFile, string fragmentFile)
+        private VertexLayout _vertexLayout;
+
+        private Shader(ALogger logger, string vertexFile, string fragmentFile, VertexLayout vertexLayout)
         {
             _logger = logger;
             _uniformLocations = new Dictionary<string, int?>();
+            _vertexLayout = vertexLayout;
 
             _logger.LogInfo("Creating shader...");
 
@@ -115,6 +119,11 @@ namespace Proof.Render
             GL.glUniformMatrix4fv(uniformLocation.Value, 1, false, &val.M11);
         }
 
+        public VertexLayout GetLayout()
+        {
+            return _vertexLayout;
+        }
+
         private int? GetUniformLocation(string name)
         {
             if(_uniformLocations.TryGetValue(name, out int? value))
@@ -182,16 +191,24 @@ namespace Proof.Render
             XElement? vertexFileNode = root.Element("VertexFile");
             if (vertexFileNode == null)
             {
-                throw new XmlException("Could not find VertexFile not in shader file.");
+                throw new XmlException("Could not find VertexFile node in shader file.");
             }
 
             XElement? fragmentFileNode = root.Element("FragmentFile");
             if (fragmentFileNode == null)
             {
-                throw new XmlException("Could not find FragmentFile not in shader file.");
+                throw new XmlException("Could not find FragmentFile node in shader file.");
             }
 
-            return new Shader(logger, vertexFileNode.Value, fragmentFileNode.Value);
+            XElement? vertexLayoutNode = root.Element("VertexLayout");
+            if(vertexLayoutNode == null)
+            {
+                throw new XmlException("Could not find VertexLayout node in shader file.");
+            }
+
+            VertexLayout vertexLayout = VertexLayout.LoadFromNode(logger, vertexLayoutNode);
+
+            return new Shader(logger, vertexFileNode.Value, fragmentFileNode.Value, vertexLayout);
         }
     }
 }

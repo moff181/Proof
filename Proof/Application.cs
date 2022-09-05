@@ -3,6 +3,7 @@ using Proof.Entities;
 using Proof.Input;
 using Proof.Render;
 using Proof.Render.Buffers;
+using System.Runtime.InteropServices;
 
 namespace Proof
 {
@@ -20,8 +21,8 @@ namespace Proof
                 InputManager inputManager = window.BuildInputManager();
 
                 var modelLibrary = new ModelLibrary(logger);
-                var layout = VertexLayout.LoadFromFile(logger, "res/layouts/Static.xml");
                 using var shader = Shader.LoadFromFile(logger, "res/shaders/Static.xml");
+                var layout = shader.GetLayout();
                 using var renderer = new Renderer(logger, 50000, 40000);
 
                 using var scene = Scene.LoadFromFile(
