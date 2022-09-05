@@ -1,5 +1,6 @@
 ﻿using Proof.Core.Logging;
 using Proof.Entities.Components;
+using Proof.Entities.Components.ScriptLoaders;
 using Proof.Input;
 using Proof.Render;
 using Proof.Render.Buffers;
@@ -41,6 +42,7 @@ namespace Proof.Entities
             Renderer renderer,
             VertexLayout layout,
             InputManager inputManager,
+            IScriptLoader scriptLoader,
             XElement node)
         {
             var entity = new Entity();
@@ -62,6 +64,7 @@ namespace Proof.Entities
                         renderer,
                         layout,
                         inputManager,
+                        scriptLoader,
                         componentNode));
             }
 

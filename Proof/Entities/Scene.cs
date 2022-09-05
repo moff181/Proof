@@ -1,4 +1,5 @@
 ﻿using Proof.Core.Logging;
+using Proof.Entities.Components.ScriptLoaders;
 using Proof.Input;
 using Proof.Render;
 using System.Xml;
@@ -52,6 +53,7 @@ namespace Proof.Entities
             ModelLibrary modelLibrary,
             Renderer renderer,
             InputManager inputManager,
+            IScriptLoader scriptLoader,
             string filePath)
         {
             DateTime start = DateTime.Now;
@@ -97,6 +99,7 @@ namespace Proof.Entities
                     renderer,
                     shader.GetLayout(),
                     inputManager,
+                    scriptLoader,
                     entityNode);
 
                 scene.AddEntity(entity);

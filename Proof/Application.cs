@@ -1,5 +1,6 @@
 ﻿using Proof.Core.Logging;
 using Proof.Entities;
+using Proof.Entities.Components.ScriptLoaders;
 using Proof.Input;
 using Proof.Render;
 using Proof.Render.Buffers;
@@ -28,6 +29,7 @@ namespace Proof
                     modelLibrary,
                     renderer,
                     inputManager,
+                    GetScriptLoader(),
                     startupScene);
 
                 uint frames = 0;
@@ -50,7 +52,7 @@ namespace Proof
                     }
                 }
             }
-            catch(System.Exception e)
+            catch(Exception e)
             {
                 logger.LogError("Top level exception caught", e);
             }
@@ -58,5 +60,6 @@ namespace Proof
 
         protected abstract ALogger GetLogger();
         protected abstract string GetTitle();
+        protected abstract IScriptLoader GetScriptLoader();
     }
 }
