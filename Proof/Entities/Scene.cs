@@ -1,7 +1,6 @@
 ﻿using Proof.Core.Logging;
 using Proof.Input;
 using Proof.Render;
-using Proof.Render.Buffers;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -11,26 +10,36 @@ namespace Proof.Entities
     {
         private readonly ALogger _logger;
         private readonly List<Entity> _entities;
+        private readonly Shader _shader;
+        private readonly Renderer _renderer;
 
-        public Scene(ALogger logger)
+        public Scene(ALogger logger, Shader shader, Renderer renderer)
         {
             _logger = logger;
             _entities = new List<Entity>();
 
             _logger.LogInfo("Scene created.");
+            _shader = shader;
+            _renderer = renderer;
         }
 
         public void Dispose()
         {
+            _logger.LogInfo("Disposing of scene...");
+            _shader.Dispose();
             _logger.LogInfo("Scene disposed of.");
         }
 
         public void Update()
         {
-            foreach(Entity e in _entities)
+            _shader.Bind();
+
+            foreach (Entity e in _entities)
             {
                 e.Update();
             }
+
+            _renderer.Flush(_shader.GetLayout());
         }
 
         public void AddEntity(Entity e)
@@ -40,10 +49,8 @@ namespace Proof.Entities
 
         public static Scene LoadFromFile(
             ALogger logger,
-            Shader shader,
             ModelLibrary modelLibrary,
             Renderer renderer,
-            VertexLayout layout,
             InputManager inputManager,
             string filePath)
         {
@@ -63,7 +70,15 @@ namespace Proof.Entities
                 throw new XmlException("Could not find root node while loading scene.");
             }
 
-            var scene = new Scene(logger);
+            XElement? shaderNode = root.Element("Shader");
+            if(shaderNode == null)
+            {
+                throw new XmlException("Could not find Shader node while loading scene.");
+            }
+
+            var shader = Shader.LoadFromFile(logger, shaderNode.Value);
+
+            var scene = new Scene(logger, shader, renderer);
 
             XElement? entitiesNode = root.Element("Entities");
             if (entitiesNode == null)
@@ -80,7 +95,7 @@ namespace Proof.Entities
                     shader,
                     modelLibrary,
                     renderer,
-                    layout,
+                    shader.GetLayout(),
                     inputManager,
                     entityNode);
 

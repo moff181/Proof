@@ -21,16 +21,12 @@ namespace Proof
                 InputManager inputManager = window.BuildInputManager();
 
                 var modelLibrary = new ModelLibrary(logger);
-                using var shader = Shader.LoadFromFile(logger, "res/shaders/Static.xml");
-                var layout = shader.GetLayout();
                 using var renderer = new Renderer(logger, 50000, 40000);
 
                 using var scene = Scene.LoadFromFile(
                     logger,
-                    shader,
                     modelLibrary,
                     renderer,
-                    layout,
                     inputManager,
                     startupScene);
 
@@ -42,11 +38,7 @@ namespace Proof
 
                     inputManager.Update();
 
-                    shader.Bind();
-
                     scene.Update();
-
-                    renderer.Flush(layout);
 
                     frames++;
                     if((DateTime.Now - lastUpdate).TotalMilliseconds >= 1000)

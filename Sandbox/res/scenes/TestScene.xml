@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Scene>
+	<Shader>res/shaders/Static.xml</Shader>
 	<Entities>
 		<Entity>
 			<Components>
