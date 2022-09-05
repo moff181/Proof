@@ -18,7 +18,7 @@ namespace Proof
             {
                 logger.LogInfo("Application starting...");
 
-                using var window = new Window(logger, 1280, 720, GetTitle(), false);
+                using var window = new Window(logger, 1280, 720, GetTitle(), false, GetParentWindow());
                 InputManager inputManager = window.BuildInputManager();
 
                 var modelLibrary = new ModelLibrary(logger);
@@ -61,5 +61,10 @@ namespace Proof
         protected abstract ALogger GetLogger();
         protected abstract string GetTitle();
         protected abstract IScriptLoader GetScriptLoader();
+
+        protected virtual IntPtr GetParentWindow()
+        {
+            return IntPtr.Zero;
+        }
     }
 }

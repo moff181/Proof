@@ -4,6 +4,7 @@ using Proof.Core.Logging;
 using System.Diagnostics;
 using System;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Proof.DevEnv
 {
@@ -23,17 +24,11 @@ namespace Proof.DevEnv
 
         private void ProcessGameEngine()
         {
-            IntPtr windowHandle;
-            while ((windowHandle = Process.GetCurrentProcess().MainWindowHandle) == IntPtr.Zero)
-            { }
+            // This will need to be updating to not just hardcode
+            Directory.SetCurrentDirectory("../../../../Sandbox");
 
-            var logger = new ConsoleLogger();
-            var window = new ProofWindow(logger, 720, 576, "DevEnv", false, windowHandle);
-
-            while(!window.ShouldClose())
-            {
-                window.Update();
-            }
+            var application = new DevEnvApplication();
+            application.Run("res/scenes/TestScene.xml");
         }
     }
 }
