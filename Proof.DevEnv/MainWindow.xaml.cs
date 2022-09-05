@@ -13,8 +13,6 @@ namespace Proof.DevEnv
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ProofWindow _window;
-
         public MainWindow()
         {
             InitializeComponent();
