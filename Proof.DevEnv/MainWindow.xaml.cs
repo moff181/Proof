@@ -1,8 +1,5 @@
 ﻿using Window = System.Windows.Window;
 using ProofWindow = Proof.Render.Window;
-using Proof.Core.Logging;
-using System.Diagnostics;
-using System;
 using System.Threading.Tasks;
 using System.IO;
 
@@ -13,6 +10,8 @@ namespace Proof.DevEnv
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ProofWindow? _window;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -22,10 +21,12 @@ namespace Proof.DevEnv
 
         private void ProcessGameEngine()
         {
-            // This will need to be updating to not just hardcode
+            // This will need updating to not just hardcode
             Directory.SetCurrentDirectory("../../../../Sandbox");
 
             var application = new DevEnvApplication();
+            _window = application.Window;
+
             application.Run("res/scenes/TestScene.xml");
         }
     }

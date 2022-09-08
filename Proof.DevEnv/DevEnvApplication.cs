@@ -7,10 +7,9 @@ namespace Proof.DevEnv
 {
     public class DevEnvApplication : Application
     {
-        protected override ALogger GetLogger()
-        {
-            return new NoLogger();
-        }
+        public DevEnvApplication()
+            : base(new NoLogger())
+        { }
 
         protected override IScriptLoader GetScriptLoader()
         {

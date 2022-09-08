@@ -15,14 +15,13 @@ namespace Sandbox
 
     internal class SandboxApplication : Application
     {
-        protected override ALogger GetLogger()
-        {
-            return new ConsoleLogger();
-        }
+        public SandboxApplication() 
+            : base(new ConsoleLogger())
+        { }
 
         protected override IScriptLoader GetScriptLoader()
         {
-            return new ScriptLoader(GetLogger());
+            return new ScriptLoader(Logger);
         }
 
         protected override string GetTitle()
