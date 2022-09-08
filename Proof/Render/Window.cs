@@ -75,6 +75,11 @@ namespace Proof.Render
             return new InputManager(_glfwWindow);
         }
 
+        public void Resize(int width, int height)
+        {
+            Glfw.SetWindowSize(_glfwWindow, width, height);
+        }
+
         private IntPtr GetWindowHandle()
         {
             return Native.GetWin32Window(_glfwWindow);
