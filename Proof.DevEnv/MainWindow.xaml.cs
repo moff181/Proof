@@ -2,6 +2,7 @@
 using ProofWindow = Proof.Render.Window;
 using System.Threading.Tasks;
 using System.IO;
+using System.Collections;
 
 namespace Proof.DevEnv
 {
@@ -10,7 +11,7 @@ namespace Proof.DevEnv
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ProofWindow? _window;
+        private Application? _application;
 
         public MainWindow()
         {
@@ -26,11 +27,10 @@ namespace Proof.DevEnv
             // This will need updating to not just hardcode
             Directory.SetCurrentDirectory("../../../../Sandbox");
 
-            var application = new DevEnvApplication();
-            _window = application.Window;
+            _application = new DevEnvApplication();
             SizeGameWindowToEditorWindow(width, height);
 
-            application.Run("res/scenes/TestScene.xml");
+            _application.Run("res/scenes/TestScene.xml");
         }
 
         private void Window_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
@@ -41,12 +41,14 @@ namespace Proof.DevEnv
 
         private void SizeGameWindowToEditorWindow(int windowWidth, int windowHeight)
         {
-            if (_window == null)
+            var window = _application?.Window;
+
+            if (window == null)
             {
                 return;
             }
 
-            _window.Resize(windowWidth / 2, windowHeight / 2);
+            _application?.GlQueue.Enqueue(() => window.Resize(windowWidth / 2, windowHeight / 2));
         }
     }
 }

@@ -78,6 +78,7 @@ namespace Proof.Render
         public void Resize(int width, int height)
         {
             Glfw.SetWindowSize(_glfwWindow, width, height);
+            GL.glViewport(0, 0, width, height);
         }
 
         private IntPtr GetWindowHandle()

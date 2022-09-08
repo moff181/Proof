@@ -1,4 +1,5 @@
-﻿using Proof.Core.Logging;
+﻿using Proof.Core.DataStructures;
+using Proof.Core.Logging;
 using Proof.Entities;
 using Proof.Entities.Components.ScriptLoaders;
 using Proof.Input;
@@ -14,9 +15,11 @@ namespace Proof
         {
             Logger = logger;
             Window = new Window(logger, 1280, 720, GetTitle(), false, GetParentWindow());
+            GlQueue = new Queue<Action>();
         }
 
-        public Window Window { get; private set; }
+        public Window Window { get; }
+        public Queue<Action> GlQueue { get; }
 
         public void Run(string startupScene)
         {
@@ -40,6 +43,7 @@ namespace Proof
                 DateTime lastUpdate = DateTime.Now;
                 while (!Window.ShouldClose())
                 {
+                    GlQueue.ForEachDequeue(a => a());
                     Window.Update();
 
                     inputManager.Update();
