@@ -16,7 +16,15 @@ namespace Proof.DevEnv.Components
         {
             _scene = scene;
 
-            // Load entities here
+            foreach(Entity entity in scene.Entities)
+            {
+                var button = new Button
+                {
+                    Content = entity.Name
+                };
+
+                Body.Children.Add(button);
+            }
         }
     }
 }
