@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Proof.DevEnv"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280"
-        SizeChanged="Window_SizeChanged">
-    <Grid>
+        SizeChanged="Window_SizeChanged"
+        Closing="Window_Closing">
+    <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="3*" />

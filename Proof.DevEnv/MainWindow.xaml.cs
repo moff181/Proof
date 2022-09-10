@@ -1,6 +1,9 @@
 ﻿using Window = System.Windows.Window;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Documents;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace Proof.DevEnv
 {
@@ -9,11 +12,39 @@ namespace Proof.DevEnv
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string WindowSettingsFile = "window.settings";
+
+        private readonly string _currentDirectory;
         private Application? _application;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            _currentDirectory = Directory.GetCurrentDirectory();
+
+            WindowSettings? nullableSettings = WindowSettings.Load(WindowSettingsFile);
+            if(nullableSettings != null)
+            {
+                WindowSettings settings = nullableSettings.Value;
+
+                WindowState = settings.Fullscreen
+                    ? WindowState.Maximized
+                    : WindowState.Normal;
+                
+                MainGrid.ColumnDefinitions.Clear();
+
+                var c0 = new ColumnDefinition();
+                c0.Width = new GridLength(settings.LeftPanelWidth / Width, GridUnitType.Star);
+                var c1 = new ColumnDefinition();
+                c1.Width = new GridLength((Width - settings.LeftPanelWidth - settings.RightPanelWidth) / Width, GridUnitType.Star);
+                var c2 = new ColumnDefinition();
+                c2.Width = new GridLength(settings.RightPanelWidth / Width, GridUnitType.Star);
+
+                MainGrid.ColumnDefinitions.Add(c0);
+                MainGrid.ColumnDefinitions.Add(c1);
+                MainGrid.ColumnDefinitions.Add(c2);
+            }
 
             Task.Run(() => ProcessGameEngine());
         }
@@ -59,6 +90,18 @@ namespace Proof.DevEnv
                         window.Move((int)leftPanelWidth, 0);
                     });
             });
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var settings = new WindowSettings
+            {
+                LeftPanelWidth = (int)LeftPanel.ActualWidth,
+                RightPanelWidth = (int)RightPanel.ActualWidth,
+                Fullscreen = WindowState == System.Windows.WindowState.Maximized,
+            };
+
+            settings.Save(Path.Combine(_currentDirectory, "window.settings"));
         }
     }
 }
