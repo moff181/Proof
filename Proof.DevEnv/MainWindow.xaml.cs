@@ -28,18 +28,22 @@ namespace Proof.DevEnv
             Directory.SetCurrentDirectory("../../../../Sandbox");
 
             _application = new DevEnvApplication();
-            SizeGameWindowToEditorWindow(width, height);
+            SizeGameWindowToEditorWindow();
 
             _application.Run("res/scenes/TestScene.xml");
         }
 
         private void Window_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
         {
-            var newSize = e.NewSize;
-            SizeGameWindowToEditorWindow((int)newSize.Width, (int)newSize.Height);
+            SizeGameWindowToEditorWindow();
         }
 
-        private void SizeGameWindowToEditorWindow(int windowWidth, int windowHeight)
+        private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            SizeGameWindowToEditorWindow();
+        }
+
+        private void SizeGameWindowToEditorWindow()
         {
             var window = _application?.Window;
 
@@ -48,15 +52,17 @@ namespace Proof.DevEnv
                 return;
             }
 
-            _application?.GlQueue.Enqueue(() => 
-                {
-                    const float glWindowRatio = 2.0f / 3.0f;
+            Dispatcher.Invoke(() =>
+            {
+                double leftPanelWidth = LeftPanel.ActualWidth;
+                double width = GameDisplayPanel.ActualWidth - RightSplitter.ActualWidth;
 
-                    float x = (windowWidth - windowWidth * glWindowRatio) * 0.5f;
-
-                    window.Resize((int)(windowWidth * glWindowRatio), (int)(windowHeight * glWindowRatio));
-                    window.Move((int)x, 0); 
-                });
+                _application?.GlQueue.Enqueue(() =>
+                    {
+                        window.Resize((int)width, (int)(width * 9.0f / 16.0f));
+                        window.Move((int)leftPanelWidth, 0);
+                    });
+            });
         }
     }
 }
