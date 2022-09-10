@@ -10,19 +10,20 @@ namespace Proof.Entities
     public class Scene : IDisposable
     {
         private readonly ALogger _logger;
-        private readonly List<Entity> _entities;
         private readonly Shader _shader;
         private readonly Renderer _renderer;
 
         public Scene(ALogger logger, Shader shader, Renderer renderer)
         {
             _logger = logger;
-            _entities = new List<Entity>();
+            Entities = new List<Entity>();
 
             _logger.LogInfo("Scene created.");
             _shader = shader;
             _renderer = renderer;
         }
+        
+        private List<Entity> Entities { get; }
 
         public void Dispose()
         {
@@ -35,17 +36,12 @@ namespace Proof.Entities
         {
             _shader.Bind();
 
-            foreach (Entity e in _entities)
+            foreach (Entity e in Entities)
             {
                 e.Update();
             }
 
             _renderer.Flush(_shader.GetLayout());
-        }
-
-        public void AddEntity(Entity e)
-        {
-            _entities.Add(e);
         }
 
         public static Scene LoadFromFile(
@@ -102,7 +98,7 @@ namespace Proof.Entities
                     scriptLoader,
                     entityNode);
 
-                scene.AddEntity(entity);
+                scene.Entities.Add(entity);
             }
 
             logger.LogInfo($"Scene took {(DateTime.Now - start).TotalMilliseconds}ms to load.");
