@@ -31,15 +31,17 @@ namespace Proof.DevEnv
                 WindowState = settings.Fullscreen
                     ? WindowState.Maximized
                     : WindowState.Normal;
+                Width = settings.Width;
+                Height = settings.Height;
                 
                 MainGrid.ColumnDefinitions.Clear();
 
                 var c0 = new ColumnDefinition();
-                c0.Width = new GridLength(settings.LeftPanelWidth / Width, GridUnitType.Star);
+                c0.Width = new GridLength(settings.LeftPanelWidth / (float)settings.Width, GridUnitType.Star);
                 var c1 = new ColumnDefinition();
-                c1.Width = new GridLength((Width - settings.LeftPanelWidth - settings.RightPanelWidth) / Width, GridUnitType.Star);
+                c1.Width = new GridLength((settings.Width - settings.LeftPanelWidth - settings.RightPanelWidth) / (float)settings.Width, GridUnitType.Star);
                 var c2 = new ColumnDefinition();
-                c2.Width = new GridLength(settings.RightPanelWidth / Width, GridUnitType.Star);
+                c2.Width = new GridLength(settings.RightPanelWidth / (float)settings.Width, GridUnitType.Star);
 
                 MainGrid.ColumnDefinitions.Add(c0);
                 MainGrid.ColumnDefinitions.Add(c1);
@@ -98,7 +100,9 @@ namespace Proof.DevEnv
             {
                 LeftPanelWidth = (int)LeftPanel.ActualWidth,
                 RightPanelWidth = (int)RightPanel.ActualWidth,
-                Fullscreen = WindowState == System.Windows.WindowState.Maximized,
+                Fullscreen = WindowState == WindowState.Maximized,
+                Width = (int)ActualWidth,
+                Height = (int)ActualHeight,
             };
 
             settings.Save(Path.Combine(_currentDirectory, "window.settings"));

@@ -10,6 +10,8 @@ namespace Proof.DevEnv
         public int LeftPanelWidth { get; init; }
         public int RightPanelWidth { get; init; }
         public bool Fullscreen { get; init; }
+        public int Width { get; init; }
+        public int Height { get; init; }
 
         public void Save(string filePath)
         {
