@@ -49,9 +49,13 @@ namespace Proof.DevEnv
             }
 
             _application?.GlQueue.Enqueue(() => 
-                { 
-                    window.Resize(windowWidth / 2, windowHeight / 2);
-                    window.Move(windowWidth / 4, 0); 
+                {
+                    const float glWindowRatio = 2.0f / 3.0f;
+
+                    float x = (windowWidth - windowWidth * glWindowRatio) * 0.5f;
+
+                    window.Resize((int)(windowWidth * glWindowRatio), (int)(windowHeight * glWindowRatio));
+                    window.Move((int)x, 0); 
                 });
         }
     }
