@@ -4,6 +4,7 @@ using Proof.Entities.Components.ScriptLoaders;
 using Proof.Input;
 using Proof.Render;
 using Proof.Render.Buffers;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Proof.Entities
@@ -12,10 +13,13 @@ namespace Proof.Entities
     {
         private readonly Dictionary<Type, IComponent> _components;
 
-        public Entity()
+        public Entity(string name)
         {
             _components = new Dictionary<Type, IComponent>();
+            Name = name;
         }
+
+        public string Name { get; }
 
         public void Update()
         {
@@ -45,7 +49,13 @@ namespace Proof.Entities
             IScriptLoader scriptLoader,
             XElement node)
         {
-            var entity = new Entity();
+            XElement? nameNode = node.Element("Name");
+            if(nameNode == null)
+            {
+                throw new XmlException("Entity node was missing the Name node.");
+            }
+
+            var entity = new Entity(nameNode.Value);
 
             XElement? componentsNode = node.Element("Components");
             if(componentsNode == null)

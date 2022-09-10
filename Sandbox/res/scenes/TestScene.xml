@@ -3,6 +3,7 @@
 	<Shader>res/shaders/Static.xml</Shader>
 	<Entities>
 		<Entity>
+			<Name>Camera</Name>
 			<Components>
 				<CameraComponent>
 					<Active>true</Active>
@@ -29,6 +30,7 @@
 			</Components>
 		</Entity>
 		<Entity>
+			<Name>Square</Name>
 			<Components>
 				<RenderableComponent>
 					<Model>res/models/Square.model</Model>
