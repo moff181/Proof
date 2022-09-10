@@ -16,10 +16,12 @@ namespace Proof
             Logger = logger;
             Window = new Window(logger, 1280, 720, GetTitle(), false, GetParentWindow());
             GlQueue = new Queue<Action>();
+            Scene = null;
         }
 
         public Window Window { get; }
         public Queue<Action> GlQueue { get; }
+        public Scene? Scene { get; internal set; }
 
         public void Run(string startupScene)
         {
@@ -31,7 +33,7 @@ namespace Proof
                 var modelLibrary = new ModelLibrary(Logger);
                 using var renderer = new Renderer(Logger, 50000, 40000);
 
-                using var scene = Scene.LoadFromFile(
+                Scene = Scene.LoadFromFile(
                     Logger,
                     modelLibrary,
                     renderer,
@@ -48,7 +50,7 @@ namespace Proof
 
                     inputManager.Update();
 
-                    scene.Update();
+                    Scene.Update();
 
                     frames++;
                     if((DateTime.Now - lastUpdate).TotalMilliseconds >= 1000)

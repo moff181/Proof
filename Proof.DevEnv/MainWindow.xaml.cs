@@ -7,9 +7,6 @@ using System.Windows;
 
 namespace Proof.DevEnv
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private const string WindowSettingsFile = "window.settings";
@@ -58,6 +55,14 @@ namespace Proof.DevEnv
 
             _application = new DevEnvApplication();
             SizeGameWindowToEditorWindow();
+
+            Task.Run(() =>
+            {
+                while (_application.Scene == null)
+                { }
+
+                LeftPanel.Init(_application.Scene);
+            });
 
             _application.Run("res/scenes/TestScene.xml");
         }
