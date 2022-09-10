@@ -15,12 +15,10 @@ namespace Proof.DevEnv
         {
             InitializeComponent();
 
-            int width = (int)Width;
-            int height = (int)Height;
-            Task.Run(() => ProcessGameEngine(width, height));
+            Task.Run(() => ProcessGameEngine());
         }
 
-        private void ProcessGameEngine(int width, int height)
+        private void ProcessGameEngine()
         {
             // This will need updating to not just hardcode
             Directory.SetCurrentDirectory("../../../../Sandbox");
