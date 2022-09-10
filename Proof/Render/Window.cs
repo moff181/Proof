@@ -81,6 +81,11 @@ namespace Proof.Render
             GL.glViewport(0, 0, width, height);
         }
 
+        public void Move(int x, int y)
+        {
+            Glfw.SetWindowPosition(_glfwWindow, x, y);
+        }
+
         private IntPtr GetWindowHandle()
         {
             return Native.GetWin32Window(_glfwWindow);

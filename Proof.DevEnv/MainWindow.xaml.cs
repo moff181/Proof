@@ -48,7 +48,11 @@ namespace Proof.DevEnv
                 return;
             }
 
-            _application?.GlQueue.Enqueue(() => window.Resize(windowWidth / 2, windowHeight / 2));
+            _application?.GlQueue.Enqueue(() => 
+                { 
+                    window.Resize(windowWidth / 2, windowHeight / 2);
+                    window.Move(windowWidth / 4, 0); 
+                });
         }
     }
 }
