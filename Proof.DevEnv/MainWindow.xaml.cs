@@ -1,8 +1,6 @@
 ﻿using Window = System.Windows.Window;
-using ProofWindow = Proof.Render.Window;
 using System.Threading.Tasks;
 using System.IO;
-using System.Collections;
 
 namespace Proof.DevEnv
 {
