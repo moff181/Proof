@@ -23,7 +23,7 @@ namespace Proof.Entities
             _renderer = renderer;
         }
         
-        private List<Entity> Entities { get; }
+        public List<Entity> Entities { get; }
 
         public void Dispose()
         {
