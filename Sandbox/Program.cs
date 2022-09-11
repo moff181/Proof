@@ -1,6 +1,6 @@
 ﻿using Proof;
 using Proof.Core.Logging;
-using Proof.Entities.Components.ScriptLoaders;
+using Proof.Entities.Components.Scripts;
 
 namespace Sandbox
 {

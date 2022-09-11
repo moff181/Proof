@@ -1,6 +1,6 @@
 ﻿using Proof.Core.Logging;
 using Proof.Entities.Components;
-using Proof.Entities.Components.ScriptLoaders;
+using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
 using Proof.Render.Buffers;

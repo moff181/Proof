@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Proof.Entities.Components.ScriptLoaders
+namespace Proof.Entities.Components.Scripts
 {
     public class ScriptLoader : IScriptLoader
     {
@@ -15,16 +15,8 @@ namespace Proof.Entities.Components.ScriptLoaders
             _logger = logger;
         }
 
-        public IComponent LoadScriptComponent(XElement componentNode, InputManager inputManager)
+        public IScript LoadScriptComponent(string className, XElement componentNode, InputManager inputManager)
         {
-            XElement? classNode = componentNode.Element("Class");
-            if (classNode == null)
-            {
-                throw new XmlException("Could not find Class node in ScriptElement.");
-            }
-
-            string? className = classNode.Value;
-
             Assembly? assembly = Assembly.GetEntryAssembly();
             if (assembly == null)
             {
@@ -37,19 +29,19 @@ namespace Proof.Entities.Components.ScriptLoaders
                 throw new TypeLoadException($"Could not load type specified in ScriptComponent: {className}");
             }
 
-            if (!t.GetInterfaces().Contains(typeof(IComponent)))
+            if (!t.GetInterfaces().Contains(typeof(IScript)))
             {
                 throw new TypeLoadException($"Class specified in ScriptComponent was invalid as it didn't implement IComponent: {className}");
             }
 
-            IComponent component = CreateInstance(t, inputManager);
+            IScript component = CreateInstance(t, inputManager);
 
             SetProperties(t, component, componentNode);
 
             return component;
         }
 
-        private IComponent CreateInstance(Type t, InputManager inputManager)
+        private IScript CreateInstance(Type t, InputManager inputManager)
         {
             foreach (ConstructorInfo constructorInfo in t.GetConstructors())
             {
@@ -73,13 +65,13 @@ namespace Proof.Entities.Components.ScriptLoaders
                     continue;
                 }
 
-                return (IComponent)constructorInfo.Invoke(parameters.ToArray());
+                return (IScript)constructorInfo.Invoke(parameters.ToArray());
             }
 
             throw new TypeLoadException($"Could not find a suitable constructor for type specified in ScriptComponent: {t.FullName}");
         }
 
-        private void SetProperties(Type t, IComponent component, XElement componentNode)
+        private void SetProperties(Type t, IScript component, XElement componentNode)
         {
             Dictionary<string, string> providedValues = ExtractProvidedPropertyValues(componentNode);
             if (providedValues == null || !providedValues.Any())

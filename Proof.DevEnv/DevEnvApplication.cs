@@ -1,5 +1,5 @@
 ﻿using Proof.Core.Logging;
-using Proof.Entities.Components.ScriptLoaders;
+using Proof.Entities.Components.Scripts;
 using System;
 using System.Diagnostics;
 

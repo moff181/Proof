@@ -1,12 +1,13 @@
 ﻿using GLFW;
 using Proof.Entities;
 using Proof.Entities.Components;
+using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using System.Numerics;
 
 namespace Sandbox.Scripts
 {
-    public class CameraScript : IComponent
+    public class CameraScript : IScript
     {
         private readonly InputManager _inputManager;
 

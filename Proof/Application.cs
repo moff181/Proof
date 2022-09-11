@@ -1,7 +1,7 @@
 ﻿using Proof.Core.DataStructures;
 using Proof.Core.Logging;
 using Proof.Entities;
-using Proof.Entities.Components.ScriptLoaders;
+using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
 
