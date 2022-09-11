@@ -18,6 +18,6 @@
         <GridSplitter Grid.Column="0" Width="10" DragDelta="GridSplitter_DragDelta" x:Name="LeftSplitter" />
         <StackPanel Grid.Column="1" x:Name="GameDisplayPanel" />
         <GridSplitter Grid.Column="1" Width="10" DragDelta="GridSplitter_DragDelta" x:Name="RightSplitter" />
-        <StackPanel Grid.Column="2" x:Name="RightPanel" />
+        <components:ComponentsPanel Grid.Column="2" x:Name="RightPanel" />
     </Grid>
 </Window>

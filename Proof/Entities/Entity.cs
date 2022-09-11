@@ -39,6 +39,11 @@ namespace Proof.Entities
             return (T)_components[typeof(T)];
         }
 
+        public IEnumerable<IComponent> GetComponents()
+        {
+            return _components.Values;
+        }
+
         public static Entity LoadFromNode(
             ALogger logger,
             Shader shader,

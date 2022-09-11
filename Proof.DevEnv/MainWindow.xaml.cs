@@ -61,7 +61,7 @@ namespace Proof.DevEnv
                 while (_application.Scene == null)
                 { }
 
-                Dispatcher.Invoke(() => LeftPanel.Init(_application.Scene));
+                Dispatcher.Invoke(() => LeftPanel.Init(_application.Scene, e => RightPanel.Init(e)));
             });
 
             _application.Run("res/scenes/TestScene.xml");

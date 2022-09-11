@@ -1,20 +1,19 @@
 ﻿using Proof.Entities;
+using System;
 using System.Windows.Controls;
 
 namespace Proof.DevEnv.Components
 {
     public partial class EntitiesPanel : UserControl
     {
-        private Scene? _scene;
-
         public EntitiesPanel()
         {
             InitializeComponent();
         }
 
-        public void Init(Scene scene)
+        public void Init(Scene scene, Action<Entity> onClick)
         {
-            _scene = scene;
+            Body.Children.Clear();
 
             foreach(Entity entity in scene.Entities)
             {
@@ -22,6 +21,7 @@ namespace Proof.DevEnv.Components
                 {
                     Content = entity.Name
                 };
+                button.Click += (sender, e) => onClick(entity);
 
                 Body.Children.Add(button);
             }
