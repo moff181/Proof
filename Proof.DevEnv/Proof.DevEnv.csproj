@@ -12,27 +12,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Components\EntityComponents\TransformComponent.xaml.cs">
+    <Compile Update="Components\EntityComponents\TransformComponentPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Components\EntityComponents\ScriptComponent.xaml.cs">
+    <Compile Update="Components\EntityComponents\ScriptComponentPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Components\EntityComponents\RenderableComponent.xaml.cs">
+    <Compile Update="Components\EntityComponents\RenderableComponentPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Components\EntityComponents\TransformComponent.xaml">
+    <Page Update="Components\EntityComponents\TransformComponentPanel.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Components\EntityComponents\ScriptComponent.xaml">
+    <Page Update="Components\EntityComponents\ScriptComponentPanel.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Components\EntityComponents\RenderableComponent.xaml">
+    <Page Update="Components\EntityComponents\RenderableComponentPanel.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
