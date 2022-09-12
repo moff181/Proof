@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Proof.DevEnv.Components.EntityComponents"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Expander Header="Camera Component">
+    <Expander Header="Camera Component" IsExpanded="True">
         <StackPanel x:Name="Body">
             <Button x:Name="Active" Content="Active" Click="Active_Click" />
         </StackPanel>

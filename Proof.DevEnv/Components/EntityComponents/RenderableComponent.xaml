@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Proof.DevEnv.Components.EntityComponents"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Expander Header="Renderable Component">
+    <Expander Header="Renderable Component" IsExpanded="True">
         <StackPanel x:Name="Body" />
     </Expander>
 </UserControl>
