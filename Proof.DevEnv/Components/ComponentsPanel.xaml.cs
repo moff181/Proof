@@ -1,6 +1,8 @@
 ﻿using Proof.DevEnv.Components.EntityComponents;
 using Proof.Entities;
 using Proof.Entities.Components;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Proof.DevEnv.Components
@@ -18,29 +20,16 @@ namespace Proof.DevEnv.Components
 
             foreach(IComponent comp in entity.GetComponents())
             {
-                switch(comp.GetType().Name)
+                UIElement uiElement = comp switch
                 {
-                    case "CameraComponent":
-                        Body.Children.Add(new CameraComponentPanel());
-                        break;
-                    case "RenderableComponent":
-                        Body.Children.Add(new RenderableComponentPanel());
-                        break;
-                    case "ScriptComponent":
-                        Body.Children.Add(new ScriptComponentPanel());
-                        break;
-                    case "TransformComponent":
-                        Body.Children.Add(new TransformComponentPanel());
-                        break;
-                    default:
-                        var textBlock = new TextBlock
-                        {
-                            Text = comp.GetType().Name,
-                        };
+                    CameraComponent cameraComp => new CameraComponentPanel(),
+                    RenderableComponent renderableComp => new RenderableComponentPanel(),
+                    ScriptComponent scriptComp => new ScriptComponentPanel(),
+                    TransformComponent transformComp => new TransformComponentPanel(),
+                    _ => new TextBlock { Text = comp.GetType().Name }
+                };
 
-                        Body.Children.Add(textBlock);
-                        break;
-                }
+                Body.Children.Add(uiElement);
             }
         }
     }
