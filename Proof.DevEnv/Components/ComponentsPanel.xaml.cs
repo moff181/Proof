@@ -22,7 +22,7 @@ namespace Proof.DevEnv.Components
             {
                 UIElement uiElement = comp switch
                 {
-                    CameraComponent cameraComp => new CameraComponentPanel(),
+                    CameraComponent cameraComp => new CameraComponentPanel(cameraComp),
                     RenderableComponent renderableComp => new RenderableComponentPanel(),
                     ScriptComponent scriptComp => new ScriptComponentPanel(),
                     TransformComponent transformComp => new TransformComponentPanel(),
