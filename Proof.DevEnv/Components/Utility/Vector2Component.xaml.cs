@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Numerics;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Proof.DevEnv.Components.Utility
 {
-    /// <summary>
-    /// Interaction logic for Vector2Component.xaml
-    /// </summary>
     public partial class Vector2Component : UserControl
     {
         public Vector2Component()
