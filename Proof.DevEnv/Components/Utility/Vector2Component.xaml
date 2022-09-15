@@ -13,11 +13,11 @@
         </Grid.ColumnDefinitions>
         <DockPanel LastChildFill="True" Grid.Column="0">
             <TextBlock Margin="0, 0, 5, 0"><Bold>X: </Bold></TextBlock>
-            <TextBox x:Name="XValue" HorizontalAlignment="Stretch" LostFocus="Value_LostFocus" PreviewTextInput="TextBox_PreviewTextInput" />
+            <local:DecimalInput x:Name="XValue" HorizontalAlignment="Stretch" OnValueChange="Input_OnValueChange" />
         </DockPanel>
         <DockPanel LastChildFill="True" Grid.Column="1">
             <TextBlock Margin="0, 0, 5, 0"><Bold>Y: </Bold></TextBlock>
-            <TextBox x:Name="YValue" HorizontalAlignment="Stretch" LostFocus="Value_LostFocus" PreviewTextInput="TextBox_PreviewTextInput" />
+            <local:DecimalInput x:Name="YValue" HorizontalAlignment="Stretch" OnValueChange="Input_OnValueChange" />
         </DockPanel>
     </Grid>
 </UserControl>
