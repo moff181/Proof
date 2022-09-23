@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows;
+using Proof.Render;
+using Proof.Core.Logging;
 
 namespace Proof.DevEnv
 {
@@ -60,7 +62,8 @@ namespace Proof.DevEnv
                 while (_application.Scene == null)
                 { }
 
-                Dispatcher.Invoke(() => LeftPanel.Init(_application.Scene, e => RightPanel.Init(e)));
+                var modelLibrary = new ModelLibrary(new NoLogger());
+                Dispatcher.Invoke(() => LeftPanel.Init(_application.Scene, e => RightPanel.Init(e, modelLibrary)));
             });
 
             _application.Run("res/scenes/TestScene.xml");

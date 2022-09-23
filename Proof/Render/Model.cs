@@ -6,14 +6,18 @@ namespace Proof.Render
     {
         private readonly ALogger _logger;
 
-        public Model(ALogger logger, float[] vertices, int[] indices)
+        public Model(ALogger logger, string path, float[] vertices, int[] indices)
         {
             _logger = logger;
+
+            Path = path;
             Vertices = vertices;
             Indices = indices;
 
             _logger.LogInfo("Model created.");
         }
+
+        public string Path { get; }
 
         public float[] Vertices { get; }
 

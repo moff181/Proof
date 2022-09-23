@@ -12,9 +12,6 @@ namespace Proof.Entities.Components
         private readonly Renderer _renderer;
         private readonly VertexLayout _layout;
 
-        private readonly Model _model;
-        private readonly int _layer;
-
         private float[] _verticesBuffer;
         private Vector2 _previousPosition;
         private Vector2 _previousScale;
@@ -23,14 +20,29 @@ namespace Proof.Entities.Components
         {
             _renderer = renderer;
             _layout = layout;
-            _model = model;
-            _layer = layer;
-
-            _verticesBuffer = new float[model.Vertices.Length];
-            Array.Copy(_model.Vertices, _verticesBuffer, _verticesBuffer.Length);
 
             _previousPosition = Vector2.Zero;
             _previousScale = Vector2.One;
+
+            Layer = layer;
+
+            _verticesBuffer = Array.Empty<float>();
+            Model = model;
+            SetModel(model);
+        }
+
+        public Model Model { get; private set; }
+        public int Layer { get; set; }
+
+        public void SetModel(Model model)
+        {
+            Model = model;
+
+            _verticesBuffer = new float[model.Vertices.Length];
+            Array.Copy(Model.Vertices, _verticesBuffer, _verticesBuffer.Length);
+
+            // Update _previousPosition to make it recalculate
+            _previousPosition = new Vector2(float.MaxValue, float.MaxValue);
         }
 
         public void Update(Entity entity)
@@ -38,7 +50,7 @@ namespace Proof.Entities.Components
             var transformComponent = entity.GetComponent<TransformComponent>();
             if (transformComponent != null && (transformComponent.Position != _previousPosition || transformComponent.Scale != _previousScale))
             {
-                Array.Copy(_model.Vertices, _verticesBuffer, _verticesBuffer.Length);
+                Array.Copy(Model.Vertices, _verticesBuffer, _verticesBuffer.Length);
 
                 for (int i = _layout.PositionIndex; i < _verticesBuffer.Length; i += _layout.SumOfElements())
                 {
@@ -47,7 +59,7 @@ namespace Proof.Entities.Components
                 }
             }
 
-            _renderer.Submit(_verticesBuffer, _model.Indices, _layer);
+            _renderer.Submit(_verticesBuffer, Model.Indices, Layer);
         }
 
         public static IComponent LoadFromNode(

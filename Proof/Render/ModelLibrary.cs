@@ -104,7 +104,7 @@ namespace Proof.Render
                 }
             }
 
-            return new Model(_logger, vertices.ToArray(), indices.ToArray());
+            return new Model(_logger, filePath, vertices.ToArray(), indices.ToArray());
         }
     }
 }

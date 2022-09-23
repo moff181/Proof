@@ -1,7 +1,7 @@
 ﻿using Proof.DevEnv.Components.EntityComponents;
 using Proof.Entities;
 using Proof.Entities.Components;
-using System;
+using Proof.Render;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,7 +14,7 @@ namespace Proof.DevEnv.Components
             InitializeComponent();
         }
 
-        public void Init(Entity entity)
+        public void Init(Entity entity, ModelLibrary modelLibrary)
         {
             Body.Children.Clear();
 
@@ -23,7 +23,7 @@ namespace Proof.DevEnv.Components
                 UIElement uiElement = comp switch
                 {
                     CameraComponent cameraComp => new CameraComponentPanel(cameraComp),
-                    RenderableComponent renderableComp => new RenderableComponentPanel(),
+                    RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary),
                     ScriptComponent scriptComp => new ScriptComponentPanel(),
                     TransformComponent transformComp => new TransformComponentPanel(transformComp),
                     _ => new TextBlock { Text = comp.GetType().Name }
