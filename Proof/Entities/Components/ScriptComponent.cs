@@ -7,12 +7,13 @@ namespace Proof.Entities.Components
 {
     public class ScriptComponent : IComponent
     {
-        private readonly string _scriptName;
+        public string ScriptName { get; set; }
+
         private readonly IScript _script;
 
         public ScriptComponent(string scriptName, IScript script)
         {
-            _scriptName = scriptName;
+            ScriptName = scriptName;
             _script = script;
         }
 

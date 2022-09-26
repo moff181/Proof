@@ -24,7 +24,7 @@ namespace Proof.DevEnv.Components
                 {
                     CameraComponent cameraComp => new CameraComponentPanel(cameraComp),
                     RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary),
-                    ScriptComponent scriptComp => new ScriptComponentPanel(),
+                    ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp),
                     TransformComponent transformComp => new TransformComponentPanel(transformComp),
                     _ => new TextBlock { Text = comp.GetType().Name }
                 };
