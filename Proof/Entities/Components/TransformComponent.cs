@@ -1,4 +1,5 @@
-﻿using Proof.Core.Logging;
+﻿using Proof.Core.Extensions;
+using Proof.Core.Logging;
 using System.Numerics;
 using System.Xml.Linq;
 
@@ -21,6 +22,14 @@ namespace Proof.Entities.Components
 
         public void Update(Entity entity)
         { }
+
+        public XElement ToXml()
+        {
+            return new XElement(
+                "TransformComponent",
+                Position.ToXml("Position"),
+                Scale.ToXml("Scale"));
+        }
 
         public static IComponent LoadFromNode(ALogger logger, XElement componentNode)
         {

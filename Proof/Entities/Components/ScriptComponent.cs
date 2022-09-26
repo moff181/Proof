@@ -22,6 +22,13 @@ namespace Proof.Entities.Components
             _script.Update(entity);
         }
 
+        public XElement ToXml()
+        {
+            return new XElement(
+                "ScriptComponent",
+                new XElement("Class", ScriptName));
+        }
+
         public static ScriptComponent LoadFromXml(XElement componentNode, IScriptLoader scriptLoader, InputManager inputManager)
         {
             XElement? classNode = componentNode.Element("Class");

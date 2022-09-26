@@ -44,6 +44,25 @@ namespace Proof.Entities
             _renderer.Flush(_shader.GetLayout());
         }
 
+        public void Save(string filePath)
+        {
+            DateTime start = DateTime.Now;
+            _logger.LogInfo($"Saving scene to {filePath}");
+
+            var scene = new XElement("Scene");
+            var entities = new XElement("Entities");
+
+            foreach(Entity e in Entities)
+            {
+                entities.Add(e.ToXml());
+            }
+
+            scene.Add(entities);
+            scene.Save(filePath);
+            
+            _logger.LogInfo($"Finished saving scene ({(DateTime.Now - start).TotalMilliseconds}ms)");
+        }
+
         public static Scene LoadFromFile(
             ALogger logger,
             ModelLibrary modelLibrary,

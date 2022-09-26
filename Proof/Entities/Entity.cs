@@ -44,6 +44,20 @@ namespace Proof.Entities
             return _components.Values;
         }
 
+        public XElement ToXml()
+        {
+            var entity = new XElement(
+                "Element",
+                new XElement("Name", Name));
+
+            foreach (var component in GetComponents())
+            {
+                entity.Add(component.ToXml());
+            }
+
+            return entity;
+        }
+
         public static Entity LoadFromNode(
             ALogger logger,
             Shader shader,

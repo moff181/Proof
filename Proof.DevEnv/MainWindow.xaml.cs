@@ -113,6 +113,8 @@ namespace Proof.DevEnv
             };
 
             settings.Save(Path.Combine(_currentDirectory, "window.settings"));
+
+            _application?.Scene?.Save("Test.xml");
         }
     }
 }

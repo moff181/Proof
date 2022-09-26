@@ -36,6 +36,13 @@ namespace Proof.Entities.Components
             _shader.LoadUniform("Transformation", transformationMat);
         }
 
+        public XElement ToXml()
+        {
+            return new XElement(
+                "CameraComponent",
+                new XElement("Active", Active));
+        }
+
         public static IComponent LoadFromNode(ALogger logger, Shader shader, XElement componentNode)
         {
             XElement? activeNode = componentNode.Element("Active");

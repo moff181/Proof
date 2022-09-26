@@ -62,6 +62,14 @@ namespace Proof.Entities.Components
             _renderer.Submit(_verticesBuffer, Model.Indices, Layer);
         }
 
+        public XElement ToXml()
+        {
+            return new XElement(
+                "RenderableComponent",
+                new XElement("Model", Model.Path),
+                new XElement("Layer", Layer));
+        }
+
         public static IComponent LoadFromNode(
             ALogger logger,
             ModelLibrary modelLibrary,
