@@ -24,11 +24,13 @@ namespace Proof.Render
 
         private VertexLayout _vertexLayout;
 
-        private Shader(ALogger logger, string vertexFile, string fragmentFile, VertexLayout vertexLayout)
+        private Shader(ALogger logger, string filePath, string vertexFile, string fragmentFile, VertexLayout vertexLayout)
         {
             _logger = logger;
             _uniformLocations = new Dictionary<string, int?>();
             _vertexLayout = vertexLayout;
+
+            FilePath = filePath;
 
             _logger.LogInfo("Creating shader...");
 
@@ -48,6 +50,8 @@ namespace Proof.Render
 
             _logger.LogInfo("Shader created.");            
         }
+
+        public string FilePath { get; }
 
         public void Dispose()
         {
@@ -208,7 +212,7 @@ namespace Proof.Render
 
             VertexLayout vertexLayout = VertexLayout.LoadFromNode(logger, vertexLayoutNode);
 
-            return new Shader(logger, vertexFileNode.Value, fragmentFileNode.Value, vertexLayout);
+            return new Shader(logger, filePath, vertexFileNode.Value, fragmentFileNode.Value, vertexLayout);
         }
     }
 }

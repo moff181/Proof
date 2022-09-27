@@ -50,6 +50,9 @@ namespace Proof.Entities
             _logger.LogInfo($"Saving scene to {filePath}");
 
             var scene = new XElement("Scene");
+
+            scene.Add(new XElement("Shader", _shader.FilePath));
+
             var entities = new XElement("Entities");
 
             foreach(Entity e in Entities)
