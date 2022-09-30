@@ -3,6 +3,8 @@
     public class NoScript : IScript
     {
         public void Update(Entity entity)
-        { }
+        { 
+            // NoScript explicitly does nothing
+        }
     }
 }

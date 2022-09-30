@@ -21,7 +21,9 @@ namespace Proof.Entities.Components
         public Vector2 Scale { get; set; }
 
         public void Update(Entity entity)
-        { }
+        {
+            // Any updates should be performed by other components
+        }
 
         public XElement ToXml()
         {
