@@ -22,7 +22,7 @@ namespace Proof.Render
 
         private readonly Dictionary<string, int?> _uniformLocations;
 
-        private VertexLayout _vertexLayout;
+        private readonly VertexLayout _vertexLayout;
 
         private Shader(ALogger logger, string filePath, string vertexFile, string fragmentFile, VertexLayout vertexLayout)
         {
