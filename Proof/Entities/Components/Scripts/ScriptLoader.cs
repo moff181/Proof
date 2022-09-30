@@ -1,7 +1,6 @@
 ﻿using Proof.Core.Logging;
 using Proof.Input;
 using System.Reflection;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace Proof.Entities.Components.Scripts
@@ -39,36 +38,6 @@ namespace Proof.Entities.Components.Scripts
             SetProperties(t, component, componentNode);
 
             return component;
-        }
-
-        private IScript CreateInstance(Type t, InputManager inputManager)
-        {
-            foreach (ConstructorInfo constructorInfo in t.GetConstructors())
-            {
-                if (!constructorInfo.IsPublic)
-                {
-                    continue;
-                }
-
-                ParameterInfo[] paramInfos = constructorInfo.GetParameters();
-                var parameters = new List<object>();
-                foreach (ParameterInfo parameter in paramInfos)
-                {
-                    if (parameter.ParameterType == typeof(InputManager))
-                    {
-                        parameters.Add(inputManager);
-                    }
-                }
-
-                if (parameters.Count != paramInfos.Length)
-                {
-                    continue;
-                }
-
-                return (IScript)constructorInfo.Invoke(parameters.ToArray());
-            }
-
-            throw new TypeLoadException($"Could not find a suitable constructor for type specified in ScriptComponent: {t.FullName}");
         }
 
         private void SetProperties(Type t, IScript component, XElement componentNode)
@@ -189,6 +158,36 @@ namespace Proof.Entities.Components.Scripts
 
             _logger.LogWarn($"Invalid type for ScriptComponent property: {propertyInfo.PropertyType.FullName}");
             return null;
+        }
+
+        private static IScript CreateInstance(Type t, InputManager inputManager)
+        {
+            foreach (ConstructorInfo constructorInfo in t.GetConstructors())
+            {
+                if (!constructorInfo.IsPublic)
+                {
+                    continue;
+                }
+
+                ParameterInfo[] paramInfos = constructorInfo.GetParameters();
+                var parameters = new List<object>();
+                foreach (ParameterInfo parameter in paramInfos)
+                {
+                    if (parameter.ParameterType == typeof(InputManager))
+                    {
+                        parameters.Add(inputManager);
+                    }
+                }
+
+                if (parameters.Count != paramInfos.Length)
+                {
+                    continue;
+                }
+
+                return (IScript)constructorInfo.Invoke(parameters.ToArray());
+            }
+
+            throw new TypeLoadException($"Could not find a suitable constructor for type specified in ScriptComponent: {t.FullName}");
         }
     }
 }
