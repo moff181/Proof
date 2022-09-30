@@ -147,7 +147,7 @@ namespace Proof.Render
             return uniformLocation;
         }
 
-        private uint CreateShader(ALogger logger, ShaderType type, string filePath)
+        private static uint CreateShader(ALogger logger, ShaderType type, string filePath)
         {
             logger.LogInfo($"Creating {type} shader from {filePath}...");
 
