@@ -16,7 +16,7 @@
         {
             if (toAdd.Length > 100)
             {
-                Array.Copy(toAdd, 0, _items, Index, toAdd.Count());
+                Array.Copy(toAdd, 0, _items, Index, toAdd.Length);
             }
             else
             {
