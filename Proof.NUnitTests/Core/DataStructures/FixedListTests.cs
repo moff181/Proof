@@ -179,7 +179,7 @@ namespace Proof.NUnitTests.Core.DataStructures
                 fixedList.Add(0);
             }
 
-            Assert.Throws<IndexOutOfRangeException>(() => fixedList.Get(1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => fixedList.Get(1));
         }
     }
 }
