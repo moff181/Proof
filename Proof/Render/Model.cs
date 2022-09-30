@@ -2,7 +2,7 @@
 
 namespace Proof.Render
 {
-    public class Model : IDisposable
+    public sealed class Model : IDisposable
     {
         private readonly ALogger _logger;
 

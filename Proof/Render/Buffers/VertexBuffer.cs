@@ -4,7 +4,7 @@ using Proof.OpenGL;
 
 namespace Proof.Render.Buffers
 {
-    public class VertexBuffer : IDisposable
+    public sealed class VertexBuffer : IDisposable
     {
         private readonly ALogger _logger;
 

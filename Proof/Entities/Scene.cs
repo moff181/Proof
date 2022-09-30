@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Proof.Entities
 {
-    public class Scene : IDisposable
+    public sealed class Scene : IDisposable
     {
         private readonly ALogger _logger;
         private readonly Shader _shader;
