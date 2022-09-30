@@ -25,7 +25,9 @@ namespace Proof.DevEnv
         {
             IntPtr windowHandle;
             while ((windowHandle = Process.GetCurrentProcess().MainWindowHandle) == IntPtr.Zero)
-            { }
+            { 
+                // Poll for window
+            }
 
             return windowHandle;
         }
