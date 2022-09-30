@@ -105,6 +105,7 @@ namespace Proof.NUnitTests.Core.DataStructures
             {
                 Assert.AreEqual(values[i], fixedList.Get(i));
             }
+
             Assert.AreEqual(values.First(), fixedList.First());
         }
 
@@ -148,19 +149,22 @@ namespace Proof.NUnitTests.Core.DataStructures
         [TestCase(5)]
         public void ShouldNotErrorOnFillAfterClear(int capacity)
         {
-            var fixedList = new FixedList<int>(capacity);
-
-            for(int i = 0; i < capacity; i++)
+            Assert.DoesNotThrow(() =>
             {
-                fixedList.Add(i);
-            }
+                var fixedList = new FixedList<int>(capacity);
 
-            fixedList.Clear();
+                for (int i = 0; i < capacity; i++)
+                {
+                    fixedList.Add(i);
+                }
 
-            for (int i = 0; i < capacity; i++)
-            {
-                fixedList.Add(i);
-            }
+                fixedList.Clear();
+
+                for (int i = 0; i < capacity; i++)
+                {
+                    fixedList.Add(i);
+                }
+            }, "FixedList should not error on fill after clear.");
         }
 
         [TestCase(0)]
