@@ -60,7 +60,7 @@ namespace Proof.Entities.Components.Scripts
                     }
                 }
 
-                if (parameters.Count() != paramInfos.Length)
+                if (parameters.Count != paramInfos.Length)
                 {
                     continue;
                 }
