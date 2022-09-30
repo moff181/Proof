@@ -52,7 +52,7 @@
         {
             if(index >= Index)
             {
-                throw new IndexOutOfRangeException($"Provided index ({index}) must be less than Index.");
+                throw new ArgumentOutOfRangeException($"Provided index ({index}) must be less than Index.");
             }
 
             return _items[index];
