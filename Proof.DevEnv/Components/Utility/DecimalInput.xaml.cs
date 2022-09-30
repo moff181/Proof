@@ -31,7 +31,7 @@ namespace Proof.DevEnv.Components.Utility
 
         private void TextBox_PreviewTextInput(object s, TextCompositionEventArgs e)
         {
-            if (s == null || s is not TextBox)
+            if (s is not TextBox)
             {
                 return;
             }
