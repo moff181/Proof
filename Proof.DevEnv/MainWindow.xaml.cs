@@ -60,7 +60,9 @@ namespace Proof.DevEnv
             Task.Run(() =>
             {
                 while (_application.Scene == null)
-                { }
+                { 
+                    // Poll for scene to be loaded
+                }
 
                 var modelLibrary = new ModelLibrary(new NoLogger());
                 Dispatcher.Invoke(() => LeftPanel.Init(_application.Scene, e => RightPanel.Init(e, modelLibrary)));
