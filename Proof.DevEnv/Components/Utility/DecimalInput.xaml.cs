@@ -56,7 +56,7 @@ namespace Proof.DevEnv.Components.Utility
             e.Handled = !regex.IsMatch(newText.Replace("-", ""));
         }
 
-        private string FormatToNumber(string s)
+        private static string FormatToNumber(string s)
         {
             if (string.IsNullOrWhiteSpace(s))
             {
