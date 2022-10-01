@@ -80,31 +80,38 @@ namespace Proof.Render
                     continue;
                 }
 
-                string[] split = line.Split(',');
-                foreach(string s in split)
-                {
-                    if (state == ModelLoadState.Vertices)
-                    {
-                        if(!float.TryParse(s, out float val))
-                        {
-                            _logger.LogWarn($"Could not parse vertex value as a float: {s}");
-                            continue;
-                        }
-                        vertices.Add(val);
-                    }
-                    else if (state == ModelLoadState.Indices)
-                    {
-                        if (!int.TryParse(s, out int val))
-                        {
-                            _logger.LogWarn($"Could not parse index value as an int: {s}");
-                            continue;
-                        }
-                        indices.Add(val);
-                    }
-                }
+                ProcessLine(line, state, vertices, indices);
             }
 
             return new Model(_logger, filePath, vertices.ToArray(), indices.ToArray());
+        }
+
+        private void ProcessLine(string line, ModelLoadState state, List<float> vertices, List<int> indices)
+        {
+            string[] split = line.Split(',');
+            foreach (string s in split)
+            {
+                if (state == ModelLoadState.Vertices)
+                {
+                    if (!float.TryParse(s, out float val))
+                    {
+                        _logger.LogWarn($"Could not parse vertex value as a float: {s}");
+                        continue;
+                    }
+
+                    vertices.Add(val);
+                }
+                else if (state == ModelLoadState.Indices)
+                {
+                    if (!int.TryParse(s, out int val))
+                    {
+                        _logger.LogWarn($"Could not parse index value as an int: {s}");
+                        continue;
+                    }
+
+                    indices.Add(val);
+                }
+            }
         }
     }
 }
