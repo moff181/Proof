@@ -10,11 +10,18 @@ namespace Proof
     public abstract class Application
     {
         protected readonly ALogger Logger;
+        private readonly IScriptLoader _scriptLoader;
 
-        public Application(ALogger logger)
+        protected Application(
+            ALogger logger,
+            string title,
+            IScriptLoader scriptLoader,
+            IntPtr? parentWindow = null)
         {
             Logger = logger;
-            Window = new Window(logger, 1280, 720, GetTitle(), false, GetParentWindow());
+            _scriptLoader = scriptLoader;
+
+            Window = new Window(logger, 1280, 720, title, false, parentWindow ?? IntPtr.Zero);
             GlQueue = new Queue<Action>();
             Scene = null;
         }
@@ -38,7 +45,7 @@ namespace Proof
                     modelLibrary,
                     renderer,
                     inputManager,
-                    GetScriptLoader(),
+                    _scriptLoader,
                     startupScene);
 
                 uint frames = 0;
@@ -66,14 +73,6 @@ namespace Proof
             {
                 Logger.LogError("Top level exception caught", e);
             }
-        }
-
-        protected abstract string GetTitle();
-        protected abstract IScriptLoader GetScriptLoader();
-
-        protected virtual IntPtr GetParentWindow()
-        {
-            return IntPtr.Zero;
         }
     }
 }

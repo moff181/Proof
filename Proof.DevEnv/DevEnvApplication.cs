@@ -8,20 +8,10 @@ namespace Proof.DevEnv
     public class DevEnvApplication : Application
     {
         public DevEnvApplication()
-            : base(new NoLogger())
+            : base(new NoLogger(), "DevEnv", new NoScriptLoader(), GetParentWindow())
         { }
 
-        protected override IScriptLoader GetScriptLoader()
-        {
-            return new NoScriptLoader();
-        }
-
-        protected override string GetTitle()
-        {
-            return "DevEnv";
-        }
-
-        protected override IntPtr GetParentWindow()
+        protected static IntPtr GetParentWindow()
         {
             IntPtr windowHandle;
             while ((windowHandle = Process.GetCurrentProcess().MainWindowHandle) == IntPtr.Zero)

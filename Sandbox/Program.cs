@@ -16,17 +16,7 @@ namespace Sandbox
     internal class SandboxApplication : Application
     {
         public SandboxApplication() 
-            : base(new ConsoleLogger())
+            : base(new ConsoleLogger(), "Sandbox", new ScriptLoader(new ConsoleLogger()))
         { }
-
-        protected override IScriptLoader GetScriptLoader()
-        {
-            return new ScriptLoader(Logger);
-        }
-
-        protected override string GetTitle()
-        {
-            return "Sandbox";
-        }
     }
 }
