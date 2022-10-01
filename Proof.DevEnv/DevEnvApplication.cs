@@ -11,7 +11,7 @@ namespace Proof.DevEnv
             : base(new NoLogger(), "DevEnv", new NoScriptLoader(), GetParentWindow())
         { }
 
-        protected static IntPtr GetParentWindow()
+        private static IntPtr GetParentWindow()
         {
             IntPtr windowHandle;
             while ((windowHandle = Process.GetCurrentProcess().MainWindowHandle) == IntPtr.Zero)
