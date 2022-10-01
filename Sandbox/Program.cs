@@ -4,7 +4,7 @@ using Proof.Entities.Components.Scripts;
 
 namespace Sandbox
 {
-    internal class Program
+    internal static class Program
     {
         public static void Main(string[] args)
         {
