@@ -158,7 +158,7 @@ namespace Proof.Render
             }
             catch(Exception e)
             {
-                throw new Exception($"Could not read shader file from {filePath}", e);
+                throw new IOException($"Could not read shader file from {filePath}", e);
             }
 
             uint shaderId = GL.glCreateShader((int)type);

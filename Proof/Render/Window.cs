@@ -45,7 +45,7 @@ namespace Proof.Render
             }
             catch(Exception e)
             {
-                throw new Exception("An exception occurred while creating the window", e);
+                throw new IOException("An exception occurred while creating the window", e);
             }
 
             logger.LogInfo("Window created.");
