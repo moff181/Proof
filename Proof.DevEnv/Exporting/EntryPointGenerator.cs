@@ -13,14 +13,23 @@ namespace Proof.Game
     internal class GameApplication : Application
     {
         public GameApplication(ALogger logger)
-            : base(logger, ""Proof Game"", new ScriptLoader(Assembly.GetExecutingAssembly(), logger))
+            : base(logger, ""{TITLE}"", new ScriptLoader(Assembly.GetExecutingAssembly(), logger))
         { }
     }
 }";
 
+        private readonly string _title;
+
+        public EntryPointGenerator(string title)
+        {
+            _title = title;
+        }
+
         public void GenerateEntryPointFile(string fileName)
         {
-            File.WriteAllText(fileName, EntryPoint);
+            string formatted = EntryPoint.Replace("{TITLE}", _title);
+
+            File.WriteAllText(fileName, formatted);
         }
     }
 }

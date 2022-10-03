@@ -3,12 +3,24 @@ using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace Proof.DevEnv.Exporting
 {
     public class Compiler
     {
+        private readonly List<string> _additionalReferences;
+
+        public Compiler()
+        {
+            _additionalReferences = new List<string>();
+        }
+
+        public Compiler WithAdditionalReferences(params string[] files)
+        {
+            _additionalReferences.AddRange(files);
+            return this;
+        }
+
         public void Compile(string outputDllName, string[] files)
         {
             SyntaxTree[] syntaxTrees =
@@ -17,11 +29,7 @@ namespace Proof.DevEnv.Exporting
                 .ToArray();
 
             List<PortableExecutableReference> references = GetNetCoreDefaultReferences();
-            AddAssembly("Proof.dll", references);
-            AddAssembly("Proof.OpenGL.dll", references);
-            AddAssembly("GLFW.NET.dll", references);
-            AddAssembly("System.Numerics.dll", references);
-            AddAssembly("System.Numerics.Vectors.dll", references);
+            AddAssemblies(references, _additionalReferences.ToArray());
 
             var compilation = CSharpCompilation.Create("Executor.cs")
                 .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, optimizationLevel: OptimizationLevel.Release))

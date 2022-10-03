@@ -117,7 +117,15 @@ namespace Proof.DevEnv
 
             settings.Save(Path.Combine(_currentDirectory, "window.settings"));
 
-            var exporter = new Exporter(new Compiler(), new EntryPointGenerator());
+            var exporter = new Exporter(
+                new Compiler()
+                    .WithAdditionalReferences(
+                        "Proof.dll",
+                        "Proof.OpenGL.dll",
+                        "GLFW.NET.dll",
+                        "System.Numerics.dll",
+                        "System.Numerics.Vectors.dll"),
+                new EntryPointGenerator("Proof Game"));
             exporter.Export(Directory.GetCurrentDirectory(), "Game.dll");
             // _application?.Scene?.Save("Test.xml");
         }

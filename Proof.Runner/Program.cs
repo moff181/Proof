@@ -19,7 +19,7 @@ namespace Proof.Runner
                 string directory = Directory.GetCurrentDirectory();
                 string path = Path.Combine(directory, DllName);
 
-                var assembly = Assembly.LoadFile(path);
+                var assembly = Assembly.LoadFrom(path);
 
                 Type? gameApplicationType = assembly.GetType(EntryPointTypeName);
                 if (gameApplicationType == null)
@@ -39,7 +39,6 @@ namespace Proof.Runner
             catch(Exception e)
             {
                 logger.LogError("Failed to create game instance", e);
-                return;
             }
         }
     }
