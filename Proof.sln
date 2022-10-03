@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proof.NUnitTests", "Proof.N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proof.DevEnv", "Proof.DevEnv\Proof.DevEnv.csproj", "{2F6CE18E-6B3F-40EE-8784-B58F63A90442}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proof.Runner", "Proof.Runner\Proof.Runner.csproj", "{66977F39-5972-4D63-8055-6BE067D7CDDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{2F6CE18E-6B3F-40EE-8784-B58F63A90442}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F6CE18E-6B3F-40EE-8784-B58F63A90442}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F6CE18E-6B3F-40EE-8784-B58F63A90442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66977F39-5972-4D63-8055-6BE067D7CDDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66977F39-5972-4D63-8055-6BE067D7CDDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66977F39-5972-4D63-8055-6BE067D7CDDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66977F39-5972-4D63-8055-6BE067D7CDDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -117,7 +117,8 @@ namespace Proof.DevEnv
 
             settings.Save(Path.Combine(_currentDirectory, "window.settings"));
 
-            new Exporter(new Compiler()).Export(Directory.GetCurrentDirectory(), "Game.dll");
+            var exporter = new Exporter(new Compiler(), new EntryPointGenerator());
+            exporter.Export(Directory.GetCurrentDirectory(), "Game.dll");
             // _application?.Scene?.Save("Test.xml");
         }
     }

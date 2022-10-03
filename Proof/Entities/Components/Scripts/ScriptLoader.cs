@@ -7,22 +7,18 @@ namespace Proof.Entities.Components.Scripts
 {
     public class ScriptLoader : IScriptLoader
     {
+        private readonly Assembly _assembly;
         private readonly ALogger _logger;
 
-        public ScriptLoader(ALogger logger)
+        public ScriptLoader(Assembly assembly, ALogger logger)
         {
+            _assembly = assembly;
             _logger = logger;
         }
 
         public IScript LoadScriptComponent(string className, XElement componentNode, InputManager inputManager)
         {
-            Assembly? assembly = Assembly.GetEntryAssembly();
-            if (assembly == null)
-            {
-                throw new EntryPointNotFoundException("Could not find entry assembly while loading ScriptComponent");
-            }
-
-            Type? t = assembly.GetType(className);
+            Type? t = _assembly.GetType(className);
             if (t == null)
             {
                 throw new TypeLoadException($"Could not load type specified in ScriptComponent: {className}");
