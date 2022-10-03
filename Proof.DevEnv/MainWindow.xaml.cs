@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows;
 using Proof.Render;
 using Proof.Core.Logging;
+using Proof.DevEnv.Exporting;
 
 namespace Proof.DevEnv
 {
@@ -116,7 +117,8 @@ namespace Proof.DevEnv
 
             settings.Save(Path.Combine(_currentDirectory, "window.settings"));
 
-            _application?.Scene?.Save("Test.xml");
+            new Exporter(new Compiler()).Export(Directory.GetCurrentDirectory(), "Game.dll");
+            // _application?.Scene?.Save("Test.xml");
         }
     }
 }
