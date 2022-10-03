@@ -33,14 +33,14 @@ namespace Proof.DevEnv.Exporting
             compilation.Emit(codeStream);
         }
 
-        private SyntaxTree GetSyntaxTree(string file)
+        private static SyntaxTree GetSyntaxTree(string file)
         {
             string src = File.ReadAllText(file);
 
             return SyntaxFactory.ParseSyntaxTree(src.Trim());
         }
 
-        private List<PortableExecutableReference> GetNetCoreDefaultReferences()
+        private static List<PortableExecutableReference> GetNetCoreDefaultReferences()
         {
             var references = new List<PortableExecutableReference>();
 
@@ -74,7 +74,7 @@ namespace Proof.DevEnv.Exporting
             return references;
         }
 
-        private void AddAssemblies(List<PortableExecutableReference> references, params string[] assemblies)
+        private static void AddAssemblies(List<PortableExecutableReference> references, params string[] assemblies)
         {
             foreach (var assembly in assemblies)
             {
@@ -82,7 +82,7 @@ namespace Proof.DevEnv.Exporting
             }
         }
 
-        private void AddAssembly(string assemblyDll, List<PortableExecutableReference> references)
+        private static void AddAssembly(string assemblyDll, List<PortableExecutableReference> references)
         {
             if (string.IsNullOrEmpty(assemblyDll))
             {
