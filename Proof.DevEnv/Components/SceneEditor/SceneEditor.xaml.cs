@@ -67,14 +67,14 @@ namespace Proof.DevEnv.Components
             }
 
             Dispatcher.Invoke(
-                    () =>
-                        LeftPanel.Init(
+                () =>
+                    LeftPanel.Init(
+                        _application.Scene,
+                        e => RightPanel.Init(
                             _application.Scene,
-                            e => RightPanel.Init(
-                                _application.Scene,
-                                e,
-                                _modelLibrary,
-                                CreateSidePanels)));
+                            e,
+                            _modelLibrary,
+                            CreateSidePanels)));
         }
 
         private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
