@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using Proof.DevEnv.Components;
+using Proof.DevEnv.Exporting;
 
 namespace Proof.DevEnv
 {
@@ -48,7 +49,7 @@ namespace Proof.DevEnv
 
             settings.Save(Path.Combine(_currentDirectory, "window.settings"));
 
-            /*var exporter = new Exporter(
+            var exporter = new Exporter(
                 new Compiler()
                     .WithAdditionalReferences(
                         "Proof.dll",
@@ -58,7 +59,7 @@ namespace Proof.DevEnv
                         "System.Numerics.Vectors.dll"),
                 new EntryPointGenerator("Proof Game"));
             exporter.Export(Directory.GetCurrentDirectory(), "Game.dll");
-            _application?.Scene?.Save("Test.xml");*/
+            // _application?.Scene?.Save("Test.xml");
         }
     }
 }

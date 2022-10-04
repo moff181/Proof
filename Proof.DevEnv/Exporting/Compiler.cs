@@ -31,7 +31,7 @@ namespace Proof.DevEnv.Exporting
             List<PortableExecutableReference> references = GetNetCoreDefaultReferences();
             AddAssemblies(references, _additionalReferences.ToArray());
 
-            var compilation = CSharpCompilation.Create("Executor.cs")
+            var compilation = CSharpCompilation.Create("Game")
                 .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, optimizationLevel: OptimizationLevel.Release))
                 .WithReferences(references)
                 .AddSyntaxTrees(syntaxTrees);

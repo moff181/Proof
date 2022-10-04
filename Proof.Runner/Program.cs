@@ -19,7 +19,7 @@ namespace Proof.Runner
                 string directory = Directory.GetCurrentDirectory();
                 string path = Path.Combine(directory, DllName);
 
-                var assembly = Assembly.LoadFrom(path);
+                var assembly = Assembly.LoadFile(path);
 
                 Type? gameApplicationType = assembly.GetType(EntryPointTypeName);
                 if (gameApplicationType == null)
