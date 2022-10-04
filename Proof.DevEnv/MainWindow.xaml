@@ -6,18 +6,7 @@
         xmlns:local="clr-namespace:Proof.DevEnv" xmlns:components="clr-namespace:Proof.DevEnv.Components"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280"
-        SizeChanged="Window_SizeChanged"
         Closing="Window_Closing">
-    <Grid x:Name="MainGrid">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-        <components:EntitiesPanel Grid.Column="0" x:Name="LeftPanel" />
-        <GridSplitter Grid.Column="0" Width="10" DragDelta="GridSplitter_DragDelta" x:Name="LeftSplitter" />
-        <StackPanel Grid.Column="1" x:Name="GameDisplayPanel" />
-        <GridSplitter Grid.Column="1" Width="10" DragDelta="GridSplitter_DragDelta" x:Name="RightSplitter" />
-        <components:ComponentsPanel Grid.Column="2" x:Name="RightPanel" />
-    </Grid>
+    <StackPanel x:Name="Content"/>
+
 </Window>
