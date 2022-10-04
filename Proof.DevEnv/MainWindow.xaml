@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280"
         Closing="Window_Closing">
-    <StackPanel x:Name="Content"/>
+    <DockPanel x:Name="Content" LastChildFill="True"/>
 
 </Window>

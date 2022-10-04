@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:Proof.DevEnv.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel x:Name="Body">
-        
-    </StackPanel>
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Bottom">
+            <TextBox x:Name="NewEntityNameBox" KeyDown="NewEntityNameBox_KeyDown" />
+            <Button Content="Add" Click="Button_Click" />
+        </StackPanel>
+        <StackPanel x:Name="Body" DockPanel.Dock="Top" />
+    </DockPanel>
 </UserControl>
