@@ -10,6 +10,7 @@ namespace Proof.DevEnv.Components
     public partial class SceneEditor : UserControl
     {
         private Application? _application;
+        private ModelLibrary? _modelLibrary;
 
         public SceneEditor(WindowSettings? nullableSettings)
         {
@@ -51,11 +52,29 @@ namespace Proof.DevEnv.Components
                     // Poll for scene to be loaded
                 }
 
-                var modelLibrary = new ModelLibrary(new NoLogger());
-                Dispatcher.Invoke(() => LeftPanel.Init(_application.Scene, e => RightPanel.Init(e, modelLibrary)));
+                _modelLibrary = new ModelLibrary(new NoLogger());
+                CreateSidePanels();
             });
 
             _application.Run("res/scenes/TestScene.xml");
+        }
+
+        private void CreateSidePanels()
+        {
+            if(_application?.Scene == null || _modelLibrary == null)
+            {
+                return;
+            }
+
+            Dispatcher.Invoke(
+                    () =>
+                        LeftPanel.Init(
+                            _application.Scene,
+                            e => RightPanel.Init(
+                                _application.Scene,
+                                e,
+                                _modelLibrary,
+                                CreateSidePanels)));
         }
 
         private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)

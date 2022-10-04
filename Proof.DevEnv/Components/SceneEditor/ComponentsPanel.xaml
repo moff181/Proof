@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:Proof.DevEnv.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel x:Name="Body">
-            
-    </StackPanel>
+    <DockPanel LastChildFill="True">
+        <Button x:Name="Remove" Content="Remove" DockPanel.Dock="Bottom" Click="Remove_Click" />
+        <StackPanel x:Name="Body" DockPanel.Dock="Top" />
+    </DockPanel>
 </UserControl>
