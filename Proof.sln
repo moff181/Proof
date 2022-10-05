@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proof", "Proof\Proof.csproj", "{DDE398EF-C3D4-4A65-B0F4-37E2CA458B9D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "Sandbox\Sandbox.csproj", "{2AC6E1A8-EB95-4EB9-AAEE-CDAD287CDBBD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{213D424E-7E61-405E-8EF1-BD3692FE88DD}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -18,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proof.NUnitTests", "Proof.N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proof.DevEnv", "Proof.DevEnv\Proof.DevEnv.csproj", "{2F6CE18E-6B3F-40EE-8784-B58F63A90442}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proof.Runner", "Proof.Runner\Proof.Runner.csproj", "{66977F39-5972-4D63-8055-6BE067D7CDDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proof.Runner", "Proof.Runner\Proof.Runner.csproj", "{66977F39-5972-4D63-8055-6BE067D7CDDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +28,6 @@ Global
 		{DDE398EF-C3D4-4A65-B0F4-37E2CA458B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDE398EF-C3D4-4A65-B0F4-37E2CA458B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDE398EF-C3D4-4A65-B0F4-37E2CA458B9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2AC6E1A8-EB95-4EB9-AAEE-CDAD287CDBBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AC6E1A8-EB95-4EB9-AAEE-CDAD287CDBBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AC6E1A8-EB95-4EB9-AAEE-CDAD287CDBBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AC6E1A8-EB95-4EB9-AAEE-CDAD287CDBBD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9D36D78-6FC4-4951-959A-E542DF27FC8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9D36D78-6FC4-4951-959A-E542DF27FC8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9D36D78-6FC4-4951-959A-E542DF27FC8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
