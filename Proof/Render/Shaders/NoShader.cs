@@ -5,7 +5,12 @@ namespace Proof.Render.Shaders
 {
     public class NoShader : IShader
     {
-        public string FilePath => string.Empty;
+        public string FilePath { get; }
+
+        public NoShader(string filePath)
+        {
+            FilePath = filePath;
+        }
 
         public void Bind()
         {

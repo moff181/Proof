@@ -48,7 +48,7 @@ namespace Proof.DevEnv.Components.ProjectManager
             var programFile = ProgramFile.CreateDefault();
             programFile.Save(Path.Combine(directory, $"{ProjectNameText.Text}.proof"));
 
-            var scene = new Scene(new NoLogger(), new NoShader(), new NoRenderer());
+            var scene = new Scene(new NoLogger(), new NoShader("res/shaders/Static.xml"), new NoRenderer());
             scene.Save(Path.Combine(directory, "res", "scenes", programFile.StartupScene));
         }
 
