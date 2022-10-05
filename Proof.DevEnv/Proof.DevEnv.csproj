@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Proof.Runner\Proof.Runner.csproj" />
     <ProjectReference Include="..\Proof\Proof.csproj" />
   </ItemGroup>
 
