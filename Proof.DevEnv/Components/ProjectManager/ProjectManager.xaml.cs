@@ -58,13 +58,14 @@ namespace Proof.DevEnv.Components.ProjectManager
             File.Copy(
                 Path.Combine("defaults", "static.vertex"),
                 Path.Combine(directory, "res", "shaders", "Static.vertex"));
+
             File.Copy(
                 Path.Combine("defaults", "static.frag"),
                 Path.Combine(directory, "res", "shaders", "Static.frag"));
-            
-            // Create Shader file
-            //  - this will probably be the tricky one if done properly through making a shader and serialising)
-            //  - currently no implementation for serialising a shader file
+
+            File.Copy(
+                Path.Combine("defaults", "static.frag"),
+                Path.Combine(directory, "res", "shaders", "Static.xml"));
 
             _switchViewToSceneEditor(directory, programFile.StartupScene);
         }
