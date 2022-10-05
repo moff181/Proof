@@ -45,7 +45,7 @@ namespace Proof.DevEnv.Components.ProjectManager
             programFile.Save(Path.Combine(directory, $"{ProjectNameText.Text}.proof"));
         }
 
-        private string GetDesktopPath()
+        private static string GetDesktopPath()
         {
             return Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         }
