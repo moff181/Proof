@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Proof.Render.Shaders
 {
-    public sealed class Shader : IDisposable, IShader
+    public sealed class Shader : IShader
     {
         private enum ShaderType
         {

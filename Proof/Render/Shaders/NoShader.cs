@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Proof.Render.Shaders
 {
-    public class NoShader : IShader
+    public sealed class NoShader : IShader
     {
         public string FilePath { get; }
 

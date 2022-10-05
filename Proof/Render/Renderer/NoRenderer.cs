@@ -2,7 +2,7 @@
 
 namespace Proof.Render.Renderer
 {
-    public class NoRenderer : IRenderer
+    public sealed class NoRenderer : IRenderer
     {
         public void Dispose()
         {

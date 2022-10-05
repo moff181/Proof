@@ -85,7 +85,7 @@ namespace Proof.DevEnv.Components.ProjectManager
             File.Copy("Proof.OpenGL.dll", Path.Combine(directory, "Proof.OpenGL.dll"));
         }
 
-        private void CopyProofRunnerFiles(string directory)
+        private static void CopyProofRunnerFiles(string directory)
         {
             File.Copy("Proof.Runner.dll", Path.Combine(directory, "Proof.Runner.dll"));
             File.Copy("Proof.Runner.exe", Path.Combine(directory, "Proof.Runner.exe"));

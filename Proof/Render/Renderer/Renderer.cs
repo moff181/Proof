@@ -3,7 +3,7 @@ using Proof.Render.Buffers;
 
 namespace Proof.Render.Renderer
 {
-    public sealed class Renderer : IDisposable, IRenderer
+    public sealed class Renderer : IRenderer
     {
         private readonly ALogger _logger;
 
