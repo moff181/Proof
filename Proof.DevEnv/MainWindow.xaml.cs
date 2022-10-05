@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using Proof.DevEnv.Components;
 using Proof.DevEnv.Exporting;
+using Proof.DevEnv.Components.ProjectManager;
 
 namespace Proof.DevEnv
 {
@@ -31,11 +32,16 @@ namespace Proof.DevEnv
                 Height = settings.Height;
             }
 
-            Content.Children.Add(new SceneEditor(_windowSettings));
+            Content.Children.Add(new ProjectManager());
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (Content.Children?[0] is not SceneEditor)
+            {
+                return;
+            }
+
             var sceneEditor = (SceneEditor)Content.Children[0];
 
             var settings = new WindowSettings
