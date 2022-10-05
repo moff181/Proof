@@ -65,7 +65,6 @@ namespace Proof.DevEnv
                         "System.Numerics.Vectors.dll"),
                 new EntryPointGenerator("Proof Game"));
             exporter.Export(Directory.GetCurrentDirectory(), "Game.dll");
-            // _application?.Scene?.Save("Test.xml");
         }
     }
 }
