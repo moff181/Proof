@@ -56,15 +56,15 @@ namespace Proof.DevEnv.Components.ProjectManager
             scene.Save(Path.Combine(directory, programFile.StartupScene));
 
             File.Copy(
-                Path.Combine("defaults", "static.vertex"),
+                Path.Combine("defaults", "Static.vertex"),
                 Path.Combine(directory, "res", "shaders", "Static.vertex"));
 
             File.Copy(
-                Path.Combine("defaults", "static.frag"),
+                Path.Combine("defaults", "Static.frag"),
                 Path.Combine(directory, "res", "shaders", "Static.frag"));
 
             File.Copy(
-                Path.Combine("defaults", "static.frag"),
+                Path.Combine("defaults", "Static.xml"),
                 Path.Combine(directory, "res", "shaders", "Static.xml"));
 
             _switchViewToSceneEditor(directory, programFile.StartupScene);
