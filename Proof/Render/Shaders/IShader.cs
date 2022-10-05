@@ -3,12 +3,11 @@ using System.Numerics;
 
 namespace Proof.Render.Shaders
 {
-    public interface IShader
+    public interface IShader : IDisposable
     {
         string FilePath { get; }
 
         void Bind();
-        void Dispose();
         VertexLayout GetLayout();
         void LoadUniform(string name, float val);
         void LoadUniform(string name, Matrix4x4 val);

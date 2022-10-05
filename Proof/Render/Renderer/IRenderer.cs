@@ -2,9 +2,8 @@
 
 namespace Proof.Render.Renderer
 {
-    public interface IRenderer
+    public interface IRenderer : IDisposable
     {
-        void Dispose();
         void Flush(VertexLayout layout);
         void Submit(float[] vertices, int[] indices, int layer);
     }
