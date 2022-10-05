@@ -1,4 +1,8 @@
-﻿using Proof.DevEnv.ProjectStructure;
+﻿using Proof.Core.Logging;
+using Proof.DevEnv.ProjectStructure;
+using Proof.Entities;
+using Proof.Render.Renderer;
+using Proof.Render.Shaders;
 using System;
 using System.IO;
 using System.Windows;
@@ -43,6 +47,9 @@ namespace Proof.DevEnv.Components.ProjectManager
 
             var programFile = ProgramFile.CreateDefault();
             programFile.Save(Path.Combine(directory, $"{ProjectNameText.Text}.proof"));
+
+            var scene = new Scene(new NoLogger(), new NoShader(), new NoRenderer());
+            scene.Save(Path.Combine(directory, "res", "scenes", programFile.StartupScene));
         }
 
         private static string GetDesktopPath()
