@@ -1,6 +1,7 @@
 ﻿using Proof.Core.Logging;
 using Proof.Render;
 using Proof.Render.Buffers;
+using Proof.Render.Renderer;
 using System.Numerics;
 using System.Xml;
 using System.Xml.Linq;

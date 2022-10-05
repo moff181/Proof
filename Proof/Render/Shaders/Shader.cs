@@ -5,9 +5,9 @@ using System.Numerics;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Proof.Render
+namespace Proof.Render.Shaders
 {
-    public sealed class Shader : IDisposable
+    public sealed class Shader : IDisposable, IShader
     {
         private enum ShaderType
         {
@@ -48,7 +48,7 @@ namespace Proof.Render
             GL.glDeleteShader(vertexShaderId);
             GL.glDeleteShader(fragmentShaderId);
 
-            _logger.LogInfo("Shader created.");            
+            _logger.LogInfo("Shader created.");
         }
 
         public string FilePath { get; }
@@ -70,7 +70,7 @@ namespace Proof.Render
         public void LoadUniform(string name, float val)
         {
             int? uniformLocation = GetUniformLocation(name);
-            if(!uniformLocation.HasValue)
+            if (!uniformLocation.HasValue)
             {
                 return;
             }
@@ -130,7 +130,7 @@ namespace Proof.Render
 
         private int? GetUniformLocation(string name)
         {
-            if(_uniformLocations.TryGetValue(name, out int? value))
+            if (_uniformLocations.TryGetValue(name, out int? value))
             {
                 return value;
             }
@@ -156,7 +156,7 @@ namespace Proof.Render
             {
                 src = File.ReadAllText(filePath);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new IOException($"Could not read shader file from {filePath}", e);
             }
@@ -185,9 +185,9 @@ namespace Proof.Render
             }
 
             XDocument doc = XDocument.Load(filePath);
-            
+
             XElement? root = doc.Root;
-            if(root == null)
+            if (root == null)
             {
                 throw new XmlException("Could not find root node in shader file.");
             }
@@ -205,7 +205,7 @@ namespace Proof.Render
             }
 
             XElement? vertexLayoutNode = root.Element("VertexLayout");
-            if(vertexLayoutNode == null)
+            if (vertexLayoutNode == null)
             {
                 throw new XmlException("Could not find VertexLayout node in shader file.");
             }

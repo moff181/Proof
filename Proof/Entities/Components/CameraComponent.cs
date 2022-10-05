@@ -1,5 +1,5 @@
 ﻿using Proof.Core.Logging;
-using Proof.Render;
+using Proof.Render.Shaders;
 using System.Numerics;
 using System.Xml.Linq;
 

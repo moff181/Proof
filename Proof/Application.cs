@@ -4,6 +4,7 @@ using Proof.Entities;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
+using Proof.Render.Renderer;
 
 namespace Proof
 {

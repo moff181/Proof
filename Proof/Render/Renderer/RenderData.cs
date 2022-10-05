@@ -1,4 +1,4 @@
-﻿namespace Proof.Render
+﻿namespace Proof.Render.Renderer
 {
     public struct RenderData
     {

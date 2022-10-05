@@ -1,9 +1,9 @@
 ﻿using Proof.Core.Logging;
 using Proof.Render.Buffers;
 
-namespace Proof.Render
+namespace Proof.Render.Renderer
 {
-    public sealed class Renderer : IDisposable
+    public sealed class Renderer : IDisposable, IRenderer
     {
         private readonly ALogger _logger;
 

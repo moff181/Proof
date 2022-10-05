@@ -2,6 +2,8 @@
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
+using Proof.Render.Renderer;
+using Proof.Render.Shaders;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -10,10 +12,10 @@ namespace Proof.Entities
     public sealed class Scene : IDisposable
     {
         private readonly ALogger _logger;
-        private readonly Shader _shader;
-        private readonly Renderer _renderer;
+        private readonly IShader _shader;
+        private readonly IRenderer _renderer;
 
-        public Scene(ALogger logger, Shader shader, Renderer renderer)
+        public Scene(ALogger logger, IShader shader, IRenderer renderer)
         {
             _logger = logger;
             Entities = new List<Entity>();

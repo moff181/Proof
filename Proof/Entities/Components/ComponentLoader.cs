@@ -3,6 +3,8 @@ using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
 using Proof.Render.Buffers;
+using Proof.Render.Renderer;
+using Proof.Render.Shaders;
 using System.Xml.Linq;
 
 namespace Proof.Entities.Components
