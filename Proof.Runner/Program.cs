@@ -1,4 +1,5 @@
 ﻿using Proof.Core.Logging;
+using Proof.Core.ProjectStructure;
 using Proof.Entities.Components.Scripts;
 using System.Reflection;
 
@@ -12,7 +13,7 @@ namespace Proof.Runner
 
         public static void Main(string[] args)
         {
-            ALogger logger = new ConsoleLogger();
+            ALogger logger = new FileLogger("debug.log");
 
             try
             {
@@ -34,12 +35,23 @@ namespace Proof.Runner
                 }
 
                 var gameApplication = gameApplicationType.GetConstructors().First().Invoke(new object[] { logger });
-                entryPoint.Invoke(gameApplication, new object[] { "res/scenes/TestScene.xml" });
+                entryPoint.Invoke(gameApplication, new object[] { GetStartupScene() });
             }
             catch(Exception e)
             {
                 logger.LogError("Failed to create game instance", e);
             }
+        }
+
+        private static string GetStartupScene()
+        {
+            var files = Directory.GetFiles(Directory.GetCurrentDirectory())
+                .Where(x => x.EndsWith(".proof"));
+
+            string file = files.First();
+
+            ProgramFile programFile = ProgramFile.Load(file) ?? throw new IOException($"Could not load program file from {file}");
+            return programFile.StartupScene;
         }
     }
 }
