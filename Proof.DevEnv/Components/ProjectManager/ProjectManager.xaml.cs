@@ -52,15 +52,10 @@ namespace Proof.DevEnv.Components.ProjectManager
             var programFile = ProgramFile.CreateDefault();
             programFile.Save(Path.Combine(directory, $"{ProjectNameText.Text}.proof"));
 
-<<<<<<< Updated upstream
             var scene = new Scene(new NoLogger(), new NoShader("res/shaders/Static.xml"), new NoRenderer());
-            scene.Save(Path.Combine(directory, "res", "scenes", programFile.StartupScene));
-=======
-            var scene = new Scene(new NoLogger(), new NoShader(), new NoRenderer());
             scene.Save(Path.Combine(directory, programFile.StartupScene));
 
             _switchViewToSceneEditor(directory, programFile.StartupScene);
->>>>>>> Stashed changes
         }
 
         private static string GetDesktopPath()
