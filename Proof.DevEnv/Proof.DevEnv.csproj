@@ -37,10 +37,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="defaults\static.frag">
+    <None Update="defaults\Static.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="defaults\static.vertex">
+    <None Update="defaults\Static.vertex">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="defaults\Static.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

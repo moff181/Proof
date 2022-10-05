@@ -55,6 +55,14 @@ namespace Proof.DevEnv.Components.ProjectManager
             var scene = new Scene(new NoLogger(), new NoShader("res/shaders/Static.xml"), new NoRenderer());
             scene.Save(Path.Combine(directory, programFile.StartupScene));
 
+            CopyShaderFiles(directory);
+            CopyDllFiles(directory);
+
+            _switchViewToSceneEditor(directory, programFile.StartupScene);
+        }
+
+        private static void CopyShaderFiles(string directory)
+        {
             File.Copy(
                 Path.Combine("defaults", "Static.vertex"),
                 Path.Combine(directory, "res", "shaders", "Static.vertex"));
@@ -66,8 +74,14 @@ namespace Proof.DevEnv.Components.ProjectManager
             File.Copy(
                 Path.Combine("defaults", "Static.xml"),
                 Path.Combine(directory, "res", "shaders", "Static.xml"));
+        }
 
-            _switchViewToSceneEditor(directory, programFile.StartupScene);
+        private static void CopyDllFiles(string directory)
+        {
+            File.Copy("glfw.dll", Path.Combine(directory, "glfw.dll"));
+            File.Copy("GLFW.NET.dll", Path.Combine(directory, "GLFW.NET.dll"));
+            File.Copy("Proof.dll", Path.Combine(directory, "Proof.dll"));
+            File.Copy("Proof.OpenGL.dll", Path.Combine(directory, "Proof.OpenGL.dll"));
         }
 
         private static string GetDesktopPath()
