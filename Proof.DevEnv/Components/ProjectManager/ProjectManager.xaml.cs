@@ -1,5 +1,5 @@
 ﻿using Proof.Core.Logging;
-using Proof.DevEnv.ProjectStructure;
+using Proof.Core.ProjectStructure;
 using Proof.Entities;
 using Proof.Render.Renderer;
 using Proof.Render.Shaders;

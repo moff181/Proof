@@ -1,10 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml;
 using System.Xml.Serialization;
 
-namespace Proof.DevEnv.ProjectStructure
+namespace Proof.Core.ProjectStructure
 {
     public struct ProgramFile
     {
@@ -22,7 +19,7 @@ namespace Proof.DevEnv.ProjectStructure
 
         public static ProgramFile? Load(string filePath)
         {
-            XmlSerializer ser = new XmlSerializer(typeof(WindowSettings));
+            var ser = new XmlSerializer(typeof(ProgramFile));
             using XmlReader reader = XmlReader.Create(filePath);
             return (ProgramFile?)ser.Deserialize(reader);
         }
