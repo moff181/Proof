@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proof.DevEnv.ProjectStructure;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
@@ -6,9 +7,6 @@ using UserControl = System.Windows.Controls.UserControl;
 
 namespace Proof.DevEnv.Components.ProjectManager
 {
-    /// <summary>
-    /// Interaction logic for ProjectManager.xaml
-    /// </summary>
     public partial class ProjectManager : UserControl
     {
         public ProjectManager()
@@ -42,6 +40,9 @@ namespace Proof.DevEnv.Components.ProjectManager
             Directory.CreateDirectory(Path.Combine(directory, "res", "models"));
             Directory.CreateDirectory(Path.Combine(directory, "res", "scenes"));
             Directory.CreateDirectory(Path.Combine(directory, "res", "shaders"));
+
+            var programFile = ProgramFile.CreateDefault();
+            programFile.Save(Path.Combine(directory, $"{ProjectNameText.Text}.proof"));
         }
 
         private string GetDesktopPath()
