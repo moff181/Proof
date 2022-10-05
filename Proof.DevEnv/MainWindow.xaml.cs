@@ -32,7 +32,15 @@ namespace Proof.DevEnv
                 Height = settings.Height;
             }
 
-            Content.Children.Add(new ProjectManager());
+            Content.Children.Add(new ProjectManager(SwitchViewToSceneEditor));
+        }
+
+        private void SwitchViewToSceneEditor(string activeDirectory, string scene)
+        {
+            Content.Children.Clear();
+
+            Directory.SetCurrentDirectory(activeDirectory);
+            Content.Children.Add(new SceneEditor(_windowSettings, scene));
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -12,7 +12,7 @@ namespace Proof.DevEnv.Components
         private Application? _application;
         private ModelLibrary? _modelLibrary;
 
-        public SceneEditor(WindowSettings? nullableSettings)
+        public SceneEditor(WindowSettings? nullableSettings, string scene)
         {
             InitializeComponent();
 
@@ -34,14 +34,11 @@ namespace Proof.DevEnv.Components
                 MainGrid.ColumnDefinitions.Add(c2);
             }
 
-            Task.Run(() => ProcessGameEngine());
+            Task.Run(() => ProcessGameEngine(scene));
         }
 
-        private void ProcessGameEngine()
+        private void ProcessGameEngine(string scene)
         {
-            // This will need updating to not just hardcode
-            Directory.SetCurrentDirectory("../../../../Sandbox");
-
             _application = new DevEnvApplication();
             SizeGameWindowToEditorWindow();
 
@@ -56,7 +53,7 @@ namespace Proof.DevEnv.Components
                 CreateSidePanels();
             });
 
-            _application.Run("res/scenes/TestScene.xml");
+            _application.Run(scene);
         }
 
         private void CreateSidePanels()

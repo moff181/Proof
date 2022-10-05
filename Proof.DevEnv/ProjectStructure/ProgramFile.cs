@@ -29,7 +29,7 @@ namespace Proof.DevEnv.ProjectStructure
 
         public static ProgramFile CreateDefault()
         {
-            const string defaultStartupScene = "Default.scene";
+            const string defaultStartupScene = "res/scenes/Default.scene";
 
             return new ProgramFile
             {
