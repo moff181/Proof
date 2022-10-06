@@ -43,6 +43,12 @@ namespace Proof.DevEnv.Components
             }
 
             string name = NewEntityNameBox.Text;
+
+            if(string.IsNullOrWhiteSpace(name))
+            {
+                return;
+            }
+
             _scene.Entities.Add(new Entity(name));
 
             NewEntityNameBox.Text = string.Empty;
