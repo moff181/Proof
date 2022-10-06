@@ -86,15 +86,19 @@ namespace Proof.DevEnv.Components
                             !_scene.Entities
                                 .SelectMany(x => x.GetComponents())
                                 .Any(x => x is CameraComponent y && y.Active)));
-                    Init(_scene, _entity, _modelLibrary, _refresh);
                     break;
                 case "Renderable Component":
                     break;
                 case "Script Component":
                     break;
                 case "Transform Component":
+                    _entity.AddComponent(new TransformComponent());
                     break;
+                default:
+                    return;
             }
+
+            Init(_scene, _entity, _modelLibrary, _refresh);
         }
     }
 }
