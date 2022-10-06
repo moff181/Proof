@@ -38,7 +38,12 @@ namespace Proof.Entities
 
         public T? GetComponent<T>()
         {
-            return (T)_components[typeof(T)];
+            if(_components.TryGetValue(typeof(T), out IComponent? component))
+            {
+                return (T)component;
+            }
+
+            return default(T);
         }
 
         public IEnumerable<IComponent> GetComponents()
