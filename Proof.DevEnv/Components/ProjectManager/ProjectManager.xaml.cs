@@ -62,6 +62,30 @@ namespace Proof.DevEnv.Components.ProjectManager
             _switchViewToSceneEditor(directory, programFile.StartupScene);
         }
 
+        private void OpenProject_Click(object sender, RoutedEventArgs e)
+        {
+            using var dialog = new OpenFileDialog();
+            dialog.Filter = "proof files (*.proof)|*.proof";
+            dialog.RestoreDirectory = true;
+            dialog.Multiselect = false;
+
+            DialogResult result = dialog.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return;
+            }
+
+            var fileInfo = new FileInfo(dialog.FileName);
+            ProgramFile? programFile = ProgramFile.Load(fileInfo.FullName);
+
+            if(programFile == null || fileInfo.Directory == null)
+            {
+                throw new IOException("Could not load program file.");
+            }
+            
+            _switchViewToSceneEditor(fileInfo.Directory.FullName, programFile.Value.StartupScene);
+        }
+
         private static void CopyShaderFiles(string directory)
         {
             File.Copy(

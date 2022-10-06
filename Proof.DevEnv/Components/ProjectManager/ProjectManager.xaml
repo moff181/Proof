@@ -17,5 +17,6 @@
             <TextBox x:Name="ProjectNameText" />
         </DockPanel>
         <Button Content="Create New Project" x:Name="CreateNewProject" Click="CreateNewProject_Click" />
+        <Button Content="Open Project" x:Name="OpenProject" Click="OpenProject_Click" />        
     </StackPanel>
 </UserControl>
