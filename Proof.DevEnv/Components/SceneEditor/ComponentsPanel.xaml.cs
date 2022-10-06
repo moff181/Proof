@@ -52,5 +52,34 @@ namespace Proof.DevEnv.Components
             _scene.Entities.Remove(_entity);
             _refresh();
         }
+
+        private void AddComponent_Click(object sender, RoutedEventArgs e)
+        {
+            object? selectedItem = NewComponentList.SelectedValue;
+            if(selectedItem == null)
+            {
+                return;
+            }
+
+            ComboBoxItem? comboBoxItem = selectedItem as ComboBoxItem;
+
+            string? componentLabel = comboBoxItem?.Content?.ToString();
+            if(componentLabel == null)
+            {
+                return;
+            }
+
+            switch(componentLabel)
+            {
+                case "Camera Component":
+                    break;
+                case "Renderable Component":
+                    break;
+                case "Script Component":
+                    break;
+                case "Transform Component":
+                    break;
+            }
+        }
     }
 }

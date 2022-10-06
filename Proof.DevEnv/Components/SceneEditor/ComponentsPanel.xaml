@@ -8,6 +8,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel LastChildFill="True">
         <Button x:Name="Remove" Content="Remove" DockPanel.Dock="Bottom" Click="Remove_Click" />
+        <Button x:Name="AddComponent" Content="Add Component" DockPanel.Dock="Bottom" Click="AddComponent_Click" />
+        <ComboBox DockPanel.Dock="Bottom" x:Name="NewComponentList">
+            <ComboBoxItem>Camera Component</ComboBoxItem>
+            <ComboBoxItem>Renderable Component</ComboBoxItem>
+            <ComboBoxItem>Script Component</ComboBoxItem>
+            <ComboBoxItem>Transform Component</ComboBoxItem>
+        </ComboBox>
         <StackPanel x:Name="Body" DockPanel.Dock="Top" />
     </DockPanel>
 </UserControl>
