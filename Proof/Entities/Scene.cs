@@ -12,7 +12,7 @@ namespace Proof.Entities
     public sealed class Scene : IDisposable
     {
         private readonly ALogger _logger;
-        private readonly IShader _shader;
+
         private readonly IRenderer _renderer;
 
         public Scene(ALogger logger, IShader shader, IRenderer renderer)
@@ -21,29 +21,31 @@ namespace Proof.Entities
             Entities = new List<Entity>();
 
             _logger.LogInfo("Scene created.");
-            _shader = shader;
+            Shader = shader;
             _renderer = renderer;
         }
         
         public List<Entity> Entities { get; }
 
+        public IShader Shader { get; }
+
         public void Dispose()
         {
             _logger.LogInfo("Disposing of scene...");
-            _shader.Dispose();
+            Shader.Dispose();
             _logger.LogInfo("Scene disposed of.");
         }
 
         public void Update()
         {
-            _shader.Bind();
+            Shader.Bind();
 
             foreach (Entity e in Entities)
             {
                 e.Update();
             }
 
-            _renderer.Flush(_shader.GetLayout());
+            _renderer.Flush(Shader.GetLayout());
         }
 
         public void Save(string filePath)
@@ -53,7 +55,7 @@ namespace Proof.Entities
 
             var scene = new XElement("Scene");
 
-            scene.Add(new XElement("Shader", _shader.FilePath));
+            scene.Add(new XElement("Shader", Shader.FilePath));
 
             var entities = new XElement("Entities");
 
@@ -98,7 +100,7 @@ namespace Proof.Entities
                 throw new XmlException("Could not find Shader node while loading scene.");
             }
 
-            var shader = Shader.LoadFromFile(logger, shaderNode.Value);
+            var shader = Render.Shaders.Shader.LoadFromFile(logger, shaderNode.Value);
 
             var scene = new Scene(logger, shader, renderer);
 

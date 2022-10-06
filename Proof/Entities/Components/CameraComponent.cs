@@ -9,9 +9,9 @@ namespace Proof.Entities.Components
     {
         public bool Active { get; set; }
 
-        private readonly Shader _shader;
+        private readonly IShader _shader;
         
-        public CameraComponent(Shader shader, bool active)
+        public CameraComponent(IShader shader, bool active)
         {
             _shader = shader;
             Active = active;

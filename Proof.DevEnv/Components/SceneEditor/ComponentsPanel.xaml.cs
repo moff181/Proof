@@ -3,6 +3,7 @@ using Proof.Entities;
 using Proof.Entities.Components;
 using Proof.Render;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,6 +13,7 @@ namespace Proof.DevEnv.Components
     {
         private Scene? _scene;
         private Entity? _entity;
+        private ModelLibrary? _modelLibrary;
         private Action? _refresh;
 
         public ComponentsPanel()
@@ -23,6 +25,7 @@ namespace Proof.DevEnv.Components
         {
             _scene = scene;
             _entity = entity;
+            _modelLibrary = modelLibrary;
             _refresh = refresh;
 
             Body.Children.Clear();
@@ -69,9 +72,21 @@ namespace Proof.DevEnv.Components
                 return;
             }
 
+            if (_entity == null || _scene == null || _modelLibrary == null || _refresh == null)
+            {
+                return;
+            }
+
             switch(componentLabel)
             {
                 case "Camera Component":
+                    _entity.AddComponent(
+                        new CameraComponent(
+                            _scene.Shader,
+                            !_scene.Entities
+                                .SelectMany(x => x.GetComponents())
+                                .Any(x => x is CameraComponent y && y.Active)));
+                    Init(_scene, _entity, _modelLibrary, _refresh);
                     break;
                 case "Renderable Component":
                     break;
