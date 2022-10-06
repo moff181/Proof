@@ -1,6 +1,7 @@
 ﻿using Proof.DevEnv.Components.EntityComponents;
 using Proof.Entities;
 using Proof.Entities.Components;
+using Proof.Entities.Components.Scripts;
 using Proof.Render;
 using System;
 using System.Linq;
@@ -90,6 +91,7 @@ namespace Proof.DevEnv.Components
                 case "Renderable Component":
                     break;
                 case "Script Component":
+                    _entity.AddComponent(new ScriptComponent("Please enter a script name.", new NoScript()));
                     break;
                 case "Transform Component":
                     _entity.AddComponent(new TransformComponent());
