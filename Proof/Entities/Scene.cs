@@ -13,7 +13,7 @@ namespace Proof.Entities
     {
         private readonly ALogger _logger;
 
-        public Scene(ALogger logger, IShader shader, IRenderer renderer)
+        public Scene(ALogger logger, IShader shader, IRenderer renderer, string scenePath)
         {
             _logger = logger;
             Entities = new List<Entity>();
@@ -21,13 +21,16 @@ namespace Proof.Entities
             _logger.LogInfo("Scene created.");
             Shader = shader;
             Renderer = renderer;
+            FilePath = scenePath;
         }
-        
+
         public List<Entity> Entities { get; }
 
         public IShader Shader { get; }
 
         public IRenderer Renderer { get; }
+
+        public string FilePath { get; }
 
         public void Dispose()
         {
@@ -102,7 +105,7 @@ namespace Proof.Entities
 
             var shader = Render.Shaders.Shader.LoadFromFile(logger, shaderNode.Value);
 
-            var scene = new Scene(logger, shader, renderer);
+            var scene = new Scene(logger, shader, renderer, filePath);
 
             XElement? entitiesNode = root.Element("Entities");
             if (entitiesNode == null)

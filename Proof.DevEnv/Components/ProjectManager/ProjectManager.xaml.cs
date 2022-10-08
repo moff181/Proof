@@ -52,8 +52,9 @@ namespace Proof.DevEnv.Components.ProjectManager
             var programFile = ProgramFile.CreateDefault();
             programFile.Save(Path.Combine(directory, $"{ProjectNameText.Text}.proof"));
 
-            var scene = new Scene(new NoLogger(), new NoShader("res/shaders/Static.xml"), new NoRenderer());
-            scene.Save(Path.Combine(directory, programFile.StartupScene));
+            string filePath = Path.Combine(directory, programFile.StartupScene);
+            var scene = new Scene(new NoLogger(), new NoShader("res/shaders/Static.xml"), new NoRenderer(), filePath);
+            scene.Save(filePath);
 
             CopyShaderFiles(directory);
             CopyModelFiles(directory);
