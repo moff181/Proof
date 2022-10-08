@@ -4,6 +4,7 @@ using Proof.Entities.Components;
 using Proof.Entities.Components.Scripts;
 using Proof.Render;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -89,6 +90,12 @@ namespace Proof.DevEnv.Components
                                 .Any(x => x is CameraComponent y && y.Active)));
                     break;
                 case "Renderable Component":
+                    _entity.AddComponent(
+                        new RenderableComponent(
+                            _scene.Renderer,
+                            _scene.Shader.GetLayout(),
+                            _modelLibrary.Get("res/models/Square.model") ?? throw new IOException("Could not find Square.model"),
+                            0));
                     break;
                 case "Script Component":
                     _entity.AddComponent(new ScriptComponent("Please enter a script name.", new NoScript()));
