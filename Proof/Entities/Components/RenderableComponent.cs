@@ -10,14 +10,14 @@ namespace Proof.Entities.Components
 {
     public class RenderableComponent : IComponent
     {
-        private readonly Renderer _renderer;
+        private readonly IRenderer _renderer;
         private readonly VertexLayout _layout;
 
         private float[] _verticesBuffer;
         private Vector2 _previousPosition;
         private Vector2 _previousScale;
 
-        public RenderableComponent(Renderer renderer, VertexLayout layout, Model model, int layer)
+        public RenderableComponent(IRenderer renderer, VertexLayout layout, Model model, int layer)
         {
             _renderer = renderer;
             _layout = layout;
