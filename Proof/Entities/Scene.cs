@@ -13,8 +13,6 @@ namespace Proof.Entities
     {
         private readonly ALogger _logger;
 
-        private readonly IRenderer _renderer;
-
         public Scene(ALogger logger, IShader shader, IRenderer renderer)
         {
             _logger = logger;
@@ -22,12 +20,14 @@ namespace Proof.Entities
 
             _logger.LogInfo("Scene created.");
             Shader = shader;
-            _renderer = renderer;
+            Renderer = renderer;
         }
         
         public List<Entity> Entities { get; }
 
         public IShader Shader { get; }
+
+        public IRenderer Renderer { get; }
 
         public void Dispose()
         {
@@ -45,7 +45,7 @@ namespace Proof.Entities
                 e.Update();
             }
 
-            _renderer.Flush(Shader.GetLayout());
+            Renderer.Flush(Shader.GetLayout());
         }
 
         public void Save(string filePath)
