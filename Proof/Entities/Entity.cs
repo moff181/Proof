@@ -54,13 +54,17 @@ namespace Proof.Entities
         public XElement ToXml()
         {
             var entity = new XElement(
-                "Element",
+                "Entity",
                 new XElement("Name", Name));
+
+            var components = new XElement("Components");
 
             foreach (var component in GetComponents())
             {
-                entity.Add(component.ToXml());
+                components.Add(component.ToXml());
             }
+
+            entity.Add(components);
 
             return entity;
         }
