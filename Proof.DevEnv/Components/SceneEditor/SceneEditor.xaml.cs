@@ -1,9 +1,11 @@
 ﻿using Proof.Core.Logging;
 using Proof.Render;
-using System.IO;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Proof.DevEnv.Components
 {
@@ -15,6 +17,8 @@ namespace Proof.DevEnv.Components
         public SceneEditor(WindowSettings? nullableSettings, string scene)
         {
             InitializeComponent();
+
+            
 
             if (nullableSettings != null)
             {
@@ -35,6 +39,11 @@ namespace Proof.DevEnv.Components
             }
 
             Task.Run(() => ProcessGameEngine(scene));
+        }
+
+        public IEnumerable<CommandBinding> GetCommandBindings()
+        {
+            return Tools.GetCommandBindings();
         }
 
         private void ProcessGameEngine(string scene)

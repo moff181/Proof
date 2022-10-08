@@ -1,5 +1,9 @@
 ﻿using Proof.Entities;
+using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Input;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace Proof.DevEnv.Components
@@ -18,7 +22,16 @@ namespace Proof.DevEnv.Components
             _scene = scene;
         }
 
-        private void Save_Click(object sender, System.Windows.RoutedEventArgs e)
+        public IEnumerable<CommandBinding> GetCommandBindings()
+        {
+            return new List<CommandBinding>
+            {
+                GenerateCommandBinding(Key.S, ModifierKeys.Control, Save_Click),
+                GenerateCommandBinding(Key.S, ModifierKeys.Control | ModifierKeys.Shift, SaveAs_Click),
+            };
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             if(_scene == null)
             {
@@ -28,7 +41,7 @@ namespace Proof.DevEnv.Components
             _scene.Save(_scene.FilePath);
         }
 
-        private void SaveAs_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void SaveAs_Click(object sender, RoutedEventArgs e)
         {
             if(_scene == null)
             {
@@ -46,6 +59,13 @@ namespace Proof.DevEnv.Components
 
             string filePath = dialog.FileName;
             _scene.Save(filePath);
+        }
+
+        private static CommandBinding GenerateCommandBinding(Key key, ModifierKeys modifiers, Action<object, RoutedEventArgs> action)
+        {
+            var cmd = new RoutedCommand();
+            cmd.InputGestures.Add(new KeyGesture(key, modifiers));
+            return new CommandBinding(cmd, (x, y) => action(x, y));
         }
     }
 }

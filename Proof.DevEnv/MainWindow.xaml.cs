@@ -4,6 +4,9 @@ using System.Windows;
 using Proof.DevEnv.Components;
 using Proof.DevEnv.Exporting;
 using Proof.DevEnv.Components.ProjectManager;
+using System.Windows.Input;
+using System;
+using System.Linq;
 
 namespace Proof.DevEnv
 {
@@ -40,7 +43,10 @@ namespace Proof.DevEnv
             Content.Children.Clear();
 
             Directory.SetCurrentDirectory(activeDirectory);
-            Content.Children.Add(new SceneEditor(_windowSettings, scene));
+
+            var sceneEditor = new SceneEditor(_windowSettings, scene);
+            sceneEditor.GetCommandBindings().ToList().ForEach(x => CommandBindings.Add(x));
+            Content.Children.Add(sceneEditor);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
