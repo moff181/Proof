@@ -10,6 +10,7 @@
         <Menu>
             <MenuItem Header="File">
                 <MenuItem x:Name="Save" Header="Save" Click="Save_Click" />
+                <MenuItem x:Name="SaveAs" Header="Save As" Click="SaveAs_Click" />
             </MenuItem>
         </Menu>
     </StackPanel>

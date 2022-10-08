@@ -1,5 +1,6 @@
 ﻿using Proof.Entities;
-using System.Windows.Controls;
+using System.Windows.Forms;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace Proof.DevEnv.Components
 {
@@ -25,6 +26,26 @@ namespace Proof.DevEnv.Components
             }
 
             _scene.Save(_scene.FilePath);
+        }
+
+        private void SaveAs_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if(_scene == null)
+            {
+                return;
+            }
+
+            using var dialog = new SaveFileDialog();
+            dialog.AddExtension = true;
+            dialog.DefaultExt = "scene";
+            dialog.Filter = "Scene file (*.scene)|*.scene";
+            if(dialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string filePath = dialog.FileName;
+            _scene.Save(filePath);
         }
     }
 }
