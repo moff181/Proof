@@ -49,6 +49,7 @@ namespace Proof.DevEnv.Components
                     // Poll for scene to be loaded
                 }
 
+                Tools.Init(_application.Scene);
                 _modelLibrary = new ModelLibrary(new NoLogger());
                 CreateSidePanels();
             });
