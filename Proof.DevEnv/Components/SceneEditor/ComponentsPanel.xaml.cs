@@ -21,6 +21,8 @@ namespace Proof.DevEnv.Components
         public ComponentsPanel()
         {
             InitializeComponent();
+
+            UpdateVisibility(Visibility.Collapsed);
         }
 
         public void Init(Scene scene, Entity entity, ModelLibrary modelLibrary, Action refresh)
@@ -32,7 +34,9 @@ namespace Proof.DevEnv.Components
 
             Body.Children.Clear();
 
-            foreach(IComponent comp in entity.GetComponents())
+            UpdateVisibility(Visibility.Visible);
+
+            foreach (IComponent comp in entity.GetComponents())
             {
                 UIElement uiElement = comp switch
                 {
@@ -55,6 +59,7 @@ namespace Proof.DevEnv.Components
             }
 
             _scene.Entities.Remove(_entity);
+            UpdateVisibility(Visibility.Collapsed);
             _refresh();
         }
 
@@ -108,6 +113,13 @@ namespace Proof.DevEnv.Components
             }
 
             Init(_scene, _entity, _modelLibrary, _refresh);
+        }
+
+        private void UpdateVisibility(Visibility visibility)
+        {
+            Remove.Visibility = visibility;
+            AddComponent.Visibility = visibility;
+            NewComponentList.Visibility = visibility;
         }
     }
 }
