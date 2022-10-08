@@ -56,6 +56,7 @@ namespace Proof.DevEnv.Components.ProjectManager
             scene.Save(Path.Combine(directory, programFile.StartupScene));
 
             CopyShaderFiles(directory);
+            CopyModelFiles(directory);
             CopyDllFiles(directory);
             CopyProofRunnerFiles(directory);
 
@@ -99,6 +100,13 @@ namespace Proof.DevEnv.Components.ProjectManager
             File.Copy(
                 Path.Combine("defaults", "Static.xml"),
                 Path.Combine(directory, "res", "shaders", "Static.xml"));
+        }
+
+        private static void CopyModelFiles(string directory)
+        {
+            File.Copy(
+                Path.Combine("defaults", "Square.model"),
+                Path.Combine(directory, "res", "models", "Square.model"));
         }
 
         private static void CopyDllFiles(string directory)

@@ -38,6 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="defaults\Square.model">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="defaults\Static.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
