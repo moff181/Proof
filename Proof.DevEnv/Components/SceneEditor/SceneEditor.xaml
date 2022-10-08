@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
-        <local:Toolbar DockPanel.Dock="Top" />
+        <local:Toolbar DockPanel.Dock="Top" x:Name="Tools" />
         <Grid x:Name="MainGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />

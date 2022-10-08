@@ -96,7 +96,7 @@ namespace Proof.DevEnv.Components
                 _application?.GlQueue.Enqueue(() =>
                 {
                     window.Resize((int)width, (int)(width * 9.0f / 16.0f));
-                    window.Move((int)leftPanelWidth, 0);
+                    window.Move((int)leftPanelWidth, (int)Tools.ActualHeight);
                 });
             });
         }
