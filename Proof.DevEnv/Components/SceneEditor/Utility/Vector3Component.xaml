@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Proof.DevEnv.Components.Utility.Vector3Component"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Proof.DevEnv.Components.Utility"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <DockPanel LastChildFill="True" Grid.Column="0">
+            <TextBlock Margin="0, 0, 5, 0"><Bold>X: </Bold></TextBlock>
+            <local:DecimalInput x:Name="XValue" HorizontalAlignment="Stretch" OnValueChange="Input_OnValueChange" />
+        </DockPanel>
+        <DockPanel LastChildFill="True" Grid.Column="1">
+            <TextBlock Margin="0, 0, 5, 0"><Bold>Y: </Bold></TextBlock>
+            <local:DecimalInput x:Name="YValue" HorizontalAlignment="Stretch" OnValueChange="Input_OnValueChange" />
+        </DockPanel>
+        <DockPanel LastChildFill="True" Grid.Column="1">
+            <TextBlock Margin="0, 0, 5, 0"><Bold>Z: </Bold></TextBlock>
+            <local:DecimalInput x:Name="ZValue" HorizontalAlignment="Stretch" OnValueChange="Input_OnValueChange" />
+        </DockPanel>
+    </Grid>
+</UserControl>

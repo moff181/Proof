@@ -38,6 +38,9 @@
     <Compile Update="Components\SceneEditor\EntityComponents\RenderableComponentPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Components\SceneEditor\Utility\Vector3Component.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -73,6 +76,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Components\SceneEditor\EntityComponents\RenderableComponentPanel.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Components\SceneEditor\Utility\Vector3Component.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

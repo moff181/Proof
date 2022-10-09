@@ -1,6 +1,5 @@
 ﻿using Proof.Core.Logging;
 using Proof.Render;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,8 +16,6 @@ namespace Proof.DevEnv.Components
         public SceneEditor(WindowSettings? nullableSettings, string scene)
         {
             InitializeComponent();
-
-            
 
             if (nullableSettings != null)
             {
