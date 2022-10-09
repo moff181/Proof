@@ -5,6 +5,9 @@ namespace Proof.Input
 {
     public class InputManager
     {
+        private static readonly Keys[] KeysArr = Enum.GetValues<Keys>().Where(x => x != Keys.Unknown).ToArray();
+        private static readonly MouseButton[] MouseButtonArr = Enum.GetValues<MouseButton>();
+
         private readonly Window _glfwWindow;
 
         private readonly bool[] _keysDown;
@@ -21,18 +24,13 @@ namespace Proof.Input
 
         public void Update()
         {
-            foreach(Keys key in Enum.GetValues<Keys>())
+            foreach(Keys key in KeysArr)
             {
-                if(key == Keys.Unknown)
-                {
-                    continue;
-                }
-
                 var state = Glfw.GetKey(_glfwWindow, key);
                 _keysDown[(int)key] = state == InputState.Press || state == InputState.Repeat;
             }
 
-            foreach (MouseButton mouseButton in Enum.GetValues<MouseButton>())
+            foreach (MouseButton mouseButton in MouseButtonArr)
             {
                 var state = Glfw.GetMouseButton(_glfwWindow, mouseButton);
                 _mouseButtonsDown[(int)mouseButton] = state == InputState.Press || state == InputState.Repeat;
