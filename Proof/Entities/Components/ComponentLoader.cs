@@ -35,10 +35,12 @@ namespace Proof.Entities.Components
                     return CameraComponent.LoadFromNode(_logger, shader, componentNode);
                 case "RenderableComponent":
                     return RenderableComponent.LoadFromNode(_logger, modelLibrary, renderer, layout, componentNode);
-                case "TransformComponent":
-                    return TransformComponent.LoadFromNode(_logger, componentNode);
                 case "ScriptComponent":
                     return ScriptComponent.LoadFromXml(componentNode, scriptLoader, inputManager);
+                case "TransformComponent":
+                    return TransformComponent.LoadFromNode(_logger, componentNode);
+                case "VertexDataComponent":
+                    return VertexDataComponent.LoadFromNode(componentNode);
                 default:
                     throw new NotSupportedException($"Unable to load component node with name: {componentNode}");
             }
