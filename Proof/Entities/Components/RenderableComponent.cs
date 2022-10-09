@@ -68,6 +68,9 @@ namespace Proof.Entities.Components
                     _verticesBuffer[i] = transformComponent.Scale.X * _verticesBuffer[i] + transformComponent.Position.X;
                     _verticesBuffer[i+1] = transformComponent.Scale.Y * _verticesBuffer[i+1] + transformComponent.Position.Y;
                 }
+
+                _previousPosition = transformComponent.Position;
+                _previousScale = transformComponent.Scale;
             }
 
             if(_layout.ColourIndex != null && colourComponent != null && colourUpdate)
@@ -78,6 +81,8 @@ namespace Proof.Entities.Components
                     _verticesBuffer[i + 1] = colourComponent.Colour.Y;
                     _verticesBuffer[i + 2] = colourComponent.Colour.Z;
                 }
+
+                _previousColour = colourComponent.Colour;
             }
 
             _renderer.Submit(_verticesBuffer, Model.Indices, Layer);
