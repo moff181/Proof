@@ -7,19 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-        <DockPanel LastChildFill="True" Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <DockPanel LastChildFill="True" Grid.Row="0">
             <TextBlock Margin="0, 0, 5, 0"><Bold>X: </Bold></TextBlock>
             <local:DecimalInput x:Name="XValue" HorizontalAlignment="Stretch" OnValueChange="Input_OnValueChange" />
         </DockPanel>
-        <DockPanel LastChildFill="True" Grid.Column="1">
+        <DockPanel LastChildFill="True" Grid.Row="1">
             <TextBlock Margin="0, 0, 5, 0"><Bold>Y: </Bold></TextBlock>
             <local:DecimalInput x:Name="YValue" HorizontalAlignment="Stretch" OnValueChange="Input_OnValueChange" />
         </DockPanel>
-        <DockPanel LastChildFill="True" Grid.Column="1">
+        <DockPanel LastChildFill="True" Grid.Row="2">
             <TextBlock Margin="0, 0, 5, 0"><Bold>Z: </Bold></TextBlock>
             <local:DecimalInput x:Name="ZValue" HorizontalAlignment="Stretch" OnValueChange="Input_OnValueChange" />
         </DockPanel>

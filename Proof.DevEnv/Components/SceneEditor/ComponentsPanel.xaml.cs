@@ -41,6 +41,7 @@ namespace Proof.DevEnv.Components
                 UIElement uiElement = comp switch
                 {
                     CameraComponent cameraComp => new CameraComponentPanel(cameraComp),
+                    ColourComponent colourComp => new ColourComponentPanel(colourComp),
                     RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary),
                     ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp),
                     TransformComponent transformComp => new TransformComponentPanel(transformComp),
