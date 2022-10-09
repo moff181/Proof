@@ -6,6 +6,7 @@ using Proof.Render;
 using System;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -94,6 +95,9 @@ namespace Proof.DevEnv.Components
                             !_scene.Entities
                                 .SelectMany(x => x.GetComponents())
                                 .Any(x => x is CameraComponent y && y.Active)));
+                    break;
+                case "Colour Component":
+                    _entity.AddComponent(new ColourComponent(new Vector3(1, 1, 1)));
                     break;
                 case "Renderable Component":
                     _entity.AddComponent(
