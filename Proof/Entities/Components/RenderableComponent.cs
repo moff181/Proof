@@ -53,36 +53,33 @@ namespace Proof.Entities.Components
             TransformComponent? transformComponent = entity.GetComponent<TransformComponent>();
             ColourComponent? colourComponent = entity.GetComponent<ColourComponent>();
 
-            bool transformUpdate = TransformChanged(transformComponent);
-            bool colourUpdate = ColourChanged(colourComponent);
-
-            if (transformUpdate || colourUpdate)
+            if (TransformChanged(transformComponent) || ColourChanged(colourComponent))
             {
                 Array.Copy(Model.Vertices, _verticesBuffer, _verticesBuffer.Length);
-            }
 
-            if (transformComponent != null && transformUpdate)
-            {
-                for (int i = _layout.PositionIndex; i < _verticesBuffer.Length; i += _layout.SumOfElements())
+                if (transformComponent != null)
                 {
-                    _verticesBuffer[i] = transformComponent.Scale.X * _verticesBuffer[i] + transformComponent.Position.X;
-                    _verticesBuffer[i+1] = transformComponent.Scale.Y * _verticesBuffer[i+1] + transformComponent.Position.Y;
+                    for (int i = _layout.PositionIndex; i < _verticesBuffer.Length; i += _layout.SumOfElements())
+                    {
+                        _verticesBuffer[i] = transformComponent.Scale.X * _verticesBuffer[i] + transformComponent.Position.X;
+                        _verticesBuffer[i + 1] = transformComponent.Scale.Y * _verticesBuffer[i + 1] + transformComponent.Position.Y;
+                    }
+
+                    _previousPosition = transformComponent.Position;
+                    _previousScale = transformComponent.Scale;
                 }
 
-                _previousPosition = transformComponent.Position;
-                _previousScale = transformComponent.Scale;
-            }
-
-            if(_layout.ColourIndex != null && colourComponent != null && colourUpdate)
-            {
-                for (int i = _layout.ColourIndex.Value; i < _verticesBuffer.Length; i += _layout.SumOfElements())
+                if (_layout.ColourIndex != null && colourComponent != null)
                 {
-                    _verticesBuffer[i] = colourComponent.Colour.X;
-                    _verticesBuffer[i + 1] = colourComponent.Colour.Y;
-                    _verticesBuffer[i + 2] = colourComponent.Colour.Z;
-                }
+                    for (int i = _layout.ColourIndex.Value; i < _verticesBuffer.Length; i += _layout.SumOfElements())
+                    {
+                        _verticesBuffer[i] = colourComponent.Colour.X;
+                        _verticesBuffer[i + 1] = colourComponent.Colour.Y;
+                        _verticesBuffer[i + 2] = colourComponent.Colour.Z;
+                    }
 
-                _previousColour = colourComponent.Colour;
+                    _previousColour = colourComponent.Colour;
+                }
             }
 
             _renderer.Submit(_verticesBuffer, Model.Indices, Layer);
