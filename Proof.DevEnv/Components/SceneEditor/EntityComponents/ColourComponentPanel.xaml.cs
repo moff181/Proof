@@ -17,7 +17,7 @@ namespace Proof.DevEnv.Components.EntityComponents
             ColourInput.Init(_colourComponent.Colour);
         }
 
-        private void ColourInput_Change(Vector3 newValue)
+        public void ColourInput_Change(Vector3 newValue)
         {
             _colourComponent.Colour = newValue;
         }

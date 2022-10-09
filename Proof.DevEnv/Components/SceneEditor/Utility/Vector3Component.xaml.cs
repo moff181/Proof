@@ -20,7 +20,7 @@ namespace Proof.DevEnv.Components.Utility
             ZValue.Value = val.Y;
         }
 
-        private void Input_OnValueChange()
+        public void Input_OnValueChange()
         {
             if(OnChange == null)
             {
