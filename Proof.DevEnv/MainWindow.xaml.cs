@@ -68,17 +68,6 @@ namespace Proof.DevEnv
             };
 
             settings.Save(Path.Combine(_currentDirectory, "window.settings"));
-
-            var exporter = new Exporter(
-                new Compiler()
-                    .WithAdditionalReferences(
-                        "Proof.dll",
-                        "Proof.OpenGL.dll",
-                        "GLFW.NET.dll",
-                        "System.Numerics.dll",
-                        "System.Numerics.Vectors.dll"),
-                new EntryPointGenerator("Proof Game"));
-            exporter.BuildGameDll(Directory.GetCurrentDirectory(), "Game.dll");
         }
     }
 }

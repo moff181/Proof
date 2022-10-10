@@ -68,6 +68,20 @@ namespace Proof.DevEnv.Components
             Exporter.OutputRequiredFiles(Directory.GetCurrentDirectory());
         }
 
+        private void Build_Click(object sender, RoutedEventArgs e)
+        {
+            var exporter = new Exporter(
+                new Compiler()
+                    .WithAdditionalReferences(
+                        "Proof.dll",
+                        "Proof.OpenGL.dll",
+                        "GLFW.NET.dll",
+                        "System.Numerics.dll",
+                        "System.Numerics.Vectors.dll"),
+                new EntryPointGenerator("Proof Game"));
+            exporter.BuildGameDll(Directory.GetCurrentDirectory(), "Game.dll");
+        }
+
         private static CommandBinding GenerateCommandBinding(Key key, ModifierKeys modifiers, Action<object, RoutedEventArgs> action)
         {
             var cmd = new RoutedCommand();

@@ -13,6 +13,7 @@
                 <MenuItem x:Name="SaveAs" Header="Save As" Click="SaveAs_Click" />
             </MenuItem>
             <MenuItem Header="Build">
+                <MenuItem x:Name="Build" Header="Build" Click="Build_Click" />
                 <MenuItem x:Name="BuildDependencies" Header="Build Dependencies" Click="BuildDependencies_Click" />
             </MenuItem>
         </Menu>

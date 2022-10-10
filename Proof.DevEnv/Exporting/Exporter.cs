@@ -16,6 +16,8 @@ namespace Proof.DevEnv.Exporting
 
         public void BuildGameDll(string directory, string outputDllName)
         {
+            OutputRequiredFiles(directory);
+
             _entryPointGenerator.GenerateEntryPointFile(Path.Combine(directory, "GameApplication.cs"));
             string[] files = Directory.GetFiles(directory, "*.cs", SearchOption.AllDirectories);
 
