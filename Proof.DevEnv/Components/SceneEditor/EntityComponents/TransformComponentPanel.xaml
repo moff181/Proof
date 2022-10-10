@@ -12,6 +12,7 @@
             <utility:Vector2Component OnChange="PositionChange" x:Name="Position" />
             <TextBlock><Bold>Scale</Bold></TextBlock>
             <utility:Vector2Component OnChange="ScaleChange" x:Name="Scale" />
+            <Button x:Name="Remove" Content="Remove" Click="Remove_Click" />
         </StackPanel>
     </Expander>
 </UserControl>

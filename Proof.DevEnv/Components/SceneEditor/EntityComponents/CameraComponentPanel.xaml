@@ -9,6 +9,7 @@
     <Expander Header="Camera Component" IsExpanded="True">
         <StackPanel x:Name="Body">
             <Button x:Name="Active" Content="Active" Click="Active_Click" />
+            <Button x:Name="Remove" Content="Remove" Click="Remove_Click" />
         </StackPanel>
     </Expander>
 </UserControl>

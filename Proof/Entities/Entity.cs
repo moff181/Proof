@@ -36,6 +36,11 @@ namespace Proof.Entities
             _components.Add(component.GetType(), component);
         }
 
+        public void RemoveComponent(IComponent component)
+        {
+            _components.Remove(component.GetType());
+        }
+
         public T? GetComponent<T>()
         {
             if(_components.TryGetValue(typeof(T), out IComponent? component))

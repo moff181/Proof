@@ -41,16 +41,27 @@ namespace Proof.DevEnv.Components
             {
                 UIElement uiElement = comp switch
                 {
-                    CameraComponent cameraComp => new CameraComponentPanel(cameraComp),
-                    ColourComponent colourComp => new ColourComponentPanel(colourComp),
-                    RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary),
-                    ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp),
-                    TransformComponent transformComp => new TransformComponentPanel(transformComp),
+                    CameraComponent cameraComp => new CameraComponentPanel(cameraComp, RemoveComponent),
+                    ColourComponent colourComp => new ColourComponentPanel(colourComp, RemoveComponent),
+                    RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary, RemoveComponent),
+                    ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp, RemoveComponent),
+                    TransformComponent transformComp => new TransformComponentPanel(transformComp, RemoveComponent),
                     _ => new TextBlock { Text = comp.GetType().Name }
                 };
 
                 Body.Children.Add(uiElement);
             }
+        }
+
+        private void RemoveComponent(IComponent component)
+        {
+            if(_entity == null || _scene == null || _modelLibrary == null || _refresh == null)
+            {
+                return;
+            }
+
+            _entity.RemoveComponent(component);
+            Init(_scene, _entity, _modelLibrary, _refresh);
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)

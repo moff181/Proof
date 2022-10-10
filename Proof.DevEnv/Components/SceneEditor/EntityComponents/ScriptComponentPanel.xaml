@@ -7,9 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Expander Header="Script Component" IsExpanded="True">
+        <StackPanel>
         <DockPanel LastChildFill="True" Grid.Column="0">
             <TextBlock Margin="0, 0, 5, 0"><Bold>Script: </Bold></TextBlock>
             <TextBox x:Name="ScriptName" HorizontalAlignment="Stretch" LostFocus="ScriptName_LostFocus" />
-        </DockPanel>
+            </DockPanel>
+            <Button x:Name="Remove" Content="Remove" Click="Remove_Click" />
+        </StackPanel>
     </Expander>
 </UserControl>

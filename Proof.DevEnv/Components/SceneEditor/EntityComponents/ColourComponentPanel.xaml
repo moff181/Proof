@@ -9,6 +9,7 @@
     <Expander Header="Colour Component" IsExpanded="True">
         <StackPanel x:Name="Body">
             <utility:Vector3Component x:Name="ColourInput" OnChange="ColourInput_Change" />
+            <Button x:Name="Remove" Content="Remove" Click="Remove_Click" />
         </StackPanel>
     </Expander>
 </UserControl>
