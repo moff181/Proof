@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 
 namespace Proof.DevEnv.Exporting
 {
@@ -23,23 +24,29 @@ namespace Proof.DevEnv.Exporting
 
         public static void OutputRequiredFiles(string directory)
         {
-            CopyDllFiles(directory);
-            CopyProofRunnerFiles(directory);
+            string? sourceDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+            if(sourceDirectory == null)
+            {
+                return;
+            }
+
+            CopyDllFiles(directory, sourceDirectory);
+            CopyProofRunnerFiles(directory, sourceDirectory);
         }
 
-        private static void CopyDllFiles(string directory)
+        private static void CopyDllFiles(string directory, string sourceDirectory)
         {
-            File.Copy("glfw.dll", Path.Combine(directory, "glfw.dll"));
-            File.Copy("GLFW.NET.dll", Path.Combine(directory, "GLFW.NET.dll"));
-            File.Copy("Proof.dll", Path.Combine(directory, "Proof.dll"));
-            File.Copy("Proof.OpenGL.dll", Path.Combine(directory, "Proof.OpenGL.dll"));
+            File.Copy(Path.Combine(sourceDirectory, "glfw.dll"), Path.Combine(directory, "glfw.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "GLFW.NET.dll"), Path.Combine(directory, "GLFW.NET.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "Proof.dll"), Path.Combine(directory, "Proof.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "Proof.OpenGL.dll"), Path.Combine(directory, "Proof.OpenGL.dll"), true);
         }
 
-        private static void CopyProofRunnerFiles(string directory)
+        private static void CopyProofRunnerFiles(string directory, string sourceDirectory)
         {
-            File.Copy("Proof.Runner.dll", Path.Combine(directory, "Proof.Runner.dll"));
-            File.Copy("Proof.Runner.exe", Path.Combine(directory, "Proof.Runner.exe"));
-            File.Copy("Proof.Runner.runtimeconfig.json", Path.Combine(directory, "Proof.Runner.runtimeconfig.json"));
+            File.Copy(Path.Combine(sourceDirectory, "Proof.Runner.dll"), Path.Combine(directory, "Proof.Runner.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "Proof.Runner.exe"), Path.Combine(directory, "Proof.Runner.exe"), true);
+            File.Copy(Path.Combine(sourceDirectory, "Proof.Runner.runtimeconfig.json"), Path.Combine(directory, "Proof.Runner.runtimeconfig.json"), true);
         }
     }
 }

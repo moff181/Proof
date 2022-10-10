@@ -1,6 +1,8 @@
-﻿using Proof.Entities;
+﻿using Proof.DevEnv.Exporting;
+using Proof.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -59,6 +61,11 @@ namespace Proof.DevEnv.Components
 
             string filePath = dialog.FileName;
             _scene.Save(filePath);
+        }
+
+        private void BuildDependencies_Click(object sender, RoutedEventArgs e)
+        {
+            Exporter.OutputRequiredFiles(Directory.GetCurrentDirectory());
         }
 
         private static CommandBinding GenerateCommandBinding(Key key, ModifierKeys modifiers, Action<object, RoutedEventArgs> action)
