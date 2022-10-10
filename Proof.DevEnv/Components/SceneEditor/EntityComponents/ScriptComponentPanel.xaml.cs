@@ -8,10 +8,10 @@ namespace Proof.DevEnv.Components.EntityComponents
     public partial class ScriptComponentPanel : UserControl
     {
         private readonly ScriptComponent _scriptComponent;
-        private readonly Assembly _scriptAssembly;
+        private readonly AssemblyWrapper _scriptAssembly;
         private readonly Action<IComponent> _onRemove;
 
-        public ScriptComponentPanel(ScriptComponent scriptComponent, Assembly scriptAssembly, Action<IComponent> onRemove)
+        public ScriptComponentPanel(ScriptComponent scriptComponent, AssemblyWrapper scriptAssembly, Action<IComponent> onRemove)
         {
             InitializeComponent();
 
@@ -36,7 +36,7 @@ namespace Proof.DevEnv.Components.EntityComponents
 
         private void LoadProperties()
         {
-            Type? type = _scriptAssembly.GetType(_scriptComponent.ScriptName);
+            Type? type = _scriptAssembly.Assembly.GetType(_scriptComponent.ScriptName);
             if(type == null)
             {
                 return;

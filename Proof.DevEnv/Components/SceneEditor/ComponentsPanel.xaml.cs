@@ -18,7 +18,7 @@ namespace Proof.DevEnv.Components
         private Scene? _scene;
         private Entity? _entity;
         private ModelLibrary? _modelLibrary;
-        private Assembly? _scriptAssembly;
+        private AssemblyWrapper? _scriptAssembly;
         private Action? _refresh;
 
         public ComponentsPanel()
@@ -28,7 +28,7 @@ namespace Proof.DevEnv.Components
             UpdateVisibility(Visibility.Collapsed);
         }
 
-        public void Init(Scene scene, Entity entity, ModelLibrary modelLibrary, Assembly scriptAssembly, Action refresh)
+        public void Init(Scene scene, Entity entity, ModelLibrary modelLibrary, AssemblyWrapper scriptAssembly, Action refresh)
         {
             _scene = scene;
             _entity = entity;

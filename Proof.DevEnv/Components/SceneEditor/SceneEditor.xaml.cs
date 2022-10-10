@@ -48,9 +48,9 @@ namespace Proof.DevEnv.Components
         private void ProcessGameEngine(string scene)
         {
             string gameDllPath = Path.Combine(Directory.GetCurrentDirectory(), "Game.dll");
-            Assembly scriptAssembly = Assembly.Load(File.ReadAllBytes(gameDllPath));
+            var assemblyWrapper = new AssemblyWrapper(gameDllPath);
 
-            _application = new DevEnvApplication(scriptAssembly);
+            _application = new DevEnvApplication(assemblyWrapper.Assembly);
             SizeGameWindowToEditorWindow();
 
             Task.Run(() =>
@@ -60,15 +60,15 @@ namespace Proof.DevEnv.Components
                     // Poll for scene to be loaded
                 }
 
-                Tools.Init(_application.Scene);
+                Tools.Init(_application.Scene, assemblyWrapper);
                 _modelLibrary = new ModelLibrary(new NoLogger());
-                CreateSidePanels(scriptAssembly);
+                CreateSidePanels(assemblyWrapper);
             });
 
             _application.Run(scene);
         }
 
-        private void CreateSidePanels(Assembly scriptAssembly)
+        private void CreateSidePanels(AssemblyWrapper scriptAssembly)
         {
             if(_application?.Scene == null || _modelLibrary == null)
             {

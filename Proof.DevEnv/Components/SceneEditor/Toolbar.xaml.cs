@@ -14,15 +14,17 @@ namespace Proof.DevEnv.Components
     public partial class Toolbar : UserControl
     {
         private Scene? _scene;
+        private AssemblyWrapper? _scriptAssembly;
 
         public Toolbar()
         {
             InitializeComponent();
         }
 
-        public void Init(Scene? scene)
+        public void Init(Scene? scene, AssemblyWrapper scriptAssembly)
         {
             _scene = scene;
+            _scriptAssembly = scriptAssembly;
         }
 
         public IEnumerable<CommandBinding> GetCommandBindings()
@@ -81,7 +83,7 @@ namespace Proof.DevEnv.Components
             Exporter.OutputRequiredFiles(Directory.GetCurrentDirectory());
         }
 
-        private static void BuildProject()
+        private void BuildProject()
         {
             var exporter = new Exporter(
                 new Compiler()
@@ -94,7 +96,12 @@ namespace Proof.DevEnv.Components
                 new EntryPointGenerator("Proof Game"));
             exporter.BuildGameDll(Directory.GetCurrentDirectory(), "Game.dll");
 
-            // TODO: Updated the loaded script assembly to pull through changes
+            if(_scriptAssembly == null)
+            {
+                return;
+            }
+
+            _scriptAssembly.Reload();
         }
 
         private static CommandBinding GenerateCommandBinding(Key key, ModifierKeys modifiers, Action<object, RoutedEventArgs> action)
