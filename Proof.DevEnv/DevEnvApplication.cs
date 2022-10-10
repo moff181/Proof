@@ -2,20 +2,19 @@
 using Proof.Entities.Components.Scripts;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Reflection;
 
 namespace Proof.DevEnv
 {
     public class DevEnvApplication : Application
     {
-        public DevEnvApplication()
+        public DevEnvApplication(Assembly scriptAssembly)
             : base(
                 new NoLogger(),
                 "DevEnv",
                 false,
                 new ScriptLoader(
-                    Assembly.LoadFile(Path.Combine(Directory.GetCurrentDirectory(), "Game.dll")),
+                    scriptAssembly,
                     new NoLogger()),
                 true,
                 GetParentWindow())

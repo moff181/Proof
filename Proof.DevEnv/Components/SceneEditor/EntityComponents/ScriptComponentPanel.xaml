@@ -12,6 +12,7 @@
                 <TextBlock Margin="0, 0, 5, 0"><Bold>Script: </Bold></TextBlock>
                 <TextBox x:Name="ScriptName" HorizontalAlignment="Stretch" LostFocus="ScriptName_LostFocus" />
             </DockPanel>
+            <StackPanel x:Name="Properties" />
             <Button x:Name="Remove" Content="Remove" Click="Remove_Click" />
         </StackPanel>
     </Expander>

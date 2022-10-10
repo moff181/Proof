@@ -1,6 +1,8 @@
 ﻿using Proof.Core.Logging;
 using Proof.Render;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,7 +47,10 @@ namespace Proof.DevEnv.Components
 
         private void ProcessGameEngine(string scene)
         {
-            _application = new DevEnvApplication();
+            string gameDllPath = Path.Combine(Directory.GetCurrentDirectory(), "Game.dll");
+            Assembly scriptAssembly = Assembly.Load(File.ReadAllBytes(gameDllPath));
+
+            _application = new DevEnvApplication(scriptAssembly);
             SizeGameWindowToEditorWindow();
 
             Task.Run(() =>
@@ -57,13 +62,13 @@ namespace Proof.DevEnv.Components
 
                 Tools.Init(_application.Scene);
                 _modelLibrary = new ModelLibrary(new NoLogger());
-                CreateSidePanels();
+                CreateSidePanels(scriptAssembly);
             });
 
             _application.Run(scene);
         }
 
-        private void CreateSidePanels()
+        private void CreateSidePanels(Assembly scriptAssembly)
         {
             if(_application?.Scene == null || _modelLibrary == null)
             {
@@ -78,7 +83,8 @@ namespace Proof.DevEnv.Components
                             _application.Scene,
                             e,
                             _modelLibrary,
-                            CreateSidePanels)));
+                            scriptAssembly,
+                            () => CreateSidePanels(scriptAssembly))));
         }
 
         private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)

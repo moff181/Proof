@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,6 +18,7 @@ namespace Proof.DevEnv.Components
         private Scene? _scene;
         private Entity? _entity;
         private ModelLibrary? _modelLibrary;
+        private Assembly? _scriptAssembly;
         private Action? _refresh;
 
         public ComponentsPanel()
@@ -26,11 +28,12 @@ namespace Proof.DevEnv.Components
             UpdateVisibility(Visibility.Collapsed);
         }
 
-        public void Init(Scene scene, Entity entity, ModelLibrary modelLibrary, Action refresh)
+        public void Init(Scene scene, Entity entity, ModelLibrary modelLibrary, Assembly scriptAssembly, Action refresh)
         {
             _scene = scene;
             _entity = entity;
             _modelLibrary = modelLibrary;
+            _scriptAssembly = scriptAssembly;
             _refresh = refresh;
 
             Body.Children.Clear();
@@ -44,7 +47,7 @@ namespace Proof.DevEnv.Components
                     CameraComponent cameraComp => new CameraComponentPanel(cameraComp, RemoveComponent),
                     ColourComponent colourComp => new ColourComponentPanel(colourComp, RemoveComponent),
                     RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary, RemoveComponent),
-                    ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp, RemoveComponent),
+                    ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp, scriptAssembly, RemoveComponent),
                     TransformComponent transformComp => new TransformComponentPanel(transformComp, RemoveComponent),
                     _ => new TextBlock { Text = comp.GetType().Name }
                 };
@@ -55,13 +58,13 @@ namespace Proof.DevEnv.Components
 
         private void RemoveComponent(IComponent component)
         {
-            if(_entity == null || _scene == null || _modelLibrary == null || _refresh == null)
+            if(_entity == null || _scene == null || _modelLibrary == null || _refresh == null || _scriptAssembly == null)
             {
                 return;
             }
 
             _entity.RemoveComponent(component);
-            Init(_scene, _entity, _modelLibrary, _refresh);
+            Init(_scene, _entity, _modelLibrary, _scriptAssembly, _refresh);
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -92,7 +95,7 @@ namespace Proof.DevEnv.Components
                 return;
             }
 
-            if (_entity == null || _scene == null || _modelLibrary == null || _refresh == null)
+            if (_entity == null || _scene == null || _modelLibrary == null || _refresh == null || _scriptAssembly == null)
             {
                 return;
             }
@@ -128,7 +131,7 @@ namespace Proof.DevEnv.Components
                     return;
             }
 
-            Init(_scene, _entity, _modelLibrary, _refresh);
+            Init(_scene, _entity, _modelLibrary, _scriptAssembly, _refresh);
         }
 
         private void UpdateVisibility(Visibility visibility)

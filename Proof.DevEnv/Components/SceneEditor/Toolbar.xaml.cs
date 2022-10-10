@@ -93,6 +93,8 @@ namespace Proof.DevEnv.Components
                         "System.Numerics.Vectors.dll"),
                 new EntryPointGenerator("Proof Game"));
             exporter.BuildGameDll(Directory.GetCurrentDirectory(), "Game.dll");
+
+            // TODO: Updated the loaded script assembly to pull through changes
         }
 
         private static CommandBinding GenerateCommandBinding(Key key, ModifierKeys modifiers, Action<object, RoutedEventArgs> action)
