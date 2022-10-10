@@ -8,7 +8,7 @@ namespace Proof.DevEnv
     public class DevEnvApplication : Application
     {
         public DevEnvApplication()
-            : base(new NoLogger(), "DevEnv", new NoScriptLoader(), GetParentWindow())
+            : base(new NoLogger(), "DevEnv", new NoScriptLoader(), true, GetParentWindow())
         { }
 
         private static IntPtr GetParentWindow()

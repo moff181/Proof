@@ -55,13 +55,3 @@ namespace Proof.Runner
         }
     }
 }
-
-namespace Proof.Game
-{
-    internal class GameApplication : Application
-    {
-        public GameApplication(ALogger logger)
-            : base(logger, "Proof Game", new ScriptLoader(Assembly.GetExecutingAssembly(), logger))
-        { }
-    }
-}

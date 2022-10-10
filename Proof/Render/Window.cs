@@ -12,7 +12,7 @@ namespace Proof.Render
         private readonly ALogger _logger;
         private readonly GLFW.Window _glfwWindow;
 
-        public Window(ALogger logger, int width, int height, string title, bool fullScreen, IntPtr? parent = null)
+        public Window(ALogger logger, int width, int height, string title, bool fullScreen, bool vsync, IntPtr? parent = null)
         {
             _logger = logger;
 
@@ -42,6 +42,12 @@ namespace Proof.Render
                 Glfw.MakeContextCurrent(_glfwWindow);
                 GL.Import(Glfw.GetProcAddress);
                 _logger.LogInfo("GL binding completed.");
+
+                if (vsync)
+                {
+                    _logger.LogInfo("Enabling vsync.");
+                    Glfw.SwapInterval(1);
+                }
             }
             catch(Exception e)
             {

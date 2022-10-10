@@ -17,12 +17,13 @@ namespace Proof
             ALogger logger,
             string title,
             IScriptLoader scriptLoader,
+            bool vsync,
             IntPtr? parentWindow = null)
         {
             Logger = logger;
             _scriptLoader = scriptLoader;
 
-            Window = new Window(logger, 1280, 720, title, false, parentWindow ?? IntPtr.Zero);
+            Window = new Window(logger, 1280, 720, title, false, vsync, parentWindow ?? IntPtr.Zero);
             GlQueue = new Queue<Action>();
             Scene = null;
         }
