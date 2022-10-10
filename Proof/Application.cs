@@ -10,16 +10,21 @@ namespace Proof
 {
     public abstract class Application
     {
+        public static bool ScriptsEnabled { get; internal set; }
+
         protected readonly ALogger Logger;
         private readonly IScriptLoader _scriptLoader;
 
         protected Application(
             ALogger logger,
             string title,
+            bool scriptsEnabled,
             IScriptLoader scriptLoader,
             bool vsync,
             IntPtr? parentWindow = null)
         {
+            ScriptsEnabled = scriptsEnabled;
+
             Logger = logger;
             _scriptLoader = scriptLoader;
 

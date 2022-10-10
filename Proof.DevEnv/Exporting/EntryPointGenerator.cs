@@ -13,7 +13,7 @@ namespace Proof.Game
     internal class GameApplication : Application
     {
         public GameApplication(ALogger logger)
-            : base(logger, ""{TITLE}"", new ScriptLoader(Assembly.GetExecutingAssembly(), logger), false)
+            : base(logger, ""{TITLE}"", true, new ScriptLoader(Assembly.GetExecutingAssembly(), logger), false)
         { }
     }
 }";

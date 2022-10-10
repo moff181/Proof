@@ -19,6 +19,11 @@ namespace Proof.Entities.Components
 
         public void Update(Entity entity)
         {
+            if(!Application.ScriptsEnabled)
+            {
+                return;
+            }
+
             _script.Update(entity);
         }
 
