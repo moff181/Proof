@@ -20,5 +20,26 @@ namespace Proof.DevEnv.Exporting
 
             _compiler.Compile(outputDllName, files);
         }
+
+        public static void OutputRequiredFiles(string directory)
+        {
+            CopyDllFiles(directory);
+            CopyProofRunnerFiles(directory);
+        }
+
+        private static void CopyDllFiles(string directory)
+        {
+            File.Copy("glfw.dll", Path.Combine(directory, "glfw.dll"));
+            File.Copy("GLFW.NET.dll", Path.Combine(directory, "GLFW.NET.dll"));
+            File.Copy("Proof.dll", Path.Combine(directory, "Proof.dll"));
+            File.Copy("Proof.OpenGL.dll", Path.Combine(directory, "Proof.OpenGL.dll"));
+        }
+
+        private static void CopyProofRunnerFiles(string directory)
+        {
+            File.Copy("Proof.Runner.dll", Path.Combine(directory, "Proof.Runner.dll"));
+            File.Copy("Proof.Runner.exe", Path.Combine(directory, "Proof.Runner.exe"));
+            File.Copy("Proof.Runner.runtimeconfig.json", Path.Combine(directory, "Proof.Runner.runtimeconfig.json"));
+        }
     }
 }

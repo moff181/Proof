@@ -1,5 +1,6 @@
 ﻿using Proof.Core.Logging;
 using Proof.Core.ProjectStructure;
+using Proof.DevEnv.Exporting;
 using Proof.Entities;
 using Proof.Render.Renderer;
 using Proof.Render.Shaders;
@@ -58,8 +59,7 @@ namespace Proof.DevEnv.Components.ProjectManager
 
             CopyShaderFiles(directory);
             CopyModelFiles(directory);
-            CopyDllFiles(directory);
-            CopyProofRunnerFiles(directory);
+            Exporter.OutputRequiredFiles(directory);
 
             _switchViewToSceneEditor(directory, programFile.StartupScene);
         }
@@ -108,21 +108,6 @@ namespace Proof.DevEnv.Components.ProjectManager
             File.Copy(
                 Path.Combine("defaults", "Square.model"),
                 Path.Combine(directory, "res", "models", "Square.model"));
-        }
-
-        private static void CopyDllFiles(string directory)
-        {
-            File.Copy("glfw.dll", Path.Combine(directory, "glfw.dll"));
-            File.Copy("GLFW.NET.dll", Path.Combine(directory, "GLFW.NET.dll"));
-            File.Copy("Proof.dll", Path.Combine(directory, "Proof.dll"));
-            File.Copy("Proof.OpenGL.dll", Path.Combine(directory, "Proof.OpenGL.dll"));
-        }
-
-        private static void CopyProofRunnerFiles(string directory)
-        {
-            File.Copy("Proof.Runner.dll", Path.Combine(directory, "Proof.Runner.dll"));
-            File.Copy("Proof.Runner.exe", Path.Combine(directory, "Proof.Runner.exe"));
-            File.Copy("Proof.Runner.runtimeconfig.json", Path.Combine(directory, "Proof.Runner.runtimeconfig.json"));
         }
 
         private static string GetDesktopPath()
