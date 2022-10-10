@@ -81,7 +81,7 @@ namespace Proof.DevEnv.Components
             Exporter.OutputRequiredFiles(Directory.GetCurrentDirectory());
         }
 
-        private void BuildProject()
+        private static void BuildProject()
         {
             var exporter = new Exporter(
                 new Compiler()
