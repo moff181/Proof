@@ -2,6 +2,7 @@
 using Proof.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
@@ -63,12 +64,24 @@ namespace Proof.DevEnv.Components
             _scene.Save(filePath);
         }
 
+        private void Run_Click(object sender, RoutedEventArgs e)
+        {
+            BuildProject();
+
+            Process.Start("Proof.Runner.exe");
+        }
+
+        private void Build_Click(object sender, RoutedEventArgs e)
+        {
+            BuildProject();
+        }
+
         private void BuildDependencies_Click(object sender, RoutedEventArgs e)
         {
             Exporter.OutputRequiredFiles(Directory.GetCurrentDirectory());
         }
 
-        private void Build_Click(object sender, RoutedEventArgs e)
+        private void BuildProject()
         {
             var exporter = new Exporter(
                 new Compiler()
