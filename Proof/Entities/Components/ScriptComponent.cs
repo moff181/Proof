@@ -59,6 +59,82 @@ namespace Proof.Entities.Components
             return result;
         }
 
+        public object? GetProperty(string name)
+        {
+            if(_script == null)
+            {
+                return null;
+            }
+
+            Type type = _script.GetType();
+            var property = type.GetProperty(name);
+            if(property == null)
+            {
+                return null;
+            }
+
+            return property.GetValue(_script);
+        }
+
+        public bool SetProperty(string name, string value)
+        {
+            if(_script == null)
+            {
+                return false;
+            }
+
+            Type type = _script.GetType();
+            var property = type.GetProperty(name);
+            if(property == null)
+            {
+                return false;
+            }
+
+            var propertyType = property.PropertyType;
+            if(propertyType == typeof(int))
+            {
+                property.SetValue(_script, int.Parse(value));
+            }
+            else if (propertyType == typeof(long))
+            {
+                property.SetValue(_script, long.Parse(value));
+            }
+            else if (propertyType == typeof(float))
+            {
+                property.SetValue(_script, float.Parse(value));
+            }
+            else if (propertyType == typeof(double))
+            {
+                property.SetValue(_script, double.Parse(value));
+            }
+            else if (propertyType == typeof(bool))
+            {
+                property.SetValue(_script, bool.Parse(value));
+            }
+            else if (propertyType == typeof(char))
+            {
+                property.SetValue(_script, char.Parse(value));
+            }
+            else if (propertyType == typeof(byte))
+            {
+                property.SetValue(_script, byte.Parse(value));
+            }
+            else if (propertyType == typeof(short))
+            {
+                property.SetValue(_script, short.Parse(value));
+            }
+            else if (propertyType == typeof(string))
+            {
+                property.SetValue(_script, value);
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public XElement ToXml()
         {
             var propertiesNode = new XElement("Properties");

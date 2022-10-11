@@ -33,6 +33,11 @@ namespace Proof.DevEnv.Components.EntityComponents
 
         private void ScriptName_LostFocus(object sender, System.Windows.RoutedEventArgs e)
         {
+            if (_scriptComponent.ScriptName == ScriptName.Text)
+            {
+                return;
+            }
+
             _scriptComponent.ScriptName = ScriptName.Text;
             LoadScript();
         }
@@ -77,6 +82,15 @@ namespace Proof.DevEnv.Components.EntityComponents
                 var value = new TextBox
                 {
                     Text = property.Value?.ToString() ?? string.Empty,
+                };
+                value.LostFocus += (sender, e) =>
+                {
+                    bool worked = _scriptComponent.SetProperty(property.Key, value.Text);
+
+                    if (!worked)
+                    {
+                        value.Text = _scriptComponent.GetProperty(property.Key)?.ToString() ?? string.Empty;
+                    }
                 };
                 dockPanel.Children.Add(value);
 
