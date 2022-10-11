@@ -1,4 +1,5 @@
-﻿using Proof.Core.Logging;
+﻿using Proof.Core;
+using Proof.Core.Logging;
 using Proof.Input;
 using System.Reflection;
 using System.Xml.Linq;
@@ -7,21 +8,21 @@ namespace Proof.Entities.Components.Scripts
 {
     public class ScriptLoader
     {
-        private readonly Assembly _assembly;
+        private readonly AssemblyWrapper _assembly;
         private readonly ALogger _logger;
 
-        public ScriptLoader(Assembly assembly, ALogger logger)
+        public ScriptLoader(AssemblyWrapper assembly, ALogger logger)
         {
             _assembly = assembly;
             _logger = logger;
         }
 
-        public IScript LoadScriptComponent(string className, XElement componentNode, InputManager inputManager)
+        public IScript? LoadScriptComponent(string className, XElement componentNode, InputManager inputManager)
         {
-            Type? t = _assembly.GetType(className);
+            Type? t = _assembly.Assembly.GetType(className);
             if (t == null)
             {
-                throw new TypeLoadException($"Could not load type specified in ScriptComponent: {className}");
+                return null;
             }
 
             if (!t.GetInterfaces().Contains(typeof(IScript)))

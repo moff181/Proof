@@ -1,6 +1,7 @@
-﻿using Proof.Core;
-using Proof.Entities.Components;
+﻿using Proof.Entities.Components;
+using Proof.Entities.Components.Scripts;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Controls;
 
@@ -9,15 +10,15 @@ namespace Proof.DevEnv.Components.EntityComponents
     public partial class ScriptComponentPanel : UserControl
     {
         private readonly ScriptComponent _scriptComponent;
-        private readonly AssemblyWrapper _scriptAssembly;
+        private readonly ScriptLoader _scriptLoader;
         private readonly Action<IComponent> _onRemove;
 
-        public ScriptComponentPanel(ScriptComponent scriptComponent, AssemblyWrapper scriptAssembly, Action<IComponent> onRemove)
+        public ScriptComponentPanel(ScriptComponent scriptComponent, ScriptLoader scriptLoader, Action<IComponent> onRemove)
         {
             InitializeComponent();
 
             _scriptComponent = scriptComponent;
-            _scriptAssembly = scriptAssembly;
+            _scriptLoader = scriptLoader;
             _onRemove = onRemove;
 
             ScriptName.Text = _scriptComponent.ScriptName;
@@ -37,25 +38,32 @@ namespace Proof.DevEnv.Components.EntityComponents
 
         private void LoadScript()
         {
-            Type? type = _scriptAssembly.Assembly.GetType(_scriptComponent.ScriptName);
-            if (type == null)
+            if(_scriptComponent == null)
             {
                 return;
             }
 
-            LoadProperties(type);
+            _scriptComponent.LoadScript();
+
+            LoadProperties();
         }
 
-        private void LoadProperties(Type type)
+        private void LoadProperties()
         {
+            if(_scriptComponent == null)
+            {
+                return;
+            }
+
+            var properties = _scriptComponent.GetProperties();
+
             Properties.Children.Clear();
 
-            PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach(PropertyInfo property in properties)
+            foreach(KeyValuePair<string, object?> property in properties)
             {
                 var output = new TextBlock()
                 {
-                    Text = property.Name,
+                    Text = property.Key,
                 };
                 Properties.Children.Add(output);
             }

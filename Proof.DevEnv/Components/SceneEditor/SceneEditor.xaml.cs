@@ -1,5 +1,7 @@
 ﻿using Proof.Core;
 using Proof.Core.Logging;
+using Proof.Entities.Components.Scripts;
+using Proof.Input;
 using Proof.Render;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using InputManager = Proof.Input.InputManager;
 
 namespace Proof.DevEnv.Components
 {
@@ -50,8 +53,9 @@ namespace Proof.DevEnv.Components
         {
             string gameDllPath = Path.Combine(Directory.GetCurrentDirectory(), "Game.dll");
             var assemblyWrapper = new AssemblyWrapper(gameDllPath);
+            var scriptLoader = new ScriptLoader(assemblyWrapper, new NoLogger());
 
-            _application = new DevEnvApplication(assemblyWrapper.Assembly);
+            _application = new DevEnvApplication(scriptLoader);
             SizeGameWindowToEditorWindow();
 
             Task.Run(() =>
@@ -63,13 +67,13 @@ namespace Proof.DevEnv.Components
 
                 Tools.Init(_application.Scene, assemblyWrapper);
                 _modelLibrary = new ModelLibrary(new NoLogger());
-                CreateSidePanels(assemblyWrapper);
+                CreateSidePanels(scriptLoader, _application.Window.BuildInputManager());
             });
 
             _application.Run(scene);
         }
 
-        private void CreateSidePanels(AssemblyWrapper scriptAssembly)
+        private void CreateSidePanels(ScriptLoader scriptLoader, InputManager inputManager)
         {
             if(_application?.Scene == null || _modelLibrary == null)
             {
@@ -84,8 +88,9 @@ namespace Proof.DevEnv.Components
                             _application.Scene,
                             e,
                             _modelLibrary,
-                            scriptAssembly,
-                            () => CreateSidePanels(scriptAssembly))));
+                            scriptLoader,
+                            inputManager,
+                            () => CreateSidePanels(scriptLoader, inputManager))));
         }
 
         private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using Proof.Entities.Components.Scripts;
 using Proof.Input;
+using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -9,22 +10,53 @@ namespace Proof.Entities.Components
     {
         public string ScriptName { get; set; }
 
-        private readonly IScript _script;
+        private readonly ScriptLoader _scriptLoader;
+        private readonly InputManager _inputManager;
+        private readonly XElement _componentNode;
+        private IScript? _script;
 
-        public ScriptComponent(string scriptName, IScript script)
+        public ScriptComponent(string scriptName, ScriptLoader scriptLoader, InputManager inputManager, XElement componentNode)
         {
             ScriptName = scriptName;
-            _script = script;
+            _scriptLoader = scriptLoader;
+            _inputManager = inputManager;
+            _componentNode = componentNode;
+            _script = null;
+
+            LoadScript();
         }
 
         public void Update(Entity entity)
         {
-            if(!Application.ScriptsEnabled)
+            if(!Application.ScriptsEnabled || _script == null)
             {
                 return;
             }
 
             _script.Update(entity);
+        }
+
+        public void LoadScript()
+        {
+            _script = _scriptLoader.LoadScriptComponent(ScriptName, _componentNode, _inputManager);
+        }
+
+        public Dictionary<string, object?> GetProperties()
+        {
+            if(_script == null)
+            {
+                return new Dictionary<string, object?>();
+            }
+
+            PropertyInfo[] properties = _script.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            var result = new Dictionary<string, object?>();
+            foreach (PropertyInfo property in properties)
+            {
+                result.Add(property.Name, property.GetValue(_script));
+            }
+
+            return result;
         }
 
         public XElement ToXml()
@@ -43,9 +75,8 @@ namespace Proof.Entities.Components
             }
 
             string className = classNode.Value;
-            IScript script = scriptLoader.LoadScriptComponent(className, componentNode, inputManager);
 
-            return new ScriptComponent(className, script);
+            return new ScriptComponent(className, scriptLoader, inputManager, componentNode);
         }
     }
 }

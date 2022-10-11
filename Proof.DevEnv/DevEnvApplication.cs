@@ -1,21 +1,19 @@
-﻿using Proof.Core.Logging;
+﻿using Proof.Core;
+using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
 using System;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace Proof.DevEnv
 {
     public class DevEnvApplication : Application
     {
-        public DevEnvApplication(Assembly scriptAssembly)
+        public DevEnvApplication(ScriptLoader scriptLoader)
             : base(
                 new NoLogger(),
                 "DevEnv",
                 false,
-                new ScriptLoader(
-                    scriptAssembly,
-                    new NoLogger()),
+                scriptLoader,
                 true,
                 GetParentWindow())
         { }

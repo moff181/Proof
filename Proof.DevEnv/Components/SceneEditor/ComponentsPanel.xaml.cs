@@ -3,6 +3,7 @@ using Proof.DevEnv.Components.EntityComponents;
 using Proof.Entities;
 using Proof.Entities.Components;
 using Proof.Entities.Components.Scripts;
+using Proof.Input;
 using Proof.Render;
 using System;
 using System.IO;
@@ -11,6 +12,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
 
 namespace Proof.DevEnv.Components
 {
@@ -19,7 +21,8 @@ namespace Proof.DevEnv.Components
         private Scene? _scene;
         private Entity? _entity;
         private ModelLibrary? _modelLibrary;
-        private AssemblyWrapper? _scriptAssembly;
+        private ScriptLoader? _scriptLoader;
+        private InputManager? _inputManager;
         private Action? _refresh;
 
         public ComponentsPanel()
@@ -29,12 +32,13 @@ namespace Proof.DevEnv.Components
             UpdateVisibility(Visibility.Collapsed);
         }
 
-        public void Init(Scene scene, Entity entity, ModelLibrary modelLibrary, AssemblyWrapper scriptAssembly, Action refresh)
+        public void Init(Scene scene, Entity entity, ModelLibrary modelLibrary, ScriptLoader scriptLoader, InputManager inputManager, Action refresh)
         {
             _scene = scene;
             _entity = entity;
             _modelLibrary = modelLibrary;
-            _scriptAssembly = scriptAssembly;
+            _scriptLoader = scriptLoader;
+            _inputManager = inputManager;
             _refresh = refresh;
 
             Body.Children.Clear();
@@ -48,7 +52,7 @@ namespace Proof.DevEnv.Components
                     CameraComponent cameraComp => new CameraComponentPanel(cameraComp, RemoveComponent),
                     ColourComponent colourComp => new ColourComponentPanel(colourComp, RemoveComponent),
                     RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary, RemoveComponent),
-                    ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp, scriptAssembly, RemoveComponent),
+                    ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp, _scriptLoader, RemoveComponent),
                     TransformComponent transformComp => new TransformComponentPanel(transformComp, RemoveComponent),
                     _ => new TextBlock { Text = comp.GetType().Name }
                 };
@@ -59,13 +63,13 @@ namespace Proof.DevEnv.Components
 
         private void RemoveComponent(IComponent component)
         {
-            if(_entity == null || _scene == null || _modelLibrary == null || _refresh == null || _scriptAssembly == null)
+            if(_entity == null || _scene == null || _modelLibrary == null || _refresh == null || _scriptLoader == null || _inputManager == null)
             {
                 return;
             }
 
             _entity.RemoveComponent(component);
-            Init(_scene, _entity, _modelLibrary, _scriptAssembly, _refresh);
+            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _refresh);
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -96,7 +100,7 @@ namespace Proof.DevEnv.Components
                 return;
             }
 
-            if (_entity == null || _scene == null || _modelLibrary == null || _refresh == null || _scriptAssembly == null)
+            if (_entity == null || _scene == null || _modelLibrary == null || _refresh == null || _scriptLoader == null || _inputManager == null)
             {
                 return;
             }
@@ -123,7 +127,8 @@ namespace Proof.DevEnv.Components
                             0));
                     break;
                 case "Script Component":
-                    _entity.AddComponent(new ScriptComponent("Please enter a script name.", new NoScript()));
+                    // TODO: update the componentNode param to actually be something
+                    _entity.AddComponent(new ScriptComponent("Please enter a script name.", _scriptLoader, _inputManager, new XElement("Temp")));
                     break;
                 case "Transform Component":
                     _entity.AddComponent(new TransformComponent());
@@ -132,7 +137,7 @@ namespace Proof.DevEnv.Components
                     return;
             }
 
-            Init(_scene, _entity, _modelLibrary, _scriptAssembly, _refresh);
+            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _refresh);
         }
 
         private void UpdateVisibility(Visibility visibility)
