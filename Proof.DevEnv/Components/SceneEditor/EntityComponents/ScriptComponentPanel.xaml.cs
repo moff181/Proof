@@ -20,7 +20,7 @@ namespace Proof.DevEnv.Components.EntityComponents
             _onRemove = onRemove;
 
             ScriptName.Text = _scriptComponent.ScriptName;
-            LoadProperties();
+            LoadScript();
         }
 
         private void Remove_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -31,17 +31,22 @@ namespace Proof.DevEnv.Components.EntityComponents
         private void ScriptName_LostFocus(object sender, System.Windows.RoutedEventArgs e)
         {
             _scriptComponent.ScriptName = ScriptName.Text;
-            LoadProperties();
+            LoadScript();
         }
 
-        private void LoadProperties()
+        private void LoadScript()
         {
             Type? type = _scriptAssembly.Assembly.GetType(_scriptComponent.ScriptName);
-            if(type == null)
+            if (type == null)
             {
                 return;
             }
 
+            LoadProperties(type);
+        }
+
+        private void LoadProperties(Type type)
+        {
             Properties.Children.Clear();
 
             PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
