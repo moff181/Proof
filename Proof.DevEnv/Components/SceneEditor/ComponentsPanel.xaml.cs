@@ -1,5 +1,4 @@
-﻿using Proof.Core;
-using Proof.DevEnv.Components.EntityComponents;
+﻿using Proof.DevEnv.Components.EntityComponents;
 using Proof.Entities;
 using Proof.Entities.Components;
 using Proof.Entities.Components.Scripts;
@@ -9,7 +8,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
@@ -127,7 +125,6 @@ namespace Proof.DevEnv.Components
                             0));
                     break;
                 case "Script Component":
-                    // TODO: update the componentNode param to actually be something
                     _entity.AddComponent(new ScriptComponent("Please enter a script name.", _scriptLoader, _inputManager, new XElement("Temp")));
                     break;
                 case "Transform Component":
