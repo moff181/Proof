@@ -61,9 +61,20 @@ namespace Proof.Entities.Components
 
         public XElement ToXml()
         {
+            var propertiesNode = new XElement("Properties");
+
+            foreach(KeyValuePair<string, object?> property in GetProperties())
+            {
+                propertiesNode.Add(
+                    new XElement("Property",
+                        new XElement("Name", property.Key),
+                        new XElement("Value", property.Value)));
+            }
+
             return new XElement(
                 "ScriptComponent",
-                new XElement("Class", ScriptName));
+                new XElement("Class", ScriptName),
+                propertiesNode);
         }
 
         public static ScriptComponent LoadFromXml(XElement componentNode, ScriptLoader scriptLoader, InputManager inputManager)
