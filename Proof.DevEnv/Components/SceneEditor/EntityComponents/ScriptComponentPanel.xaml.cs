@@ -3,6 +3,7 @@ using Proof.Entities.Components.Scripts;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Proof.DevEnv.Components.EntityComponents
@@ -61,11 +62,25 @@ namespace Proof.DevEnv.Components.EntityComponents
 
             foreach(KeyValuePair<string, object?> property in properties)
             {
-                var output = new TextBlock()
+                var dockPanel = new DockPanel
+                {
+                    LastChildFill = true,
+                };
+
+                var text = new TextBlock
                 {
                     Text = property.Key,
+                    FontWeight = FontWeights.Bold,
                 };
-                Properties.Children.Add(output);
+                dockPanel.Children.Add(text);
+
+                var value = new TextBox
+                {
+                    Text = property.Value?.ToString() ?? string.Empty,
+                };
+                dockPanel.Children.Add(value);
+
+                Properties.Children.Add(dockPanel);
             }
         }
     }
