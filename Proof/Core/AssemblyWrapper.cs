@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Proof.Core
 {
@@ -7,18 +6,35 @@ namespace Proof.Core
     {
         private readonly string _gameDllPath;
 
+        private Assembly _assembly;
+
         public AssemblyWrapper(string gameDllPath)
         {
             _gameDllPath = gameDllPath;
-            Assembly = Reload();
+            _assembly = Reload();
         }
 
-        public Assembly Assembly { get; private set; }
+        public Type? GetType(string typeName)
+        {
+            if(_assembly == null)
+            {
+                return null;
+            }
+
+            return _assembly.GetType(typeName);
+        }
 
         public Assembly Reload()
         {
-            Assembly = Assembly.Load(File.ReadAllBytes(_gameDllPath));
-            return Assembly;
+            try
+            {
+                _assembly = Assembly.Load(File.ReadAllBytes(_gameDllPath));
+            }
+            catch(Exception)
+            {
+                // Suppress error
+            }
+            return _assembly;
         }
     }
 }

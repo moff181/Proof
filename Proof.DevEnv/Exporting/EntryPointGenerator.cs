@@ -1,5 +1,4 @@
 ﻿using System.IO;
-
 namespace Proof.DevEnv.Exporting
 {
     public class EntryPointGenerator
@@ -7,13 +6,14 @@ namespace Proof.DevEnv.Exporting
         private const string EntryPoint = @"using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
 using System.Reflection;
+using Proof.Core;
 
 namespace Proof.Game
 {
     internal class GameApplication : Application
     {
         public GameApplication(ALogger logger)
-            : base(logger, ""{TITLE}"", true, new ScriptLoader(Assembly.GetExecutingAssembly(), logger), false)
+            : base(logger, ""{TITLE}"", true, new ScriptLoader(new AssemblyWrapper(""Game.dll""), logger), false)
         { }
     }
 }";

@@ -19,7 +19,7 @@ namespace Proof.Entities.Components.Scripts
 
         public IScript? LoadScriptComponent(string className, XElement componentNode, InputManager inputManager)
         {
-            Type? t = _assembly.Assembly.GetType(className);
+            Type? t = _assembly.GetType(className);
             if (t == null)
             {
                 return null;

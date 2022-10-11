@@ -76,6 +76,7 @@ namespace Proof.DevEnv.Components
 
         private void Build_Click(object sender, RoutedEventArgs e)
         {
+
             BuildProject();
         }
 
@@ -86,6 +87,8 @@ namespace Proof.DevEnv.Components
 
         private void BuildProject()
         {
+            Exporter.OutputRequiredFiles(Directory.GetCurrentDirectory());
+
             var exporter = new Exporter(
                 new Compiler()
                     .WithAdditionalReferences(
