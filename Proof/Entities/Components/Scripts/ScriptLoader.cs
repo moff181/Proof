@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace Proof.Entities.Components.Scripts
 {
-    public class ScriptLoader : IScriptLoader
+    public class ScriptLoader
     {
         private readonly Assembly _assembly;
         private readonly ALogger _logger;

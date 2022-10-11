@@ -34,7 +34,7 @@ namespace Proof.Entities.Components
                 new XElement("Class", ScriptName));
         }
 
-        public static ScriptComponent LoadFromXml(XElement componentNode, IScriptLoader scriptLoader, InputManager inputManager)
+        public static ScriptComponent LoadFromXml(XElement componentNode, ScriptLoader scriptLoader, InputManager inputManager)
         {
             XElement? classNode = componentNode.Element("Class");
             if (classNode == null)

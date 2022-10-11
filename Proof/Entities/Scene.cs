@@ -78,7 +78,7 @@ namespace Proof.Entities
             ModelLibrary modelLibrary,
             Renderer renderer,
             InputManager inputManager,
-            IScriptLoader scriptLoader,
+            ScriptLoader scriptLoader,
             string filePath)
         {
             DateTime start = DateTime.Now;

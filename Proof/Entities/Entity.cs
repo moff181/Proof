@@ -81,7 +81,7 @@ namespace Proof.Entities
             Renderer renderer,
             VertexLayout layout,
             InputManager inputManager,
-            IScriptLoader scriptLoader,
+            ScriptLoader scriptLoader,
             XElement node)
         {
             XElement? nameNode = node.Element("Name");

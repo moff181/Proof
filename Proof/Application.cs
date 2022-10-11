@@ -13,13 +13,13 @@ namespace Proof
         public static bool ScriptsEnabled { get; internal set; }
 
         protected readonly ALogger Logger;
-        private readonly IScriptLoader _scriptLoader;
+        private readonly ScriptLoader _scriptLoader;
 
         protected Application(
             ALogger logger,
             string title,
             bool scriptsEnabled,
-            IScriptLoader scriptLoader,
+            ScriptLoader scriptLoader,
             bool vsync,
             IntPtr? parentWindow = null)
         {

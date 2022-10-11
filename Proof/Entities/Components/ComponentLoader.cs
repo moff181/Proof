@@ -24,7 +24,7 @@ namespace Proof.Entities.Components
             Renderer renderer,
             VertexLayout layout,
             InputManager inputManager,
-            IScriptLoader scriptLoader,
+            ScriptLoader scriptLoader,
             XElement componentNode)
         {
             string name = componentNode.Name.LocalName;
