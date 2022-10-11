@@ -1,8 +1,6 @@
 ﻿using Proof.Entities.Components;
-using Proof.Entities.Components.Scripts;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,15 +9,13 @@ namespace Proof.DevEnv.Components.EntityComponents
     public partial class ScriptComponentPanel : UserControl
     {
         private readonly ScriptComponent _scriptComponent;
-        private readonly ScriptLoader _scriptLoader;
         private readonly Action<IComponent> _onRemove;
 
-        public ScriptComponentPanel(ScriptComponent scriptComponent, ScriptLoader scriptLoader, Action<IComponent> onRemove)
+        public ScriptComponentPanel(ScriptComponent scriptComponent, Action<IComponent> onRemove)
         {
             InitializeComponent();
 
             _scriptComponent = scriptComponent;
-            _scriptLoader = scriptLoader;
             _onRemove = onRemove;
 
             ScriptName.Text = _scriptComponent.ScriptName;
