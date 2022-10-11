@@ -1,4 +1,5 @@
-﻿using Proof.DevEnv.Components.EntityComponents;
+﻿using Proof.Core;
+using Proof.DevEnv.Components.EntityComponents;
 using Proof.Entities;
 using Proof.Entities.Components;
 using Proof.Entities.Components.Scripts;

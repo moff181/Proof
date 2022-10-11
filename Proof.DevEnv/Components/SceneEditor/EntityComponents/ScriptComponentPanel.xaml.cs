@@ -1,4 +1,5 @@
-﻿using Proof.Entities.Components;
+﻿using Proof.Core;
+using Proof.Entities.Components;
 using System;
 using System.Reflection;
 using System.Windows.Controls;

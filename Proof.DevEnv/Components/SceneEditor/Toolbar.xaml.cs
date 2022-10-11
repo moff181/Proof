@@ -1,4 +1,5 @@
-﻿using Proof.DevEnv.Exporting;
+﻿using Proof.Core;
+using Proof.DevEnv.Exporting;
 using Proof.Entities;
 using System;
 using System.Collections.Generic;

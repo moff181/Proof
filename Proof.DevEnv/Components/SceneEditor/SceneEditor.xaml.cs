@@ -1,4 +1,5 @@
-﻿using Proof.Core.Logging;
+﻿using Proof.Core;
+using Proof.Core.Logging;
 using Proof.Render;
 using System.Collections.Generic;
 using System.IO;
