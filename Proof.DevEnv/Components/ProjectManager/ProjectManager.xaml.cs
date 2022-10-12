@@ -14,9 +14,9 @@ namespace Proof.DevEnv.Components.ProjectManager
 {
     public partial class ProjectManager : UserControl
     {
-        private readonly Action<string, string> _switchViewToSceneEditor;
+        private readonly Action<string, string, string> _switchViewToSceneEditor;
 
-        public ProjectManager(Action<string, string> switchViewToSceneEditor)
+        public ProjectManager(Action<string, string, string> switchViewToSceneEditor)
         {
             InitializeComponent();
 
@@ -61,7 +61,8 @@ namespace Proof.DevEnv.Components.ProjectManager
             CopyModelFiles(directory);
             Exporter.OutputRequiredFiles(directory);
 
-            _switchViewToSceneEditor(directory, programFile.StartupScene);
+            string projectName = Path.GetFileNameWithoutExtension(filePath);
+            _switchViewToSceneEditor(directory, programFile.StartupScene, projectName);
         }
 
         private void OpenProject_Click(object sender, RoutedEventArgs e)
@@ -85,7 +86,7 @@ namespace Proof.DevEnv.Components.ProjectManager
                 throw new IOException("Could not load program file.");
             }
             
-            _switchViewToSceneEditor(fileInfo.Directory.FullName, programFile.Value.StartupScene);
+            _switchViewToSceneEditor(fileInfo.Directory.FullName, programFile.Value.StartupScene, Path.GetFileNameWithoutExtension(fileInfo.Name));
         }
 
         private static void CopyShaderFiles(string directory)

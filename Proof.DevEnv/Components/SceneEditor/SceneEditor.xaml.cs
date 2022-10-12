@@ -18,10 +18,14 @@ namespace Proof.DevEnv.Components
     {
         private Application? _application;
         private ModelLibrary? _modelLibrary;
+        private readonly MainWindow _mainWindow;
 
-        public SceneEditor(WindowSettings? nullableSettings, string scene)
+        public SceneEditor(WindowSettings? nullableSettings, string scene, MainWindow mainWindow, string projectName)
         {
             InitializeComponent();
+            _mainWindow = mainWindow;
+
+            _mainWindow.Title = $"{MainWindow.ProofTitle} - {projectName}";
 
             if (nullableSettings != null)
             {

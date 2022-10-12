@@ -12,6 +12,7 @@ namespace Proof.DevEnv
 {
     public partial class MainWindow : Window
     {
+        public const string ProofTitle = "Proof Dev Env";
         private const string WindowSettingsFile = "window.settings";
 
         private readonly string _currentDirectory;
@@ -38,13 +39,13 @@ namespace Proof.DevEnv
             Content.Children.Add(new ProjectManager(SwitchViewToSceneEditor));
         }
 
-        private void SwitchViewToSceneEditor(string activeDirectory, string scene)
+        private void SwitchViewToSceneEditor(string activeDirectory, string scene, string projectName)
         {
             Content.Children.Clear();
 
             Directory.SetCurrentDirectory(activeDirectory);
 
-            var sceneEditor = new SceneEditor(_windowSettings, scene);
+            var sceneEditor = new SceneEditor(_windowSettings, scene, this, projectName);
             sceneEditor.GetCommandBindings().ToList().ForEach(x => CommandBindings.Add(x));
             Content.Children.Add(sceneEditor);
         }
