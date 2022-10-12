@@ -16,16 +16,18 @@ namespace Proof.DevEnv.Components
     {
         private Scene? _scene;
         private AssemblyWrapper? _scriptAssembly;
+        private UIElement? _focusKill;
 
         public Toolbar()
         {
             InitializeComponent();
         }
 
-        public void Init(Scene? scene, AssemblyWrapper scriptAssembly)
+        public void Init(Scene? scene, AssemblyWrapper scriptAssembly, UIElement focusKill)
         {
             _scene = scene;
             _scriptAssembly = scriptAssembly;
+            _focusKill = focusKill;
         }
 
         public IEnumerable<CommandBinding> GetCommandBindings()
@@ -44,6 +46,7 @@ namespace Proof.DevEnv.Components
                 return;
             }
 
+            KillFocus();
             _scene.Save(_scene.FilePath);
         }
 
@@ -64,24 +67,26 @@ namespace Proof.DevEnv.Components
             }
 
             string filePath = dialog.FileName;
+            KillFocus();
             _scene.Save(filePath);
         }
 
         private void Run_Click(object sender, RoutedEventArgs e)
         {
+            KillFocus();
             BuildProject();
-
             Process.Start("Proof.Runner.exe");
         }
 
         private void Build_Click(object sender, RoutedEventArgs e)
         {
-
+            KillFocus();
             BuildProject();
         }
 
         private void BuildDependencies_Click(object sender, RoutedEventArgs e)
         {
+            KillFocus();
             Exporter.OutputRequiredFiles(Directory.GetCurrentDirectory());
         }
 
@@ -113,6 +118,17 @@ namespace Proof.DevEnv.Components
             var cmd = new RoutedCommand();
             cmd.InputGestures.Add(new KeyGesture(key, modifiers));
             return new CommandBinding(cmd, (x, y) => action(x, y));
+        }
+
+        private void KillFocus()
+        {
+            if(_focusKill == null)
+            {
+                return;
+            }
+
+            _focusKill.Focus();
+            Keyboard.ClearFocus();
         }
     }
 }

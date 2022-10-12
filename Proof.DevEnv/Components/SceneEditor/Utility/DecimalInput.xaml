@@ -6,5 +6,5 @@
              xmlns:local="clr-namespace:Proof.DevEnv.Components.Utility"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <TextBox x:Name="Input" HorizontalAlignment="Stretch" LostFocus="Value_LostFocus" PreviewTextInput="TextBox_PreviewTextInput" />
+    <TextBox x:Name="Input" HorizontalAlignment="Stretch" LostKeyboardFocus="Value_LostFocus" PreviewTextInput="TextBox_PreviewTextInput" />
 </UserControl>

@@ -65,7 +65,7 @@ namespace Proof.DevEnv.Components
                     // Poll for scene to be loaded
                 }
 
-                Tools.Init(_application.Scene, assemblyWrapper);
+                Tools.Init(_application.Scene, assemblyWrapper, this);
                 _modelLibrary = new ModelLibrary(new NoLogger());
                 CreateSidePanels(scriptLoader, _application.Window.BuildInputManager());
             });

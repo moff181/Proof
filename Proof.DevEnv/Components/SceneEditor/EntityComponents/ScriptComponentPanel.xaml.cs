@@ -79,7 +79,7 @@ namespace Proof.DevEnv.Components.EntityComponents
                 {
                     Text = property.Value?.ToString() ?? string.Empty,
                 };
-                value.LostFocus += (sender, e) =>
+                value.LostKeyboardFocus += (sender, e) =>
                 {
                     bool worked = _scriptComponent.SetProperty(property.Key, value.Text);
 
