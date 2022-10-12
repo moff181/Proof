@@ -92,6 +92,13 @@ namespace Proof.DevEnv.Components
 
         private void BuildProject()
         {
+            if(_scene == null)
+            {
+                return;
+            }
+
+            _scene.Save(_scene.FilePath);
+
             Exporter.OutputRequiredFiles(Directory.GetCurrentDirectory());
 
             var exporter = new Exporter(

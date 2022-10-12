@@ -26,6 +26,11 @@ namespace Proof.Entities.Components
             LoadScript();
         }
 
+        public bool IsLoaded()
+        {
+            return _script != null;
+        }
+ 
         public void Update(Entity entity)
         {
             if(!Application.ScriptsEnabled || _script == null)

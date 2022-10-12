@@ -19,7 +19,7 @@ namespace Proof.DevEnv.Components.EntityComponents
             _onRemove = onRemove;
 
             ScriptName.Text = _scriptComponent.ScriptName;
-            LoadScript();
+            LoadScript(false);
         }
 
         private void Remove_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -35,31 +35,34 @@ namespace Proof.DevEnv.Components.EntityComponents
             }
 
             _scriptComponent.ScriptName = ScriptName.Text;
-            LoadScript();
+            LoadScript(true);
         }
 
-        private void LoadScript()
+        private void LoadScript(bool reloadIfLoaded)
         {
             if(_scriptComponent == null)
             {
                 return;
             }
 
-            _scriptComponent.LoadScript();
+            if (!_scriptComponent.IsLoaded() || reloadIfLoaded)
+            {
+                _scriptComponent.LoadScript();
+            }
 
             LoadProperties();
         }
 
         private void LoadProperties()
         {
-            if(_scriptComponent == null)
+            Properties.Children.Clear();
+
+            if (_scriptComponent == null || !_scriptComponent.IsLoaded())
             {
                 return;
             }
 
             var properties = _scriptComponent.GetProperties();
-
-            Properties.Children.Clear();
 
             foreach(KeyValuePair<string, object?> property in properties)
             {
