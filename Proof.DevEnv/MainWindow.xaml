@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Proof.DevEnv" xmlns:components="clr-namespace:Proof.DevEnv.Components"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280"
+        Title="Proof Dev Env" Height="720" Width="1280"
         Closing="Window_Closing">
     <DockPanel x:Name="Content" LastChildFill="True"/>
 
