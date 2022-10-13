@@ -107,6 +107,7 @@ namespace Proof.DevEnv.Components
                 () =>
                     LeftPanel.Init(
                         _application.Scene,
+                        _changeHistory,
                         e => RightPanel.Init(
                             _application.Scene,
                             e,
