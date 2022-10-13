@@ -1,11 +1,9 @@
 ﻿using Proof.Core;
 using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
-using Proof.Input;
 using Proof.Render;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,6 +25,18 @@ namespace Proof.DevEnv.Components
 
             _mainWindow.Title = $"{MainWindow.ProofTitle} - {projectName}";
 
+            LoadSettings(null);            
+
+            Task.Run(() => ProcessGameEngine(scene));
+        }
+
+        public IEnumerable<CommandBinding> GetCommandBindings()
+        {
+            return Tools.GetCommandBindings();
+        }
+
+        private void LoadSettings(WindowSettings? nullableSettings)
+        {
             if (nullableSettings != null)
             {
                 WindowSettings settings = nullableSettings.Value;
@@ -44,13 +54,6 @@ namespace Proof.DevEnv.Components
                 MainGrid.ColumnDefinitions.Add(c1);
                 MainGrid.ColumnDefinitions.Add(c2);
             }
-
-            Task.Run(() => ProcessGameEngine(scene));
-        }
-
-        public IEnumerable<CommandBinding> GetCommandBindings()
-        {
-            return Tools.GetCommandBindings();
         }
 
         private void ProcessGameEngine(string scene)
