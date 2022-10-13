@@ -2,8 +2,10 @@
 using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
 using Proof.Render;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,11 +19,15 @@ namespace Proof.DevEnv.Components
         private Application? _application;
         private ModelLibrary? _modelLibrary;
         private readonly MainWindow _mainWindow;
+        private readonly string _projectName;
+        private readonly ChangeHistory _changeHistory;
 
         public SceneEditor(WindowSettings? nullableSettings, string scene, MainWindow mainWindow, string projectName)
         {
             InitializeComponent();
             _mainWindow = mainWindow;
+            _projectName = projectName;
+            _changeHistory = new ChangeHistory(OnUnsavedChange);
 
             _mainWindow.Title = $"{MainWindow.ProofTitle} - {projectName}";
 
@@ -33,6 +39,16 @@ namespace Proof.DevEnv.Components
         public IEnumerable<CommandBinding> GetCommandBindings()
         {
             return Tools.GetCommandBindings();
+        }
+
+        private void OnUnsavedChange()
+        {
+            _mainWindow.Title = $"* {GetTitle()}";
+        }
+
+        private string GetTitle()
+        {
+            return $"{MainWindow.ProofTitle} - {_projectName}";
         }
 
         private void LoadSettings(WindowSettings? nullableSettings)
