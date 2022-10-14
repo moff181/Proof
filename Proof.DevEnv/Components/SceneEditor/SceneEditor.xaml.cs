@@ -31,7 +31,7 @@ namespace Proof.DevEnv.Components
 
             _mainWindow.Title = $"{MainWindow.ProofTitle} - {projectName}";
 
-            LoadSettings(null);            
+            LoadSettings(nullableSettings);            
 
             Task.Run(() => ProcessGameEngine(scene));
         }
