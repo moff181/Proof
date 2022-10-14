@@ -9,14 +9,20 @@ namespace Proof.DevEnv.Components.EntityComponents
     {
         private readonly RenderableComponent _renderableComponent;
         private readonly ModelLibrary _modelLibrary;
+        private readonly ChangeHistory _changeHistory;
         private readonly Action<IComponent> _onRemove;
 
-        public RenderableComponentPanel(RenderableComponent renderableComponent, ModelLibrary modelLibrary, Action<IComponent> onRemove)
+        public RenderableComponentPanel(
+            RenderableComponent renderableComponent,
+            ModelLibrary modelLibrary,
+            ChangeHistory changeHistory,
+            Action<IComponent> onRemove)
         {
             InitializeComponent();
 
             _renderableComponent = renderableComponent;
             _modelLibrary = modelLibrary;
+            _changeHistory = changeHistory;
             _onRemove = onRemove;
 
             Model.Text = _renderableComponent.Model.Path;
@@ -25,6 +31,7 @@ namespace Proof.DevEnv.Components.EntityComponents
 
         public void Layer_OnValueChange()
         {
+            _changeHistory.RegisterChange();
             _renderableComponent.Layer = Layer.Value;
         }
 
@@ -42,6 +49,7 @@ namespace Proof.DevEnv.Components.EntityComponents
                 return;
             }
 
+            _changeHistory.RegisterChange();
             _renderableComponent.SetModel(model);
          }
     }
