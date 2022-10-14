@@ -59,7 +59,7 @@ namespace Proof.DevEnv.Components
                     CameraComponent cameraComp => new CameraComponentPanel(cameraComp, _changeHistory, RemoveComponent),
                     ColourComponent colourComp => new ColourComponentPanel(colourComp, _changeHistory, RemoveComponent),
                     RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary, _changeHistory, RemoveComponent),
-                    ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp, RemoveComponent),
+                    ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp, _changeHistory, RemoveComponent),
                     TransformComponent transformComp => new TransformComponentPanel(transformComp, _changeHistory, RemoveComponent),
                     _ => new TextBlock { Text = comp.GetType().Name }
                 };

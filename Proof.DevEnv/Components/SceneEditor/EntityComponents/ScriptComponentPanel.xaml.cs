@@ -9,13 +9,15 @@ namespace Proof.DevEnv.Components.EntityComponents
     public partial class ScriptComponentPanel : UserControl
     {
         private readonly ScriptComponent _scriptComponent;
+        private readonly ChangeHistory _changeHistory;
         private readonly Action<IComponent> _onRemove;
 
-        public ScriptComponentPanel(ScriptComponent scriptComponent, Action<IComponent> onRemove)
+        public ScriptComponentPanel(ScriptComponent scriptComponent, ChangeHistory changeHistory, Action<IComponent> onRemove)
         {
             InitializeComponent();
 
             _scriptComponent = scriptComponent;
+            _changeHistory = changeHistory;
             _onRemove = onRemove;
 
             ScriptName.Text = _scriptComponent.ScriptName;
@@ -89,6 +91,10 @@ namespace Proof.DevEnv.Components.EntityComponents
                     if (!worked)
                     {
                         value.Text = _scriptComponent.GetProperty(property.Key)?.ToString() ?? string.Empty;
+                    }
+                    else
+                    {
+                        _changeHistory.RegisterChange();
                     }
                 };
                 dockPanel.Children.Add(value);
