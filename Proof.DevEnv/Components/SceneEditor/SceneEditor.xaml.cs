@@ -27,7 +27,7 @@ namespace Proof.DevEnv.Components
             InitializeComponent();
             _mainWindow = mainWindow;
             _projectName = projectName;
-            _changeHistory = new ChangeHistory(OnUnsavedChange);
+            _changeHistory = new ChangeHistory(OnUnsavedChange, OnSave);
 
             _mainWindow.Title = $"{MainWindow.ProofTitle} - {projectName}";
 
@@ -44,6 +44,11 @@ namespace Proof.DevEnv.Components
         private void OnUnsavedChange()
         {
             _mainWindow.Title = $"* {GetTitle()}";
+        }
+
+        private void OnSave()
+        {
+            _mainWindow.Title = GetTitle();
         }
 
         private string GetTitle()
@@ -88,7 +93,7 @@ namespace Proof.DevEnv.Components
                     // Poll for scene to be loaded
                 }
 
-                Tools.Init(_application.Scene, assemblyWrapper, this);
+                Tools.Init(_application.Scene, assemblyWrapper, this, _changeHistory);
                 _modelLibrary = new ModelLibrary(new NoLogger());
                 CreateSidePanels(scriptLoader, _application.Window.BuildInputManager());
             });

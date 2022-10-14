@@ -17,17 +17,19 @@ namespace Proof.DevEnv.Components
         private Scene? _scene;
         private AssemblyWrapper? _scriptAssembly;
         private UIElement? _focusKill;
+        private ChangeHistory? _changeHistory;
 
         public Toolbar()
         {
             InitializeComponent();
         }
 
-        public void Init(Scene? scene, AssemblyWrapper scriptAssembly, UIElement focusKill)
+        public void Init(Scene? scene, AssemblyWrapper scriptAssembly, UIElement focusKill, ChangeHistory? changeHistory)
         {
             _scene = scene;
             _scriptAssembly = scriptAssembly;
             _focusKill = focusKill;
+            _changeHistory = changeHistory;
         }
 
         public IEnumerable<CommandBinding> GetCommandBindings()
@@ -47,6 +49,7 @@ namespace Proof.DevEnv.Components
             }
 
             KillFocus();
+            _changeHistory?.RegisterSave();
             _scene.Save(_scene.FilePath);
         }
 
@@ -68,6 +71,7 @@ namespace Proof.DevEnv.Components
 
             string filePath = dialog.FileName;
             KillFocus();
+            // Register save here? Potentially want to update the filepath the scene points at
             _scene.Save(filePath);
         }
 
