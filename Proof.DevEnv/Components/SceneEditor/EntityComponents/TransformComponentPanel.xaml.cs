@@ -8,13 +8,15 @@ namespace Proof.DevEnv.Components.EntityComponents
     public partial class TransformComponentPanel : UserControl
     {
         private readonly TransformComponent _transformComp;
+        private readonly ChangeHistory _changeHistory;
         private readonly Action<IComponent> _onRemove;
 
-        public TransformComponentPanel(TransformComponent transformComp, Action<IComponent> onRemove)
+        public TransformComponentPanel(TransformComponent transformComp, ChangeHistory changeHistory, Action<IComponent> onRemove)
         {
             InitializeComponent();
             
             _transformComp = transformComp;
+            _changeHistory = changeHistory;
             _onRemove = onRemove;
 
             Position.Init(transformComp.Position);
@@ -23,6 +25,7 @@ namespace Proof.DevEnv.Components.EntityComponents
 
         public void PositionChange(Vector2 newValue)
         {
+            _changeHistory.RegisterChange();
             _transformComp.Position = newValue;
         }
 
@@ -33,6 +36,7 @@ namespace Proof.DevEnv.Components.EntityComponents
 
         public void ScaleChange(Vector2 newValue)
         {
+            _changeHistory.RegisterChange();
             _transformComp.Scale = newValue;
         }
     }

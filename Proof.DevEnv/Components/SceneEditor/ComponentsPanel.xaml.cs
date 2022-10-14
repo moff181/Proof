@@ -60,7 +60,7 @@ namespace Proof.DevEnv.Components
                     ColourComponent colourComp => new ColourComponentPanel(colourComp, _changeHistory, RemoveComponent),
                     RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary, _changeHistory, RemoveComponent),
                     ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp, RemoveComponent),
-                    TransformComponent transformComp => new TransformComponentPanel(transformComp, RemoveComponent),
+                    TransformComponent transformComp => new TransformComponentPanel(transformComp, _changeHistory, RemoveComponent),
                     _ => new TextBlock { Text = comp.GetType().Name }
                 };
 
