@@ -9,12 +9,12 @@
     <StackPanel>
         <Menu>
             <MenuItem Header="File">
-                <MenuItem x:Name="Save" Header="Save" Click="Save_Click" />
-                <MenuItem x:Name="SaveAs" Header="Save As" Click="SaveAs_Click" />
+                <MenuItem x:Name="Save" Header="Save (Ctrl+S)" Click="Save_Click" />
+                <MenuItem x:Name="SaveAs" Header="Save As (Ctrl+Shift+S)" Click="SaveAs_Click" />
             </MenuItem>
             <MenuItem Header="Build">
-                <MenuItem x:Name="Run" Header="Run" Click="Run_Click" />
-                <MenuItem x:Name="Build" Header="Build" Click="Build_Click" />
+                <MenuItem x:Name="Run" Header="Run (F5)" Click="Run_Click" />
+                <MenuItem x:Name="Build" Header="Build (Ctrl+B)" Click="Build_Click" />
                 <MenuItem x:Name="BuildDependencies" Header="Build Dependencies" Click="BuildDependencies_Click" />
             </MenuItem>
         </Menu>
