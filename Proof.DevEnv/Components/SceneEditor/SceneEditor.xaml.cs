@@ -114,6 +114,7 @@ namespace Proof.DevEnv.Components
                             _modelLibrary,
                             scriptLoader,
                             inputManager,
+                            _changeHistory,
                             () => CreateSidePanels(scriptLoader, inputManager))));
         }
 

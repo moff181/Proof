@@ -21,6 +21,7 @@ namespace Proof.DevEnv.Components
         private ModelLibrary? _modelLibrary;
         private ScriptLoader? _scriptLoader;
         private InputManager? _inputManager;
+        private ChangeHistory? _changeHistory;
         private Action? _refresh;
 
         public ComponentsPanel()
@@ -30,13 +31,21 @@ namespace Proof.DevEnv.Components
             UpdateVisibility(Visibility.Collapsed);
         }
 
-        public void Init(Scene scene, Entity entity, ModelLibrary modelLibrary, ScriptLoader scriptLoader, InputManager inputManager, Action refresh)
+        public void Init(
+            Scene scene,
+            Entity entity,
+            ModelLibrary modelLibrary,
+            ScriptLoader scriptLoader,
+            InputManager inputManager,
+            ChangeHistory? changeHistory,
+            Action refresh)
         {
             _scene = scene;
             _entity = entity;
             _modelLibrary = modelLibrary;
             _scriptLoader = scriptLoader;
             _inputManager = inputManager;
+            _changeHistory = changeHistory;
             _refresh = refresh;
 
             Body.Children.Clear();
@@ -66,8 +75,9 @@ namespace Proof.DevEnv.Components
                 return;
             }
 
+            _changeHistory?.RegisterChange();
             _entity.RemoveComponent(component);
-            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _refresh);
+            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _changeHistory, _refresh);
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -77,6 +87,7 @@ namespace Proof.DevEnv.Components
                 return;
             }
 
+            _changeHistory?.RegisterChange();
             _scene.Entities.Remove(_entity);
             UpdateVisibility(Visibility.Collapsed);
             _refresh();
@@ -134,7 +145,8 @@ namespace Proof.DevEnv.Components
                     return;
             }
 
-            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _refresh);
+            _changeHistory?.RegisterChange();
+            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _changeHistory, _refresh);
         }
 
         private void UpdateVisibility(Visibility visibility)
