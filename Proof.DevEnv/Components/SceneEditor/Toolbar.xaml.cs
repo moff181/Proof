@@ -38,6 +38,8 @@ namespace Proof.DevEnv.Components
             {
                 GenerateCommandBinding(Key.S, ModifierKeys.Control, Save_Click),
                 GenerateCommandBinding(Key.S, ModifierKeys.Control | ModifierKeys.Shift, SaveAs_Click),
+                GenerateCommandBinding(Key.F5, ModifierKeys.None, Run_Click),
+                GenerateCommandBinding(Key.B, ModifierKeys.Control, Build_Click),
             };
         }
 
