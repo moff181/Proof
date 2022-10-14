@@ -79,7 +79,7 @@ namespace Proof.DevEnv.Components
         {
             KillFocus();
             BuildProject();
-            Process.Start("Proof.Runner.exe");
+            Process.Start(Path.Combine(Directory.GetCurrentDirectory(), "Proof.Runner.exe"));
         }
 
         private void Build_Click(object sender, RoutedEventArgs e)
