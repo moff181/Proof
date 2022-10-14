@@ -37,7 +37,7 @@ namespace Proof.DevEnv.Components
             ModelLibrary modelLibrary,
             ScriptLoader scriptLoader,
             InputManager inputManager,
-            ChangeHistory? changeHistory,
+            ChangeHistory changeHistory,
             Action refresh)
         {
             _scene = scene;
@@ -57,7 +57,7 @@ namespace Proof.DevEnv.Components
                 UIElement uiElement = comp switch
                 {
                     CameraComponent cameraComp => new CameraComponentPanel(cameraComp, _changeHistory, RemoveComponent),
-                    ColourComponent colourComp => new ColourComponentPanel(colourComp, RemoveComponent),
+                    ColourComponent colourComp => new ColourComponentPanel(colourComp, _changeHistory, RemoveComponent),
                     RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary, RemoveComponent),
                     ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp, RemoveComponent),
                     TransformComponent transformComp => new TransformComponentPanel(transformComp, RemoveComponent),
