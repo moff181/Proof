@@ -7,19 +7,22 @@ namespace Proof.DevEnv.Components.EntityComponents
     public partial class CameraComponentPanel : UserControl
     {
         private readonly CameraComponent _cameraComponent;
+        private readonly ChangeHistory _changeHistory;
         private readonly Action<IComponent> _onRemove;
 
-        public CameraComponentPanel(CameraComponent cameraComponent, Action<IComponent> onRemove)
+        public CameraComponentPanel(CameraComponent cameraComponent, ChangeHistory changeHistory, Action<IComponent> onRemove)
         {
             InitializeComponent();
 
             _cameraComponent = cameraComponent;
+            _changeHistory = changeHistory;
             _onRemove = onRemove;
             SetActive(cameraComponent.Active);
         }
 
         private void Active_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            _changeHistory.RegisterChange();
             SetActive(!_cameraComponent.Active);
         }
 
