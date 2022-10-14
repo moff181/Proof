@@ -70,12 +70,13 @@ namespace Proof.DevEnv.Components
 
         private void RemoveComponent(IComponent component)
         {
-            if(_entity == null || _scene == null || _modelLibrary == null || _refresh == null || _scriptLoader == null || _inputManager == null)
+            if(_entity == null || _scene == null || _modelLibrary == null || _refresh == null 
+                || _scriptLoader == null || _inputManager == null || _changeHistory == null)
             {
                 return;
             }
 
-            _changeHistory?.RegisterChange();
+            _changeHistory.RegisterChange();
             _entity.RemoveComponent(component);
             Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _changeHistory, _refresh);
         }
@@ -109,7 +110,8 @@ namespace Proof.DevEnv.Components
                 return;
             }
 
-            if (_entity == null || _scene == null || _modelLibrary == null || _refresh == null || _scriptLoader == null || _inputManager == null)
+            if (_entity == null || _scene == null || _modelLibrary == null || _refresh == null 
+                || _scriptLoader == null || _inputManager == null || _changeHistory == null)
             {
                 return;
             }
@@ -145,7 +147,7 @@ namespace Proof.DevEnv.Components
                     return;
             }
 
-            _changeHistory?.RegisterChange();
+            _changeHistory.RegisterChange();
             Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _changeHistory, _refresh);
         }
 
