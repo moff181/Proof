@@ -9,7 +9,7 @@ namespace Proof.Audio
     {
         private readonly SoundPlayer _soundPlayer;
 
-        public Sound(ALogger logger, string path)
+        internal Sound(ALogger logger, string path)
         {
             logger.LogInfo($"Loading sound from {path}");
             Path = path;
