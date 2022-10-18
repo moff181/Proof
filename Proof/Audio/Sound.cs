@@ -12,9 +12,12 @@ namespace Proof.Audio
         public Sound(ALogger logger, string path)
         {
             logger.LogInfo($"Loading sound from {path}");
+            Path = path;
             _soundPlayer = new SoundPlayer(path);
             logger.LogInfo("Sound loaded.");
         }
+
+        public string Path { get; }
 
         public void Play()
         {
