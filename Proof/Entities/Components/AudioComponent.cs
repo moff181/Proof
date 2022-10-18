@@ -1,8 +1,10 @@
 ﻿using Proof.Audio;
+using System.Runtime.Versioning;
 using System.Xml.Linq;
 
 namespace Proof.Entities.Components
 {
+    [SupportedOSPlatform("windows")]
     public class AudioComponent : IComponent
     {
         public AudioComponent(Sound sound)
@@ -23,7 +25,7 @@ namespace Proof.Entities.Components
                 "AudioComponent",
                 new XElement(
                     "FilePath",
-                    Sound.Path);
+                    Sound.Path));
         }
     }
 }
