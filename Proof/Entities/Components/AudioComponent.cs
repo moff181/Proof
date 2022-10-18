@@ -19,7 +19,11 @@ namespace Proof.Entities.Components
 
         public XElement ToXml()
         {
-            throw new NotImplementedException();
+            return new XElement(
+                "AudioComponent",
+                new XElement(
+                    "FilePath",
+                    Sound.Path);
         }
     }
 }
