@@ -1,8 +1,10 @@
 ﻿using Proof.Core.Logging;
 using System.Media;
+using System.Runtime.Versioning;
 
 namespace Proof.Audio
 {
+    [SupportedOSPlatform("windows")]
     public class Sound
     {
         private readonly SoundPlayer _soundPlayer;
