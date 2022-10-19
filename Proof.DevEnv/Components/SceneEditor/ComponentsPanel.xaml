@@ -10,6 +10,7 @@
         <Button x:Name="Remove" Content="Remove" DockPanel.Dock="Bottom" Click="Remove_Click" />
         <Button x:Name="AddComponent" Content="Add Component" DockPanel.Dock="Bottom" Click="AddComponent_Click" />
         <ComboBox DockPanel.Dock="Bottom" x:Name="NewComponentList">
+            <ComboBoxItem>Audio Component</ComboBoxItem>
             <ComboBoxItem>Camera Component</ComboBoxItem>
             <ComboBoxItem>Colour Component</ComboBoxItem>
             <ComboBoxItem>Renderable Component</ComboBoxItem>

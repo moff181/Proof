@@ -46,6 +46,7 @@ namespace Proof.DevEnv.Components.ProjectManager
             Directory.CreateDirectory(directory);
 
             Directory.CreateDirectory(Path.Combine(directory, "res"));
+            Directory.CreateDirectory(Path.Combine(directory, "res", "audio"));
             Directory.CreateDirectory(Path.Combine(directory, "res", "models"));
             Directory.CreateDirectory(Path.Combine(directory, "res", "scenes"));
             Directory.CreateDirectory(Path.Combine(directory, "res", "shaders"));
@@ -57,6 +58,7 @@ namespace Proof.DevEnv.Components.ProjectManager
             var scene = new Scene(new NoLogger(), new NoShader("res/shaders/Static.xml"), new NoRenderer(), filePath);
             scene.Save(filePath);
 
+            CopyAudioFiles(directory);
             CopyShaderFiles(directory);
             CopyModelFiles(directory);
             Exporter.OutputRequiredFiles(directory);
@@ -87,6 +89,13 @@ namespace Proof.DevEnv.Components.ProjectManager
             }
             
             _switchViewToSceneEditor(fileInfo.Directory.FullName, programFile.Value.StartupScene, Path.GetFileNameWithoutExtension(fileInfo.Name));
+        }
+
+        private static void CopyAudioFiles(string directory)
+        {
+            File.Copy(
+                Path.Combine("defaults", "silence.wav"),
+                Path.Combine(directory, "res", "audio", "silence.wav"));
         }
 
         private static void CopyShaderFiles(string directory)

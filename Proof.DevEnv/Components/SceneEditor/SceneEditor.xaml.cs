@@ -1,4 +1,5 @@
-﻿using Proof.Core;
+﻿using Proof.Audio;
+using Proof.Core;
 using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
 using Proof.Render;
@@ -82,6 +83,7 @@ namespace Proof.DevEnv.Components
             string gameDllPath = Path.Combine(Directory.GetCurrentDirectory(), "Game.dll");
             var assemblyWrapper = new AssemblyWrapper(gameDllPath);
             var scriptLoader = new ScriptLoader(assemblyWrapper, new NoLogger());
+            var soundLibrary = new SoundLibrary(new NoLogger());
 
             _application = new DevEnvApplication(scriptLoader);
             SizeGameWindowToEditorWindow();
@@ -95,13 +97,13 @@ namespace Proof.DevEnv.Components
 
                 Tools.Init(_application.Scene, assemblyWrapper, this, _changeHistory);
                 _modelLibrary = new ModelLibrary(new NoLogger());
-                CreateSidePanels(scriptLoader, _application.Window.BuildInputManager());
+                CreateSidePanels(scriptLoader, _application.Window.BuildInputManager(), soundLibrary);
             });
 
             _application.Run(scene);
         }
 
-        private void CreateSidePanels(ScriptLoader scriptLoader, InputManager inputManager)
+        private void CreateSidePanels(ScriptLoader scriptLoader, InputManager inputManager, SoundLibrary soundLibrary)
         {
             if(_application?.Scene == null || _modelLibrary == null)
             {
@@ -119,8 +121,9 @@ namespace Proof.DevEnv.Components
                             _modelLibrary,
                             scriptLoader,
                             inputManager,
+                            soundLibrary,
                             _changeHistory,
-                            () => CreateSidePanels(scriptLoader, inputManager))));
+                            () => CreateSidePanels(scriptLoader, inputManager, soundLibrary))));
         }
 
         private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)

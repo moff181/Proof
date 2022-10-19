@@ -1,4 +1,5 @@
-﻿using Proof.DevEnv.Components.EntityComponents;
+﻿using Proof.Audio;
+using Proof.DevEnv.Components.EntityComponents;
 using Proof.Entities;
 using Proof.Entities.Components;
 using Proof.Entities.Components.Scripts;
@@ -21,6 +22,7 @@ namespace Proof.DevEnv.Components
         private ModelLibrary? _modelLibrary;
         private ScriptLoader? _scriptLoader;
         private InputManager? _inputManager;
+        private SoundLibrary? _soundLibrary;
         private ChangeHistory? _changeHistory;
         private Action? _refresh;
 
@@ -37,6 +39,7 @@ namespace Proof.DevEnv.Components
             ModelLibrary modelLibrary,
             ScriptLoader scriptLoader,
             InputManager inputManager,
+            SoundLibrary soundLibrary,
             ChangeHistory changeHistory,
             Action refresh)
         {
@@ -45,6 +48,7 @@ namespace Proof.DevEnv.Components
             _modelLibrary = modelLibrary;
             _scriptLoader = scriptLoader;
             _inputManager = inputManager;
+            _soundLibrary = soundLibrary;
             _changeHistory = changeHistory;
             _refresh = refresh;
 
@@ -72,14 +76,15 @@ namespace Proof.DevEnv.Components
         private void RemoveComponent(IComponent component)
         {
             if(_entity == null || _scene == null || _modelLibrary == null || _refresh == null 
-                || _scriptLoader == null || _inputManager == null || _changeHistory == null)
+                || _scriptLoader == null || _inputManager == null || _changeHistory == null
+                || _soundLibrary == null)
             {
                 return;
             }
 
             _changeHistory.RegisterChange();
             _entity.RemoveComponent(component);
-            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _changeHistory, _refresh);
+            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _soundLibrary, _changeHistory, _refresh);
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -112,13 +117,18 @@ namespace Proof.DevEnv.Components
             }
 
             if (_entity == null || _scene == null || _modelLibrary == null || _refresh == null 
-                || _scriptLoader == null || _inputManager == null || _changeHistory == null)
+                || _scriptLoader == null || _inputManager == null || _changeHistory == null
+                || _soundLibrary == null)
             {
                 return;
             }
 
             switch(componentLabel)
             {
+                case "Audio Component":
+                    _entity.AddComponent(
+                        new AudioComponent(_soundLibrary.Get("res/audio/silence.wav")));
+                    break;
                 case "Camera Component":
                     _entity.AddComponent(
                         new CameraComponent(
@@ -149,7 +159,7 @@ namespace Proof.DevEnv.Components
             }
 
             _changeHistory.RegisterChange();
-            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _changeHistory, _refresh);
+            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _soundLibrary, _changeHistory, _refresh);
         }
 
         private void UpdateVisibility(Visibility visibility)

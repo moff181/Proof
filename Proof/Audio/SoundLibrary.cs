@@ -7,7 +7,7 @@ namespace Proof.Audio
         private readonly ALogger _logger;
         private readonly List<Sound> _sounds;
 
-        internal SoundLibrary(ALogger logger)
+        public SoundLibrary(ALogger logger)
         {
             _logger = logger;
             _sounds = new List<Sound>();
