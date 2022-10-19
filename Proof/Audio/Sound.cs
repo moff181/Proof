@@ -40,7 +40,7 @@ namespace Proof.Audio
             _logger.LogInfo("Sound disposed of successfully.");
         }
 
-        public string Path { get; }
+        public string Path { get; set; }
 
         public void Play()
         {
