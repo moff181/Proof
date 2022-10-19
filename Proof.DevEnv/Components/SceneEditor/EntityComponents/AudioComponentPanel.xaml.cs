@@ -4,21 +4,18 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Proof.DevEnv.Components.SceneEditor.EntityComponents
+namespace Proof.DevEnv.Components.EntityComponents
 {
     public partial class AudioComponentPanel : UserControl
     {
-        private AudioComponent? _audioComponent;
-        private ChangeHistory? _changeHistory;
-        private Action<IComponent>? _onRemove;
+        private readonly AudioComponent _audioComponent;
+        private readonly ChangeHistory _changeHistory;
+        private readonly Action<IComponent> _onRemove;
 
-        public AudioComponentPanel()
+        public AudioComponentPanel(AudioComponent audioComponent, ChangeHistory changeHistory, Action<IComponent> onRemove)
         {
             InitializeComponent();
-        }
 
-        public void Init(AudioComponent audioComponent, ChangeHistory changeHistory, Action<IComponent> onRemove)
-        {
             _audioComponent = audioComponent;
             _changeHistory = changeHistory;
             _onRemove = onRemove;
@@ -28,11 +25,6 @@ namespace Proof.DevEnv.Components.SceneEditor.EntityComponents
 
         private void FilePathInput_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if(_changeHistory == null || _audioComponent == null)
-            {
-                return;
-            }
-
             if (_audioComponent.Sound.Path == FilePathInput.Text)
             {
                 return;
@@ -44,11 +36,6 @@ namespace Proof.DevEnv.Components.SceneEditor.EntityComponents
 
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
-            if (_audioComponent == null || _onRemove == null)
-            {
-                return;
-            }
-
             _onRemove(_audioComponent);
         }
     }

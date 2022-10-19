@@ -56,6 +56,7 @@ namespace Proof.DevEnv.Components
             {
                 UIElement uiElement = comp switch
                 {
+                    AudioComponent audioComp => new AudioComponentPanel(audioComp, _changeHistory, RemoveComponent),
                     CameraComponent cameraComp => new CameraComponentPanel(cameraComp, _changeHistory, RemoveComponent),
                     ColourComponent colourComp => new ColourComponentPanel(colourComp, _changeHistory, RemoveComponent),
                     RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary, _changeHistory, RemoveComponent),
