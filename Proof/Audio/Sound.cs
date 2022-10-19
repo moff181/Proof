@@ -35,6 +35,7 @@ namespace Proof.Audio
 
             _wave.Dispose();
             _waveReader.Dispose();
+            GC.SuppressFinalize(this);
 
             _logger.LogInfo("Sound disposed of successfully.");
         }
