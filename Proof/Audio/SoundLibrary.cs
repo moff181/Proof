@@ -1,9 +1,7 @@
 ﻿using Proof.Core.Logging;
-using System.Runtime.Versioning;
 
 namespace Proof.Audio
 {
-    [SupportedOSPlatform("windows")]
     public class SoundLibrary
     {
         private readonly ALogger _logger;
