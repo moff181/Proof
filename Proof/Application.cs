@@ -1,4 +1,5 @@
-﻿using Proof.Core.DataStructures;
+﻿using Proof.Audio;
+using Proof.Core.DataStructures;
 using Proof.Core.Logging;
 using Proof.Entities;
 using Proof.Entities.Components.Scripts;
@@ -46,6 +47,7 @@ namespace Proof
 
                 var modelLibrary = new ModelLibrary(Logger);
                 using var renderer = new Renderer(Logger, 50000, 40000);
+                var soundLibrary = new SoundLibrary(Logger);
 
                 Scene = Scene.LoadFromFile(
                     Logger,
@@ -53,6 +55,7 @@ namespace Proof
                     renderer,
                     inputManager,
                     _scriptLoader,
+                    soundLibrary,
                     startupScene);
 
                 uint frames = 0;

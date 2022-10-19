@@ -1,4 +1,5 @@
-﻿using Proof.Core.Logging;
+﻿using Proof.Audio;
+using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
@@ -79,6 +80,7 @@ namespace Proof.Entities
             Renderer renderer,
             InputManager inputManager,
             ScriptLoader scriptLoader,
+            SoundLibrary soundLibrary,
             string filePath)
         {
             DateTime start = DateTime.Now;
@@ -125,6 +127,7 @@ namespace Proof.Entities
                     shader.GetLayout(),
                     inputManager,
                     scriptLoader,
+                    soundLibrary,
                     entityNode);
 
                 scene.Entities.Add(entity);

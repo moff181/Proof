@@ -1,4 +1,5 @@
-﻿using Proof.Core.Logging;
+﻿using Proof.Audio;
+using Proof.Core.Logging;
 using Proof.Entities.Components;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
@@ -82,6 +83,7 @@ namespace Proof.Entities
             VertexLayout layout,
             InputManager inputManager,
             ScriptLoader scriptLoader,
+            SoundLibrary soundLibrary,
             XElement node)
         {
             XElement? nameNode = node.Element("Name");
@@ -110,6 +112,7 @@ namespace Proof.Entities
                         layout,
                         inputManager,
                         scriptLoader,
+                        soundLibrary,
                         componentNode));
             }
 

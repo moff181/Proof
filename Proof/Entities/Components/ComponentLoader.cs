@@ -1,4 +1,5 @@
-﻿using Proof.Core.Logging;
+﻿using Proof.Audio;
+using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
@@ -25,12 +26,15 @@ namespace Proof.Entities.Components
             VertexLayout layout,
             InputManager inputManager,
             ScriptLoader scriptLoader,
+            SoundLibrary soundLibrary,
             XElement componentNode)
         {
             string name = componentNode.Name.LocalName;
 
             switch(name)
             {
+                case "AudioComponent":
+                    return AudioComponent.LoadFromNode(soundLibrary, componentNode);
                 case "CameraComponent":
                     return CameraComponent.LoadFromNode(_logger, shader, componentNode);
                 case "ColourComponent":

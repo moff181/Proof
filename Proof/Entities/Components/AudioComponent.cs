@@ -1,4 +1,7 @@
 ﻿using Proof.Audio;
+using Proof.Core.Logging;
+using Proof.Render.Shaders;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Proof.Entities.Components
@@ -24,6 +27,20 @@ namespace Proof.Entities.Components
                 new XElement(
                     "FilePath",
                     Sound.Path));
+        }
+
+        public static IComponent LoadFromNode(SoundLibrary soundLibrary, XElement componentNode)
+        {
+            XElement? filePathNode = componentNode.Element("FilePath");
+            if (filePathNode == null)
+            {
+                throw new XmlException("Could not find FilePath node for AudioComponent.");
+            }
+
+            string filePath = filePathNode.Value;
+            Sound sound = soundLibrary.Get(filePath);
+
+            return new AudioComponent(sound);
         }
     }
 }
