@@ -55,5 +55,20 @@ namespace Proof.Audio
         {
             _wave.Pause();
         }
+
+        public float Volume
+        {
+            get { return _wave.Volume; }
+            set
+            { 
+                if(value < 0 || value > 1)
+                {
+                    _logger.LogWarn("Sound volume must be between 0.0 and 1.0.");
+                    value = 0;
+                }
+
+                _wave.Volume = value;
+            }
+        }
     }
 }
