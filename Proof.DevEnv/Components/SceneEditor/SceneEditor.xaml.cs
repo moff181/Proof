@@ -4,10 +4,8 @@ using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
 using Proof.Render;
 using Proof.Render.Textures;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -122,6 +120,7 @@ namespace Proof.DevEnv.Components
                         _application.Scene,
                         _changeHistory,
                         e => RightPanel.Init(
+                            _application,
                             _application.Scene,
                             e,
                             _modelLibrary,

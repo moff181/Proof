@@ -18,6 +18,7 @@ namespace Proof.DevEnv.Components
 {
     public partial class ComponentsPanel : UserControl
     {
+        private Application? _application;
         private Scene? _scene;
         private Entity? _entity;
         private ModelLibrary? _modelLibrary;
@@ -36,6 +37,7 @@ namespace Proof.DevEnv.Components
         }
 
         public void Init(
+            Application application,
             Scene scene,
             Entity entity,
             ModelLibrary modelLibrary,
@@ -46,6 +48,7 @@ namespace Proof.DevEnv.Components
             ChangeHistory changeHistory,
             Action refresh)
         {
+            _application = application;
             _scene = scene;
             _entity = entity;
             _modelLibrary = modelLibrary;
@@ -80,9 +83,9 @@ namespace Proof.DevEnv.Components
 
         private void RemoveComponent(IComponent component)
         {
-            if(_entity == null || _scene == null || _modelLibrary == null || _refresh == null 
-                || _scriptLoader == null || _inputManager == null || _changeHistory == null
-                || _soundLibrary == null || _textureLibrary == null)
+            if(_application == null ||_entity == null || _scene == null || _modelLibrary == null
+                || _refresh == null || _scriptLoader == null || _inputManager == null
+                || _changeHistory == null || _soundLibrary == null || _textureLibrary == null)
             {
                 return;
             }
@@ -90,6 +93,7 @@ namespace Proof.DevEnv.Components
             _changeHistory.RegisterChange();
             _entity.RemoveComponent(component);
             Init(
+                _application,
                 _scene,
                 _entity,
                 _modelLibrary,
@@ -130,14 +134,14 @@ namespace Proof.DevEnv.Components
                 return;
             }
 
-            if (_entity == null || _scene == null || _modelLibrary == null || _refresh == null 
-                || _scriptLoader == null || _inputManager == null || _changeHistory == null
-                || _soundLibrary == null || _textureLibrary == null)
+            if (_application == null || _entity == null || _scene == null || _modelLibrary == null
+                || _refresh == null || _scriptLoader == null || _inputManager == null
+                || _changeHistory == null || _soundLibrary == null || _textureLibrary == null)
             {
                 return;
             }
 
-            switch(componentLabel)
+            switch (componentLabel)
             {
                 case "Audio Component":
                     _entity.AddComponent(
@@ -166,8 +170,27 @@ namespace Proof.DevEnv.Components
                     _entity.AddComponent(new ScriptComponent("Please enter a script name.", _scriptLoader, _inputManager, new XElement("Temp")));
                     break;
                 case "Texture Component":
-                    _entity.AddComponent(new TextureComponent(_textureLibrary.Get("res/textures/no_image.png")));
-                    break;
+                    _application.GlQueue.Enqueue(
+                        () => 
+                        {
+                            _entity.AddComponent(new TextureComponent(_textureLibrary.Get("res/textures/no_image.png")));
+                            Dispatcher.Invoke(() =>
+                            {
+                                _changeHistory.RegisterChange();
+                                Init(
+                                    _application,
+                                    _scene,
+                                    _entity,
+                                    _modelLibrary,
+                                    _scriptLoader,
+                                    _inputManager,
+                                    _soundLibrary,
+                                    _textureLibrary,
+                                    _changeHistory,
+                                    _refresh);
+                            });
+                        });
+                    return;
                 case "Transform Component":
                     _entity.AddComponent(new TransformComponent());
                     break;
@@ -177,6 +200,7 @@ namespace Proof.DevEnv.Components
 
             _changeHistory.RegisterChange();
             Init(
+                _application,
                 _scene,
                 _entity,
                 _modelLibrary,
