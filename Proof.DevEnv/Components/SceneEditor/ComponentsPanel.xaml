@@ -15,6 +15,7 @@
             <ComboBoxItem>Colour Component</ComboBoxItem>
             <ComboBoxItem>Renderable Component</ComboBoxItem>
             <ComboBoxItem>Script Component</ComboBoxItem>
+            <ComboBoxItem>Texture Component</ComboBoxItem>
             <ComboBoxItem>Transform Component</ComboBoxItem>
         </ComboBox>
         <StackPanel x:Name="Body" DockPanel.Dock="Top" />

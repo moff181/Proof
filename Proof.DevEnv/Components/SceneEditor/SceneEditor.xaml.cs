@@ -3,6 +3,7 @@ using Proof.Core;
 using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
 using Proof.Render;
+using Proof.Render.Textures;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -84,6 +85,7 @@ namespace Proof.DevEnv.Components
             var assemblyWrapper = new AssemblyWrapper(gameDllPath);
             var scriptLoader = new ScriptLoader(assemblyWrapper, new NoLogger());
             var soundLibrary = new SoundLibrary(new NoLogger());
+            var textureLibrary = new TextureLibrary(new NoLogger());
 
             _application = new DevEnvApplication(scriptLoader);
             SizeGameWindowToEditorWindow();
@@ -97,13 +99,17 @@ namespace Proof.DevEnv.Components
 
                 Tools.Init(_application.Scene, assemblyWrapper, this, _changeHistory);
                 _modelLibrary = new ModelLibrary(new NoLogger());
-                CreateSidePanels(scriptLoader, _application.Window.BuildInputManager(), soundLibrary);
+                CreateSidePanels(scriptLoader, _application.Window.BuildInputManager(), soundLibrary, textureLibrary);
             });
 
             _application.Run(scene);
         }
 
-        private void CreateSidePanels(ScriptLoader scriptLoader, InputManager inputManager, SoundLibrary soundLibrary)
+        private void CreateSidePanels(
+            ScriptLoader scriptLoader,
+            InputManager inputManager,
+            SoundLibrary soundLibrary,
+            TextureLibrary textureLibrary)
         {
             if(_application?.Scene == null || _modelLibrary == null)
             {
@@ -122,8 +128,9 @@ namespace Proof.DevEnv.Components
                             scriptLoader,
                             inputManager,
                             soundLibrary,
+                            textureLibrary,
                             _changeHistory,
-                            () => CreateSidePanels(scriptLoader, inputManager, soundLibrary))));
+                            () => CreateSidePanels(scriptLoader, inputManager, soundLibrary, textureLibrary))));
         }
 
         private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)

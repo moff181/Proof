@@ -5,6 +5,7 @@ using Proof.Entities.Components;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
+using Proof.Render.Textures;
 using System;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Proof.DevEnv.Components
         private ScriptLoader? _scriptLoader;
         private InputManager? _inputManager;
         private SoundLibrary? _soundLibrary;
+        private TextureLibrary? _textureLibrary;
         private ChangeHistory? _changeHistory;
         private Action? _refresh;
 
@@ -40,6 +42,7 @@ namespace Proof.DevEnv.Components
             ScriptLoader scriptLoader,
             InputManager inputManager,
             SoundLibrary soundLibrary,
+            TextureLibrary textureLibrary,
             ChangeHistory changeHistory,
             Action refresh)
         {
@@ -49,6 +52,7 @@ namespace Proof.DevEnv.Components
             _scriptLoader = scriptLoader;
             _inputManager = inputManager;
             _soundLibrary = soundLibrary;
+            _textureLibrary = textureLibrary;
             _changeHistory = changeHistory;
             _refresh = refresh;
 
@@ -65,6 +69,7 @@ namespace Proof.DevEnv.Components
                     ColourComponent colourComp => new ColourComponentPanel(colourComp, _changeHistory, RemoveComponent),
                     RenderableComponent renderableComp => new RenderableComponentPanel(renderableComp, modelLibrary, _changeHistory, RemoveComponent),
                     ScriptComponent scriptComp => new ScriptComponentPanel(scriptComp, _changeHistory, RemoveComponent),
+                    TextureComponent textureComp => new TextureComponentPanel(textureComp, _changeHistory, RemoveComponent),
                     TransformComponent transformComp => new TransformComponentPanel(transformComp, _changeHistory, RemoveComponent),
                     _ => new TextBlock { Text = comp.GetType().Name }
                 };
@@ -77,14 +82,23 @@ namespace Proof.DevEnv.Components
         {
             if(_entity == null || _scene == null || _modelLibrary == null || _refresh == null 
                 || _scriptLoader == null || _inputManager == null || _changeHistory == null
-                || _soundLibrary == null)
+                || _soundLibrary == null || _textureLibrary == null)
             {
                 return;
             }
 
             _changeHistory.RegisterChange();
             _entity.RemoveComponent(component);
-            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _soundLibrary, _changeHistory, _refresh);
+            Init(
+                _scene,
+                _entity,
+                _modelLibrary,
+                _scriptLoader,
+                _inputManager,
+                _soundLibrary,
+                _textureLibrary,
+                _changeHistory,
+                _refresh);
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
@@ -118,7 +132,7 @@ namespace Proof.DevEnv.Components
 
             if (_entity == null || _scene == null || _modelLibrary == null || _refresh == null 
                 || _scriptLoader == null || _inputManager == null || _changeHistory == null
-                || _soundLibrary == null)
+                || _soundLibrary == null || _textureLibrary == null)
             {
                 return;
             }
@@ -159,7 +173,16 @@ namespace Proof.DevEnv.Components
             }
 
             _changeHistory.RegisterChange();
-            Init(_scene, _entity, _modelLibrary, _scriptLoader, _inputManager, _soundLibrary, _changeHistory, _refresh);
+            Init(
+                _scene,
+                _entity,
+                _modelLibrary,
+                _scriptLoader,
+                _inputManager,
+                _soundLibrary,
+                _textureLibrary,
+                _changeHistory,
+                _refresh);
         }
 
         private void UpdateVisibility(Visibility visibility)
