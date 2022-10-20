@@ -1,7 +1,4 @@
-﻿using Proof.Audio;
-using Proof.Entities.Components.Scripts;
-using Proof.Input;
-using Proof.Render.Textures;
+﻿using Proof.Render.Textures;
 using System.Xml;
 using System.Xml.Linq;
 
