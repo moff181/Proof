@@ -165,6 +165,9 @@ namespace Proof.DevEnv.Components
                 case "Script Component":
                     _entity.AddComponent(new ScriptComponent("Please enter a script name.", _scriptLoader, _inputManager, new XElement("Temp")));
                     break;
+                case "Texture Component":
+                    _entity.AddComponent(new TextureComponent(_textureLibrary.Get("res/textures/no_image.png")));
+                    break;
                 case "Transform Component":
                     _entity.AddComponent(new TransformComponent());
                     break;
