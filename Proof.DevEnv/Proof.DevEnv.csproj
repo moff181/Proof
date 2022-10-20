@@ -47,6 +47,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="defaults\no_image.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="defaults\silence.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

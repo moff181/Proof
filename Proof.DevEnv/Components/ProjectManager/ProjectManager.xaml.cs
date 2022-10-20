@@ -50,6 +50,7 @@ namespace Proof.DevEnv.Components.ProjectManager
             Directory.CreateDirectory(Path.Combine(directory, "res", "models"));
             Directory.CreateDirectory(Path.Combine(directory, "res", "scenes"));
             Directory.CreateDirectory(Path.Combine(directory, "res", "shaders"));
+            Directory.CreateDirectory(Path.Combine(directory, "res", "textures"));
 
             var programFile = ProgramFile.CreateDefault();
             programFile.Save(Path.Combine(directory, $"{ProjectNameText.Text}.proof"));
@@ -59,8 +60,9 @@ namespace Proof.DevEnv.Components.ProjectManager
             scene.Save(filePath);
 
             CopyAudioFiles(directory);
-            CopyShaderFiles(directory);
             CopyModelFiles(directory);
+            CopyShaderFiles(directory);
+            CopyTextureFiles(directory);
             Exporter.OutputRequiredFiles(directory);
 
             string projectName = Path.GetFileNameWithoutExtension(filePath);
@@ -98,6 +100,13 @@ namespace Proof.DevEnv.Components.ProjectManager
                 Path.Combine(directory, "res", "audio", "silence.wav"));
         }
 
+        private static void CopyModelFiles(string directory)
+        {
+            File.Copy(
+                Path.Combine("defaults", "Square.model"),
+                Path.Combine(directory, "res", "models", "Square.model"));
+        }
+
         private static void CopyShaderFiles(string directory)
         {
             File.Copy(
@@ -113,11 +122,11 @@ namespace Proof.DevEnv.Components.ProjectManager
                 Path.Combine(directory, "res", "shaders", "Static.xml"));
         }
 
-        private static void CopyModelFiles(string directory)
+        private static void CopyTextureFiles(string directory)
         {
             File.Copy(
-                Path.Combine("defaults", "Square.model"),
-                Path.Combine(directory, "res", "models", "Square.model"));
+                Path.Combine("defaults", "no_image.png"),
+                Path.Combine(directory, "res", "textures", "no_image.png"));
         }
 
         private static string GetDesktopPath()
