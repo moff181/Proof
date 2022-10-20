@@ -7,6 +7,7 @@ using Proof.Render;
 using Proof.Render.Buffers;
 using Proof.Render.Renderer;
 using Proof.Render.Shaders;
+using Proof.Render.Textures;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -84,6 +85,7 @@ namespace Proof.Entities
             InputManager inputManager,
             ScriptLoader scriptLoader,
             SoundLibrary soundLibrary,
+            TextureLibrary textureLibrary,
             XElement node)
         {
             XElement? nameNode = node.Element("Name");
@@ -113,6 +115,7 @@ namespace Proof.Entities
                         inputManager,
                         scriptLoader,
                         soundLibrary,
+                        textureLibrary,
                         componentNode));
             }
 

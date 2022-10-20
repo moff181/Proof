@@ -5,6 +5,7 @@ using Proof.Input;
 using Proof.Render;
 using Proof.Render.Renderer;
 using Proof.Render.Shaders;
+using Proof.Render.Textures;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -81,6 +82,7 @@ namespace Proof.Entities
             InputManager inputManager,
             ScriptLoader scriptLoader,
             SoundLibrary soundLibrary,
+            TextureLibrary textureLibrary,
             string filePath)
         {
             DateTime start = DateTime.Now;
@@ -128,6 +130,7 @@ namespace Proof.Entities
                     inputManager,
                     scriptLoader,
                     soundLibrary,
+                    textureLibrary,
                     entityNode);
 
                 scene.Entities.Add(entity);

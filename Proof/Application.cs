@@ -6,6 +6,7 @@ using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
 using Proof.Render.Renderer;
+using Proof.Render.Textures;
 
 namespace Proof
 {
@@ -48,6 +49,7 @@ namespace Proof
                 var modelLibrary = new ModelLibrary(Logger);
                 using var renderer = new Renderer(Logger, 50000, 40000);
                 var soundLibrary = new SoundLibrary(Logger);
+                var textureLibrary = new TextureLibrary(Logger);
 
                 Scene = Scene.LoadFromFile(
                     Logger,
@@ -56,6 +58,7 @@ namespace Proof
                     inputManager,
                     _scriptLoader,
                     soundLibrary,
+                    textureLibrary,
                     startupScene);
 
                 uint frames = 0;

@@ -6,6 +6,7 @@ using Proof.Render;
 using Proof.Render.Buffers;
 using Proof.Render.Renderer;
 using Proof.Render.Shaders;
+using Proof.Render.Textures;
 using System.Xml.Linq;
 
 namespace Proof.Entities.Components
@@ -27,6 +28,7 @@ namespace Proof.Entities.Components
             InputManager inputManager,
             ScriptLoader scriptLoader,
             SoundLibrary soundLibrary,
+            TextureLibrary textureLibrary,
             XElement componentNode)
         {
             string name = componentNode.Name.LocalName;
@@ -43,6 +45,8 @@ namespace Proof.Entities.Components
                     return RenderableComponent.LoadFromNode(_logger, modelLibrary, renderer, layout, componentNode);
                 case "ScriptComponent":
                     return ScriptComponent.LoadFromXml(componentNode, scriptLoader, inputManager);
+                case "TextureComponent":
+                    return TextureComponent.LoadFromXml(textureLibrary, componentNode);
                 case "TransformComponent":
                     return TransformComponent.LoadFromNode(_logger, componentNode);
                 default:
