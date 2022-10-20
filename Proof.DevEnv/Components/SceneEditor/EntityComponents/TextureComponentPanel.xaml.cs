@@ -19,6 +19,8 @@ namespace Proof.DevEnv.Components.EntityComponents
         {
             InitializeComponent();
 
+            TexturePath.Text = textureComponent.Texture.FilePath;
+
             _textureComponent = textureComponent;
             _changeHistory = changeHistory;
             _onRemove = onRemove;
