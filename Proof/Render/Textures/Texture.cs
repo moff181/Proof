@@ -2,6 +2,7 @@
 using Proof.Core.Logging;
 using Proof.OpenGL;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 
 namespace Proof.Render.Textures
@@ -19,7 +20,7 @@ namespace Proof.Render.Textures
 
             logger.LogInfo($"Loading texture from file: {filePath}");
 
-            using Image image = Image.FromFile(filePath);
+            using Bitmap image = (Bitmap)Image.FromFile(filePath);
 
 			_textureId = GL.glGenTextures(1)[0];
 			GL.glBindTexture(GL.GL_TEXTURE_2D, _textureId);
@@ -30,10 +31,10 @@ namespace Proof.Render.Textures
             GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_CLAMP_TO_EDGE);
 
             byte[] buffer = image.ToByteArray();
-            fixed (byte* p = buffer)
-            {
-                GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_RGBA8, image.Width, image.Height, 0, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, p);
-            }
+            IntPtr ptr = Marshal.AllocHGlobal(buffer.Length);
+            Marshal.Copy(buffer, 0, ptr, buffer.Length);
+            
+            GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_RGBA8, image.Width, image.Height, 0, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, ptr);
 
             logger.LogInfo($"Loaded texture successfully.");
         }
