@@ -10,15 +10,17 @@ namespace Proof.Render.Buffers
         private readonly IList<int> _arraySizes;
         private int _sumOfElements;
 
-        public VertexLayout(int positionIndex, int? colourIndex)
+        public VertexLayout(int positionIndex, int? colourIndex, int? textureSlotIndex)
         {
             _arraySizes = new List<int>();
             PositionIndex = positionIndex;
             ColourIndex = colourIndex;
+            TextureSlotIndex = textureSlotIndex;
         }
 
         public int PositionIndex { get; }
         public int? ColourIndex { get; }
+        public int? TextureSlotIndex { get; }
 
         public void AddArray(int arraySize)
         {
@@ -71,7 +73,14 @@ namespace Proof.Render.Buffers
                 colourIndex = colourIndexTemp;
             }
 
-            var vertexLayout = new VertexLayout(positionIndex, colourIndex);
+            int? textureSlotIndex = null;
+            XElement? textureIndexNode = vertexLayoutNode.Element("TextureSlotIndex");
+            if (textureIndexNode != null && int.TryParse(textureIndexNode.Value, out int textureSlotIndexTemp))
+            {
+                textureSlotIndex = textureSlotIndexTemp;
+            }
+
+            var vertexLayout = new VertexLayout(positionIndex, colourIndex, textureSlotIndex);
 
             XElement? attribArraysNode = vertexLayoutNode.Element("AttribArrays");
             if(attribArraysNode == null)
