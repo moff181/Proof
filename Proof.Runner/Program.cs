@@ -13,7 +13,7 @@ namespace Proof.Runner
 
         public static void Main(string[] args)
         {
-            ALogger logger = new ConsoleLogger();
+            ALogger logger = new FileLogger("debug.log");
 
             try
             {
