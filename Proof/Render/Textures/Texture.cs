@@ -19,8 +19,6 @@ namespace Proof.Render.Textures
 
             logger.LogInfo($"Loading texture from file: {filePath}");
 
-            // using Bitmap image = (Bitmap)Image.FromFile(filePath);
-
 			_textureId = GL.glGenTextures(1)[0];
 			GL.glBindTexture(GL.GL_TEXTURE_2D, _textureId);
 
@@ -30,6 +28,16 @@ namespace Proof.Render.Textures
             GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_CLAMP_TO_EDGE);
 
             byte[] buffer = new byte[256 * 256 * 4];
+
+            var random = new Random();
+            for(int i = 0; i < buffer.Length; i += 4)
+            {
+                buffer[i + 0] = (byte)random.Next(256);
+                buffer[i + 1] = (byte)random.Next(256);
+                buffer[i + 2] = (byte)random.Next(256);
+                buffer[i + 3] = (byte)random.Next(256);
+            }
+
             IntPtr ptr = Marshal.AllocHGlobal(buffer.Length);
             Marshal.Copy(buffer, 0, ptr, buffer.Length);
             
