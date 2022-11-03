@@ -1,5 +1,4 @@
 ﻿using Proof.Core.Logging;
-using System.Runtime.Versioning;
 
 namespace Proof.Render.Textures
 {
@@ -14,7 +13,6 @@ namespace Proof.Render.Textures
             _textures = new Dictionary<string, Texture>();
         }
 
-        [SupportedOSPlatform("windows")]
         public Texture Get(string path)
         {
             if(_textures.TryGetValue(path, out Texture? result))

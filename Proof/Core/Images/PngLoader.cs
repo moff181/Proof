@@ -7,11 +7,10 @@ namespace Proof.Core.Images
     {
         private const int IntLength = 4;
         private const int HeaderLength = 8;
-        private const int LengthDefinitionLength = IntLength;
         private const int ChunkTypeLength = 4;
         private const int CrcLength = 4;
 
-        public PngImage LoadImage(string filePath)
+        public static PngImage LoadImage(string filePath)
         {
             byte[] bytes = File.ReadAllBytes(filePath);
 
@@ -30,7 +29,7 @@ namespace Proof.Core.Images
             }
         }
 
-        private bool HasValidHeader(byte[] bytes)
+        private static bool HasValidHeader(byte[] bytes)
         {
             return bytes[0] == 0x89
                 && bytes[1] == 0x50
@@ -42,7 +41,7 @@ namespace Proof.Core.Images
                 && bytes[7] == 0x0A;
         }
 
-        private PngImage ProcessChunks(byte[] bytes)
+        private static PngImage ProcessChunks(byte[] bytes)
         {
             int index = HeaderLength;
             CoreImageData coreImageData = ProcessIhdr(bytes, ref index);
@@ -82,7 +81,7 @@ namespace Proof.Core.Images
             return new PngImage(coreImageData, result);
         }
 
-        private CoreImageData ProcessIhdr(byte[] bytes, ref int index)
+        private static CoreImageData ProcessIhdr(byte[] bytes, ref int index)
         {
             int length = ToInt(bytes, ref index);
 
@@ -116,12 +115,12 @@ namespace Proof.Core.Images
                 (InterlaceMethod)interlaceMethod);
         }
 
-        private void ProcessPlte(byte[] bytes, ref int index)
+        private static void ProcessPlte(byte[] bytes, ref int index)
         {
             throw new NotImplementedException();
         }
 
-        private byte[] ProcessIdat(byte[] bytes, ref int index, int length, int width, int height)
+        private static byte[] ProcessIdat(byte[] bytes, ref int index, int length, int width, int height)
         {
             var buffer = new byte[length];
             Array.Copy(bytes, index + ChunkTypeLength, buffer, 0, length);
@@ -150,7 +149,7 @@ namespace Proof.Core.Images
             return extractedData;
         }
 
-        private bool IsPlte(byte[] bytes, int index)
+        private static bool IsPlte(byte[] bytes, int index)
         {
             return bytes[index + 0] == 'P'
                 && bytes[index + 1] == 'L'
@@ -158,7 +157,7 @@ namespace Proof.Core.Images
                 && bytes[index + 3] == 'E';
         }
 
-        private bool IsIdat(byte[] bytes, int index)
+        private static bool IsIdat(byte[] bytes, int index)
         {
             return bytes[index + 0] == 'I'
                 && bytes[index + 1] == 'D'
@@ -166,7 +165,7 @@ namespace Proof.Core.Images
                 && bytes[index + 3] == 'T';
         }
 
-        private bool IEnd(byte[] bytes, int index)
+        private static bool IEnd(byte[] bytes, int index)
         {
             return bytes[index + 0] == 'I'
                 && bytes[index + 1] == 'E'
@@ -174,12 +173,12 @@ namespace Proof.Core.Images
                 && bytes[index + 3] == 'D';
         }
 
-        private bool IsCritical(byte[] bytes, int index)
+        private static bool IsCritical(byte[] bytes, int index)
         {
             return char.IsUpper((char)bytes[index]);
         }
 
-        private int ToInt(byte[] bytes, ref int index)
+        private static int ToInt(byte[] bytes, ref int index)
         {
             var buffer = new Span<byte>(bytes, index, IntLength);
 

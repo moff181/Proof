@@ -1,9 +1,7 @@
-﻿using Proof.Core.Extensions;
-using Proof.Core.Images;
+﻿using Proof.Core.Images;
 using Proof.Core.Logging;
 using Proof.OpenGL;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 
 namespace Proof.Render.Textures
 {
@@ -12,7 +10,6 @@ namespace Proof.Render.Textures
         private readonly ALogger _logger;
         private readonly uint _textureId;
 
-        [SupportedOSPlatform("windows")]
         public unsafe Texture(ALogger logger, string filePath)
 		{
             _logger = logger;
@@ -28,7 +25,7 @@ namespace Proof.Render.Textures
             GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_CLAMP_TO_EDGE);
             GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_CLAMP_TO_EDGE);
 
-            PngImage image = new PngLoader().LoadImage(filePath);
+            PngImage image = PngLoader.LoadImage(filePath);
 
             IntPtr ptr = Marshal.AllocHGlobal(image.Data.Length);
             Marshal.Copy(image.Data, 0, ptr, image.Data.Length);
