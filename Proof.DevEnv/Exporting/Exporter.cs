@@ -48,6 +48,7 @@ namespace Proof.DevEnv.Exporting
             File.Copy(Path.Combine(sourceDirectory, "NAudio.Midi.dll"), Path.Combine(directory, "NAudio.Midi.dll"), true);
             File.Copy(Path.Combine(sourceDirectory, "NAudio.Wasapi.dll"), Path.Combine(directory, "NAudio.Wasapi.dll"), true);
             File.Copy(Path.Combine(sourceDirectory, "NAudio.WinMM.dll"), Path.Combine(directory, "NAudio.WinMM.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "ICSharpCode.SharpZipLib.dll"), Path.Combine(directory, "ICSharpCode.SharpZipLib.dll"), true);
         }
 
         private static void CopyProofRunnerFiles(string directory, string sourceDirectory)
