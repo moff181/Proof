@@ -1,4 +1,5 @@
-﻿using Proof.Core.Logging;
+﻿using Proof.Core.Images;
+using Proof.Core.Logging;
 using Proof.Core.ProjectStructure;
 using Proof.Entities.Components.Scripts;
 using System.Reflection;
