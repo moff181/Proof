@@ -42,6 +42,12 @@ namespace Proof.DevEnv.Exporting
             File.Copy(Path.Combine(sourceDirectory, "GLFW.NET.dll"), Path.Combine(directory, "GLFW.NET.dll"), true);
             File.Copy(Path.Combine(sourceDirectory, "Proof.dll"), Path.Combine(directory, "Proof.dll"), true);
             File.Copy(Path.Combine(sourceDirectory, "Proof.OpenGL.dll"), Path.Combine(directory, "Proof.OpenGL.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "NAudio.Asio.dll"), Path.Combine(directory, "NAudio.Asio.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "NAudio.Core.dll"), Path.Combine(directory, "NAudio.Core.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "NAudio.dll"), Path.Combine(directory, "NAudio.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "NAudio.Midi.dll"), Path.Combine(directory, "NAudio.Midi.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "NAudio.Wasapi.dll"), Path.Combine(directory, "NAudio.Wasapi.dll"), true);
+            File.Copy(Path.Combine(sourceDirectory, "NAudio.WinMM.dll"), Path.Combine(directory, "NAudio.WinMM.dll"), true);
         }
 
         private static void CopyProofRunnerFiles(string directory, string sourceDirectory)
