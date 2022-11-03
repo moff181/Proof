@@ -140,10 +140,10 @@ namespace Proof.Core.Images
             int bytesPerLine = width * 3 + 1;
             for(int line = 0; line < height; line++)
             {
-                byte filterByte = decompressedData[line * bytesPerLine];
+                // Filter byte before this
                 for(int i = 1; i < bytesPerLine; i++)
                 {
-                    extractedData[line * (bytesPerLine - 1) + i - 1] = decompressedData[line * bytesPerLine + i];
+                    extractedData[(height - line - 1) * (bytesPerLine - 1) + i - 1] = decompressedData[line * bytesPerLine + i];
                 }
             }
 
