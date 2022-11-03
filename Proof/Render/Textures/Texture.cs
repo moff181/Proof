@@ -1,4 +1,5 @@
 ﻿using Proof.Core.Extensions;
+using Proof.Core.Images;
 using Proof.Core.Logging;
 using Proof.OpenGL;
 using System.Runtime.InteropServices;
@@ -27,21 +28,21 @@ namespace Proof.Render.Textures
             GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_CLAMP_TO_EDGE);
             GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_CLAMP_TO_EDGE);
 
-            byte[] buffer = new byte[256 * 256 * 4];
+            PngImage image = new PngLoader().LoadImage(filePath);
 
-            var random = new Random();
-            for(int i = 0; i < buffer.Length; i += 4)
-            {
-                buffer[i + 0] = (byte)random.Next(256);
-                buffer[i + 1] = (byte)random.Next(256);
-                buffer[i + 2] = (byte)random.Next(256);
-                buffer[i + 3] = (byte)random.Next(256);
-            }
-
-            IntPtr ptr = Marshal.AllocHGlobal(buffer.Length);
-            Marshal.Copy(buffer, 0, ptr, buffer.Length);
+            IntPtr ptr = Marshal.AllocHGlobal(image.Data.Length);
+            Marshal.Copy(image.Data, 0, ptr, image.Data.Length);
             
-            GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_RGBA8, 256, 256, 0, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, ptr);
+            GL.glTexImage2D(
+                GL.GL_TEXTURE_2D,
+                0,
+                GL.GL_RGB8,
+                image.CoreImageData.Width,
+                image.CoreImageData.Height,
+                0,
+                GL.GL_RGB,
+                GL.GL_UNSIGNED_BYTE,
+                ptr);
 
             logger.LogInfo($"Loaded texture successfully.");
         }
