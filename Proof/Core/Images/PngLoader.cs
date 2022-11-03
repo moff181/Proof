@@ -1,9 +1,8 @@
 ﻿using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
-using System;
 
 namespace Proof.Core.Images
 {
-    public class PngLoader
+    public static class PngLoader
     {
         private const int IntLength = 4;
         private const int HeaderLength = 8;
