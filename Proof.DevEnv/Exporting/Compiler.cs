@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.IO.Packaging;
 
 namespace Proof.DevEnv.Exporting
 {
@@ -22,7 +23,7 @@ namespace Proof.DevEnv.Exporting
             return this;
         }
 
-        public void Compile(string outputDllName, string[] files)
+        public List<string> Compile(string outputDllName, string[] files)
         {
             SyntaxTree[] syntaxTrees =
                 files
@@ -39,15 +40,31 @@ namespace Proof.DevEnv.Exporting
 
             using Stream codeStream = File.Create(outputDllName);
 
-            // Can get the result here if we need to
-            compilation.Emit(codeStream);
+            var results = compilation.Emit(codeStream);
+
+            return results.Diagnostics
+                .Select(x =>
+                    $"[{GetSeverity(x)}]" +
+                    $" {x.Location.SourceTree?.FilePath} - {x.GetMessage()}")
+                .ToList();
+        }
+
+        private static DiagnosticSeverity GetSeverity(Diagnostic result)
+        {
+            return result.Severity == DiagnosticSeverity.Hidden ? DiagnosticSeverity.Info : result.Severity;
         }
 
         private static SyntaxTree GetSyntaxTree(string file)
         {
             string src = File.ReadAllText(file);
+            
+            string path = file.Replace(Directory.GetCurrentDirectory(), string.Empty);
+            if(path.StartsWith('\\'))
+            {
+                path = path.Substring(1);
+            }
 
-            return SyntaxFactory.ParseSyntaxTree(src.Trim());
+            return SyntaxFactory.ParseSyntaxTree(src.Trim(), path: path);
         }
 
         private static List<PortableExecutableReference> GetNetCoreDefaultReferences()

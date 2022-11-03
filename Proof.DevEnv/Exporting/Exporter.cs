@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 
 namespace Proof.DevEnv.Exporting
@@ -14,14 +15,14 @@ namespace Proof.DevEnv.Exporting
             _entryPointGenerator = entryPointGenerator;
         }
 
-        public void BuildGameDll(string directory, string outputDllName)
+        public List<string> BuildGameDll(string directory, string outputDllName)
         {
             OutputRequiredFiles(directory);
 
             _entryPointGenerator.GenerateEntryPointFile(Path.Combine(directory, "GameApplication.cs"));
             string[] files = Directory.GetFiles(directory, "*.cs", SearchOption.AllDirectories);
 
-            _compiler.Compile(outputDllName, files);
+            return _compiler.Compile(outputDllName, files);
         }
 
         public static void OutputRequiredFiles(string directory)

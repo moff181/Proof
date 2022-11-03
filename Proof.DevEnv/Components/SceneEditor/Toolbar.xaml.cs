@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using MessageBox = System.Windows.MessageBox;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace Proof.DevEnv.Components
@@ -116,9 +118,19 @@ namespace Proof.DevEnv.Components
                         "System.Numerics.dll",
                         "System.Numerics.Vectors.dll"),
                 new EntryPointGenerator("Proof Game"));
-            exporter.BuildGameDll(Directory.GetCurrentDirectory(), "Game.dll");
+            
+            List<string> errorList = exporter.BuildGameDll(Directory.GetCurrentDirectory(), "Game.dll");
 
-            if(_scriptAssembly == null)
+            if (errorList.Any())
+            {
+                string messageBoxText = errorList.Aggregate("", (current, next) => $"{current}\n{next}");
+                string caption = "CompileResults";
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.Warning;
+                MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            }
+
+            if (_scriptAssembly == null)
             {
                 return;
             }
