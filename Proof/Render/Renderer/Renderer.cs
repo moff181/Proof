@@ -1,5 +1,6 @@
 ﻿using Proof.Core.Logging;
 using Proof.Render.Buffers;
+using Proof.Render.Textures;
 
 namespace Proof.Render.Renderer
 {
@@ -10,7 +11,7 @@ namespace Proof.Render.Renderer
         private readonly VertexBuffer _vertexBuffer;
         private readonly IndexBuffer _indexBuffer;
 
-        private readonly SortedDictionary<int, List<RenderData>> _submitted;
+        private readonly SortedDictionary<int, Layer> _submitted;
 
         public Renderer(ALogger logger, int vertexBufferCapacity, int indexBufferCapacity)
         {
@@ -20,12 +21,12 @@ namespace Proof.Render.Renderer
 
             _vertexBuffer = new VertexBuffer(logger, vertexBufferCapacity);
             _indexBuffer = new IndexBuffer(logger, indexBufferCapacity);
-            _submitted = new SortedDictionary<int, List<RenderData>>();
+            _submitted = new SortedDictionary<int, Layer>();
 
             _logger.LogInfo("Renderer created.");
         }
 
-        public void Submit(float[] vertices, int[] indices, int layer)
+        public void Submit(float[] vertices, int[] indices, int layerIndex, Texture texture)
         {
             var renderData = new RenderData
             {
@@ -33,27 +34,23 @@ namespace Proof.Render.Renderer
                 Indices = indices,
             };
 
-            if (_submitted.TryGetValue(layer, out List<RenderData>? list))
+            if (_submitted.TryGetValue(layerIndex, out Layer? layer))
             {
-                list.Add(renderData);
+                layer.Add(renderData, texture);
             }
             else
             {
-                var newList = new List<RenderData>();
-                newList.Add(renderData);
-                _submitted.Add(layer, newList);
+                var newLayer = new Layer();
+                newLayer.Add(renderData, texture);
+                _submitted.Add(layerIndex, newLayer);
             }
         }
 
         public void Flush(VertexLayout layout)
         {
-            foreach (KeyValuePair<int, List<RenderData>> layer in _submitted)
+            foreach(Layer layer in _submitted.Values)
             {
-                foreach (var renderData in layer.Value)
-                {
-                    _vertexBuffer.Submit(renderData.Vertices);
-                    _indexBuffer.Submit(renderData.Indices);
-                }
+                layer.Render(_vertexBuffer, _indexBuffer);
             }
 
             _vertexBuffer.Flush(layout);

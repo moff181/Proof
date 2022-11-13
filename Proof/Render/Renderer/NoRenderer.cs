@@ -1,4 +1,5 @@
 ﻿using Proof.Render.Buffers;
+using Proof.Render.Textures;
 
 namespace Proof.Render.Renderer
 {
@@ -14,7 +15,7 @@ namespace Proof.Render.Renderer
             throw new NotImplementedException();
         }
 
-        public void Submit(float[] vertices, int[] indices, int layer)
+        public void Submit(float[] vertices, int[] indices, int layer, Texture texture)
         {
             throw new NotImplementedException();
         }

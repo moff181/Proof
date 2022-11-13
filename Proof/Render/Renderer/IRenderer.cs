@@ -1,10 +1,11 @@
 ﻿using Proof.Render.Buffers;
+using Proof.Render.Textures;
 
 namespace Proof.Render.Renderer
 {
     public interface IRenderer : IDisposable
     {
         void Flush(VertexLayout layout);
-        void Submit(float[] vertices, int[] indices, int layer);
+        void Submit(float[] vertices, int[] indices, int layerIndex, Texture texture);
     }
 }

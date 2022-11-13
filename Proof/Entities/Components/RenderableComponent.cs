@@ -82,7 +82,13 @@ namespace Proof.Entities.Components
                 }
             }
 
-            _renderer.Submit(_verticesBuffer, Model.Indices, Layer);
+            TextureComponent? textureComponent = entity.GetComponent<TextureComponent>();
+            if(textureComponent == null)
+            {
+                throw new Exception("Textures are currently required.");
+            }
+
+            _renderer.Submit(_verticesBuffer, Model.Indices, Layer, textureComponent.Texture);
         }
 
         public XElement ToXml()
