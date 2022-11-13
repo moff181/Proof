@@ -6,6 +6,6 @@ namespace Proof.Render.Renderer
     public interface IRenderer : IDisposable
     {
         void Flush(VertexLayout layout);
-        void Submit(float[] vertices, int[] indices, int layerIndex, Texture texture);
+        void Submit(float[] vertices, int[] indices, int layerIndex, ITexture texture);
     }
 }

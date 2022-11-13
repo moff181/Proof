@@ -5,20 +5,20 @@ using System.Runtime.InteropServices;
 
 namespace Proof.Render.Textures
 {
-    public sealed class Texture : IDisposable
+    public sealed class Texture : IDisposable, ITexture
     {
         private readonly ALogger _logger;
         private readonly uint _textureId;
 
         public unsafe Texture(ALogger logger, string filePath)
-		{
+        {
             _logger = logger;
-			FilePath = filePath;
+            FilePath = filePath;
 
             logger.LogInfo($"Loading texture from file: {filePath}");
 
-			_textureId = GL.glGenTextures(1)[0];
-			GL.glBindTexture(GL.GL_TEXTURE_2D, _textureId);
+            _textureId = GL.glGenTextures(1)[0];
+            GL.glBindTexture(GL.GL_TEXTURE_2D, _textureId);
 
             GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR);
             GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);
@@ -29,7 +29,7 @@ namespace Proof.Render.Textures
 
             IntPtr ptr = Marshal.AllocHGlobal(image.Data.Length);
             Marshal.Copy(image.Data, 0, ptr, image.Data.Length);
-            
+
             GL.glTexImage2D(
                 GL.GL_TEXTURE_2D,
                 0,

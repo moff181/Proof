@@ -26,7 +26,7 @@ namespace Proof.Render.Renderer
             _logger.LogInfo("Renderer created.");
         }
 
-        public void Submit(float[] vertices, int[] indices, int layerIndex, Texture texture)
+        public void Submit(float[] vertices, int[] indices, int layerIndex, ITexture texture)
         {
             var renderData = new RenderData
             {

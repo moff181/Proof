@@ -5,14 +5,14 @@ namespace Proof.Render.Renderer
 {
     public class Layer
     {
-        private readonly Dictionary<Texture, List<RenderData>> _renderables;
+        private readonly Dictionary<ITexture, List<RenderData>> _renderables;
 
         public Layer()
         {
-            _renderables = new Dictionary<Texture, List<RenderData>>();
+            _renderables = new Dictionary<ITexture, List<RenderData>>();
         }
 
-        public void Add(RenderData renderData, Texture texture)
+        public void Add(RenderData renderData, ITexture texture)
         {
             if(_renderables.TryGetValue(texture, out List<RenderData>? list))
             {
@@ -28,7 +28,7 @@ namespace Proof.Render.Renderer
 
         public void Render(VertexBuffer vertexBuffer, IndexBuffer indexBuffer)
         {
-            foreach(Texture texture in _renderables.Keys)
+            foreach(ITexture texture in _renderables.Keys)
             {
                 // TODO: update the bind index here
                 texture.Bind(0);

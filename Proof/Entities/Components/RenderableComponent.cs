@@ -2,6 +2,7 @@
 using Proof.Render;
 using Proof.Render.Buffers;
 using Proof.Render.Renderer;
+using Proof.Render.Textures;
 using System.Numerics;
 using System.Xml;
 using System.Xml.Linq;
@@ -83,12 +84,9 @@ namespace Proof.Entities.Components
             }
 
             TextureComponent? textureComponent = entity.GetComponent<TextureComponent>();
-            if(textureComponent == null)
-            {
-                throw new Exception("Textures are currently required.");
-            }
+            ITexture texture = textureComponent?.Texture ?? (ITexture)NoTexture.Instance;
 
-            _renderer.Submit(_verticesBuffer, Model.Indices, Layer, textureComponent.Texture);
+            _renderer.Submit(_verticesBuffer, Model.Indices, Layer, texture);
         }
 
         public XElement ToXml()
