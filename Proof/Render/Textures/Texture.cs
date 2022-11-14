@@ -7,12 +7,10 @@ namespace Proof.Render.Textures
 {
     public sealed class Texture : ITexture
     {
-        private readonly ALogger _logger;
         private readonly uint _textureId;
 
         public unsafe Texture(ALogger logger, string filePath)
         {
-            _logger = logger;
             FilePath = filePath;
 
             logger.LogInfo($"Loading texture from file: {filePath}");

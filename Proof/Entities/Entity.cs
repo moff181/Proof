@@ -15,8 +15,8 @@ namespace Proof.Entities
 {
     public class Entity
     {
-        private List<AudioComponent> _audioComponent;
-        private List<ScriptComponent> _scriptComponent;
+        private readonly List<AudioComponent> _audioComponent;
+        private readonly List<ScriptComponent> _scriptComponent;
         private readonly Dictionary<Type, IComponent> _otherComponents;
 
         public Entity(string name)
