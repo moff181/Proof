@@ -50,7 +50,7 @@ namespace Proof.Render.Renderer
         {
             foreach(Layer layer in _submitted.Values)
             {
-                layer.Render(_vertexBuffer, _indexBuffer);
+                layer.Render(layout, _vertexBuffer, _indexBuffer);
             }
 
             _vertexBuffer.Flush(layout);

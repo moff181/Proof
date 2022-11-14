@@ -26,18 +26,38 @@ namespace Proof.Render.Renderer
             }
         }
 
-        public void Render(VertexBuffer vertexBuffer, IndexBuffer indexBuffer)
+        public void Render(VertexLayout layout, VertexBuffer vertexBuffer, IndexBuffer indexBuffer)
         {
             foreach(ITexture texture in _renderables.Keys)
             {
-                // TODO: update the bind index here
-                texture.Bind(0);
+                bool isNoTexture = texture == NoTexture.Instance;
+                if(isNoTexture)
+                {
+                    texture.Bind(0);
+                }
 
+                int textureSlot = isNoTexture ? -1 : 0;
                 foreach(RenderData renderData in _renderables[texture])
                 {
+                    UpdateTexSlot(layout, renderData.Vertices, textureSlot);
                     vertexBuffer.Submit(renderData.Vertices);
                     indexBuffer.Submit(renderData.Indices);
                 }
+            }
+        }
+
+        private void UpdateTexSlot(VertexLayout layout, float[] vertices, int texSlotValue)
+        {
+            int? texSlot = layout.TextureSlotIndex;
+            if(texSlot == null)
+            {
+                return;
+            }
+
+            int sumOfElements = layout.SumOfElements();
+            for (int i = 0; i < vertices.Length; i += sumOfElements)
+            {
+                vertices[i + texSlot.Value] = texSlotValue;
             }
         }
     }
