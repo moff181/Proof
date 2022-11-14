@@ -123,6 +123,17 @@ namespace Proof.Render.Shaders
             GL.glUniformMatrix4fv(uniformLocation.Value, 1, false, &val.M11);
         }
 
+        public void LoadUniform(string name, int[] vals)
+        {
+            int? uniformLocation = GetUniformLocation(name);
+            if (!uniformLocation.HasValue)
+            {
+                return;
+            }
+
+            GL.glUniform1iv(uniformLocation.Value, vals.Length, vals);
+        }
+
         public VertexLayout GetLayout()
         {
             return _vertexLayout;

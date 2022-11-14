@@ -14,5 +14,6 @@ namespace Proof.Render.Shaders
         void LoadUniform(string name, Vector2 val);
         void LoadUniform(string name, Vector3 val);
         void LoadUniform(string name, Vector4 val);
+        void LoadUniform(string name, int[] vals);
     }
 }

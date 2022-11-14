@@ -26,23 +26,24 @@ namespace Proof.Render.Renderer
             }
         }
 
-        public void Render(VertexLayout layout, VertexBuffer vertexBuffer, IndexBuffer indexBuffer)
+        public void Render(VertexLayout layout, VertexBuffer vertexBuffer, IndexBuffer indexBuffer, ref int textureSlot)
         {
             foreach(ITexture texture in _renderables.Keys)
             {
                 bool isNoTexture = texture == NoTexture.Instance;
-                if(isNoTexture)
+                if(!isNoTexture)
                 {
-                    texture.Bind(0);
+                    texture.Bind(textureSlot);
                 }
 
-                int textureSlot = isNoTexture ? -1 : 0;
+                int localTextureSlot = isNoTexture ? -1 : textureSlot;
                 foreach(RenderData renderData in _renderables[texture])
                 {
-                    UpdateTexSlot(layout, renderData.Vertices, textureSlot);
+                    UpdateTexSlot(layout, renderData.Vertices, localTextureSlot);
                     vertexBuffer.Submit(renderData.Vertices);
                     indexBuffer.Submit(renderData.Indices);
                 }
+                textureSlot++;
             }
         }
 

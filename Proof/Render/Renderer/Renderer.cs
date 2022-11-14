@@ -48,9 +48,10 @@ namespace Proof.Render.Renderer
 
         public void Flush(VertexLayout layout)
         {
+            int textureSlot = 0;
             foreach(Layer layer in _submitted.Values)
             {
-                layer.Render(layout, _vertexBuffer, _indexBuffer);
+                layer.Render(layout, _vertexBuffer, _indexBuffer, ref textureSlot);
             }
 
             _vertexBuffer.Flush(layout);

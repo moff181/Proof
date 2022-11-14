@@ -51,5 +51,10 @@ namespace Proof.Render.Shaders
         {
             throw new NotImplementedException();
         }
+
+        public void LoadUniform(string name, int[] vals)
+        {
+            // Do nothing
+        }
     }
 }

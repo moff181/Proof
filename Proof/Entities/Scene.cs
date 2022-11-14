@@ -50,6 +50,13 @@ namespace Proof.Entities
                 e.Update();
             }
 
+            int[] vals = new int[8];
+            for(int i = 0; i < vals.Length; i++)
+            {
+                vals[i] = i;
+            }
+            Shader.LoadUniform("Textures", vals);
+            
             Renderer.Flush(Shader.GetLayout());
         }
 
