@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Proof.Render.Textures
 {
-    public sealed class Texture : IDisposable, ITexture
+    public sealed class Texture : ITexture
     {
         private readonly ALogger _logger;
         private readonly uint _textureId;
@@ -42,21 +42,6 @@ namespace Proof.Render.Textures
                 ptr);
 
             logger.LogInfo($"Loaded texture successfully.");
-        }
-
-        ~Texture()
-        {
-            Dispose();
-        }
-
-        public void Dispose()
-        {
-            _logger.LogInfo($"Disposing of texture: {FilePath}...");
-
-            GL.glDeleteTexture(_textureId);
-            GC.SuppressFinalize(this);
-
-            _logger.LogInfo("Texture disposed of.");
         }
 
         public string FilePath { get; set; }

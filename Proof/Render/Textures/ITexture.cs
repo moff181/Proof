@@ -5,6 +5,5 @@
         string FilePath { get; set; }
 
         void Bind(int textureSlot);
-        void Dispose();
     }
 }
