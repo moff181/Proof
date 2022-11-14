@@ -50,6 +50,7 @@ namespace Proof.Entities
                 e.Update();
             }
 
+            // TODO: This probably shouldn't be here/should be more generic
             int[] vals = new int[8];
             for(int i = 0; i < vals.Length; i++)
             {
