@@ -47,7 +47,7 @@ namespace Proof.Render.Renderer
             }
         }
 
-        private void UpdateTexSlot(VertexLayout layout, float[] vertices, int texSlotValue)
+        private static void UpdateTexSlot(VertexLayout layout, float[] vertices, int texSlotValue)
         {
             int? texSlot = layout.TextureSlotIndex;
             if(texSlot == null)

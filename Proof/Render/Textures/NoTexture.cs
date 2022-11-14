@@ -13,10 +13,5 @@
         {
             // Do nothing
         }
-
-        public void Dispose()
-        {
-            // Do nothing
-        }
     }
 }
