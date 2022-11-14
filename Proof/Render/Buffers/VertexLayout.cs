@@ -74,7 +74,7 @@ namespace Proof.Render.Buffers
             }
 
             int? textureSlotIndex = null;
-            XElement? textureIndexNode = vertexLayoutNode.Element("TextureSlotIndex");
+            XElement? textureIndexNode = vertexLayoutNode.Element("TextureIndex");
             if (textureIndexNode != null && int.TryParse(textureIndexNode.Value, out int textureSlotIndexTemp))
             {
                 textureSlotIndex = textureSlotIndexTemp;
