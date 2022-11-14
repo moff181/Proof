@@ -16,17 +16,14 @@ namespace Proof.Entities
     public class Entity
     {
         private List<AudioComponent> _audioComponent;
-        private CameraComponent? _cameraComponent;
-        private ColourComponent? _colourComponent;
-        private RenderableComponent? _renderableComponent;
         private List<ScriptComponent> _scriptComponent;
-        private TextureComponent? _textureComponent;
-        private TransformComponent? _transformComponent;
+        private readonly Dictionary<Type, IComponent> _otherComponents;
 
         public Entity(string name)
         {
             _audioComponent = new List<AudioComponent>();
             _scriptComponent = new List<ScriptComponent>();
+            _otherComponents = new Dictionary<Type, IComponent>();
             Name = name;
         }
 
@@ -35,12 +32,12 @@ namespace Proof.Entities
         public void Update()
         {
             _audioComponent.ForEach(x => x.Update(this));
-            _cameraComponent?.Update(this);
-            _colourComponent?.Update(this);
-            _renderableComponent?.Update(this);
             _scriptComponent.ForEach(x => x.Update(this));
-            _textureComponent?.Update(this);
-            _transformComponent?.Update(this);
+            
+            foreach(var comp in _otherComponents.Values)
+            {
+                comp.Update(this);
+            }
         }
 
         public void AddComponent(IComponent component)
@@ -49,33 +46,13 @@ namespace Proof.Entities
             {
                 _audioComponent.Add(audioComp);
             }
-            else if (component is CameraComponent cameraComp)
-            {
-                _cameraComponent = cameraComp;
-            }
-            else if (component is ColourComponent colourComp)
-            {
-                _colourComponent = colourComp;
-            }
-            else if (component is RenderableComponent renderableComp)
-            {
-                _renderableComponent = renderableComp;
-            }
             else if (component is ScriptComponent scriptComp)
             {
                 _scriptComponent.Add(scriptComp);
             }
-            else if (component is TextureComponent textureComp)
-            {
-                _textureComponent = textureComp;
-            }
-            else if (component is TransformComponent transformComp)
-            {
-                _transformComponent = transformComp;
-            }
             else
             {
-                throw new ArgumentException($"Unknown component type could not be added.");
+                _otherComponents.Add(component.GetType(), component);
             }
         }
 
@@ -85,33 +62,13 @@ namespace Proof.Entities
             {
                 _audioComponent.Remove(audioComp);
             }
-            else if (component is CameraComponent)
-            {
-                _cameraComponent = null;
-            }
-            else if (component is ColourComponent)
-            {
-                _colourComponent = null;
-            }
-            else if (component is RenderableComponent)
-            {
-                _renderableComponent = null;
-            }
             else if (component is ScriptComponent scriptComp)
             {
                 _scriptComponent.Remove(scriptComp);
             }
-            else if (component is TextureComponent)
-            {
-                _textureComponent = null;
-            }
-            else if (component is TransformComponent)
-            {
-                _transformComponent = null;
-            }
             else
             {
-                throw new ArgumentException($"Unknown component type could not be added.");
+                _otherComponents.Remove(component.GetType());
             }
         }
 
@@ -121,32 +78,18 @@ namespace Proof.Entities
             {
                 return (T?)Convert.ChangeType(_audioComponent.FirstOrDefault(), typeof(T?));
             }
-            if (typeof(T) == typeof(CameraComponent))
-            {
-                return (T?)Convert.ChangeType(_cameraComponent, typeof(T?));
-            }
-            if (typeof(T) == typeof(ColourComponent))
-            {
-                return (T?)Convert.ChangeType(_colourComponent, typeof(T?));
-            }
-            if (typeof(T) == typeof(RenderableComponent))
-            {
-                return (T?)Convert.ChangeType(_renderableComponent, typeof(T?));
-            }
+           
             if (typeof(T) == typeof(ScriptComponent))
             {
                 return (T?)Convert.ChangeType(_scriptComponent.FirstOrDefault(), typeof(T?));
             }
-            if (typeof(T) == typeof(TextureComponent))
+
+            if (_otherComponents.TryGetValue(typeof(T), out IComponent? component))
             {
-                return (T?)Convert.ChangeType(_textureComponent, typeof(T?));
-            }
-            if (typeof(T) == typeof(TransformComponent))
-            {
-                return (T?)Convert.ChangeType(_transformComponent, typeof(T?));
+                return (T)component;
             }
 
-            throw new ArgumentException("Unknown type for retrieving component");
+            return default(T);
         }
 
         public AudioComponent? GetAudio(string path)
@@ -161,17 +104,10 @@ namespace Proof.Entities
 
         public IEnumerable<IComponent> GetComponents()
         {
-            // TODO: update this to work with attributes or something
-            var result = new List<IComponent?>
-            {
-                _cameraComponent,
-                _colourComponent,
-                _renderableComponent,
-                _textureComponent,
-                _transformComponent,
-            };
+            var result = new List<IComponent?>();
             result.AddRange(_audioComponent);
             result.AddRange(_scriptComponent);
+            result.AddRange(_otherComponents.Values);
 
             return result
                 .Where(x => x != null)
