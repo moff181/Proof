@@ -39,7 +39,7 @@ namespace Proof.Render.Shaders
             uint vertexShaderId = CreateShader(_logger, ShaderType.Vertex, vertexFile);
             uint fragmentShaderId = CreateShader(_logger, ShaderType.Fragment, fragmentFile);
 
-            _programId = GL.glCreateProgram();
+            _programId = _gl.CreateProgram();
             _gl.AttachShader(_programId, vertexShaderId);
             _gl.AttachShader(_programId, fragmentShaderId);
 
@@ -174,12 +174,12 @@ namespace Proof.Render.Shaders
                 throw new IOException($"Could not read shader file from {filePath}", e);
             }
 
-            uint shaderId = GL.glCreateShader((int)type);
+            uint shaderId = _gl.CreateShader((int)type);
 
             _gl.ShaderSource(shaderId, src);
             _gl.CompileShader(shaderId);
 
-            string shaderLog = GL.glGetShaderInfoLog(shaderId);
+            string shaderLog = _gl.GetShaderInfoLog(shaderId);
             if (!string.IsNullOrWhiteSpace(shaderLog))
             {
                 logger.LogWarn(shaderLog);
