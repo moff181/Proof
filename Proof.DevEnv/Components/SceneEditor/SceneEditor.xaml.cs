@@ -83,7 +83,6 @@ namespace Proof.DevEnv.Components
             var assemblyWrapper = new AssemblyWrapper(gameDllPath);
             var scriptLoader = new ScriptLoader(assemblyWrapper, new NoLogger());
             var soundLibrary = new SoundLibrary(new NoLogger());
-            var textureLibrary = new TextureLibrary(new NoLogger());
 
             _application = new DevEnvApplication(scriptLoader);
             SizeGameWindowToEditorWindow();
@@ -96,6 +95,7 @@ namespace Proof.DevEnv.Components
                 }
 
                 Tools.Init(_application.Scene, assemblyWrapper, this, _changeHistory);
+                var textureLibrary = new TextureLibrary(_application.GL, new NoLogger());
                 _modelLibrary = new ModelLibrary(new NoLogger());
                 CreateSidePanels(scriptLoader, _application.Window.BuildInputManager(), soundLibrary, textureLibrary);
             });

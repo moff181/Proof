@@ -16,7 +16,6 @@ namespace Proof
         public static bool ScriptsEnabled { get; internal set; }
 
         protected readonly ALogger Logger;
-        private readonly IOpenGLApi _gl;
         private readonly ScriptLoader _scriptLoader;
 
         protected Application(
@@ -32,8 +31,8 @@ namespace Proof
             Logger = logger;
             _scriptLoader = scriptLoader;
 
-            _gl = new OpenGLApi();
-            Window = new Window(_gl, logger, 1280, 720, title, false, vsync, parentWindow ?? IntPtr.Zero);
+            GL = new OpenGLApi();
+            Window = new Window(GL, logger, 1280, 720, title, false, vsync, parentWindow ?? IntPtr.Zero);
             GlQueue = new Queue<Action>();
             Scene = null;
         }
@@ -41,6 +40,7 @@ namespace Proof
         public Window Window { get; }
         public Queue<Action> GlQueue { get; }
         public Scene? Scene { get; internal set; }
+        public IOpenGLApi GL { get; }
 
         public void Run(string startupScene)
         {
@@ -50,12 +50,12 @@ namespace Proof
                 InputManager inputManager = Window.BuildInputManager();
 
                 var modelLibrary = new ModelLibrary(Logger);
-                using var renderer = new Renderer(_gl, Logger, 50000, 40000);
+                using var renderer = new Renderer(GL, Logger, 50000, 40000);
                 var soundLibrary = new SoundLibrary(Logger);
-                var textureLibrary = new TextureLibrary(Logger);
+                var textureLibrary = new TextureLibrary(GL, Logger);
 
                 Scene = Scene.LoadFromFile(
-                    _gl,
+                    GL,
                     Logger,
                     modelLibrary,
                     renderer,

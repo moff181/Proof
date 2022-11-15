@@ -1,14 +1,17 @@
 ﻿using Proof.Core.Logging;
+using Proof.OpenGL;
 
 namespace Proof.Render.Textures
 {
     public class TextureLibrary
     {
+        private readonly IOpenGLApi _gl;
         private readonly ALogger _logger;
         private readonly Dictionary<string, Texture> _textures;
 
-        public TextureLibrary(ALogger logger)
+        public TextureLibrary(IOpenGLApi gl, ALogger logger)
         {
+            _gl = gl;
             _logger = logger;
             _textures = new Dictionary<string, Texture>();
         }
@@ -20,7 +23,7 @@ namespace Proof.Render.Textures
                 return result;
             }
 
-            return new Texture(_logger, path);
+            return new Texture(_gl, _logger, path);
         }
     }
 }
