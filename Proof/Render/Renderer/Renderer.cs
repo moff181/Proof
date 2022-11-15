@@ -1,4 +1,5 @@
 ﻿using Proof.Core.Logging;
+using Proof.OpenGL;
 using Proof.Render.Buffers;
 using Proof.Render.Textures;
 
@@ -13,13 +14,13 @@ namespace Proof.Render.Renderer
 
         private readonly SortedDictionary<int, Layer> _submitted;
 
-        public Renderer(ALogger logger, int vertexBufferCapacity, int indexBufferCapacity)
+        public Renderer(IOpenGLApi gl, ALogger logger, int vertexBufferCapacity, int indexBufferCapacity)
         {
             _logger = logger;
 
             _logger.LogInfo("Creating renderer...");
 
-            _vertexBuffer = new VertexBuffer(logger, vertexBufferCapacity);
+            _vertexBuffer = new VertexBuffer(gl, logger, vertexBufferCapacity);
             _indexBuffer = new IndexBuffer(logger, indexBufferCapacity);
             _submitted = new SortedDictionary<int, Layer>();
 

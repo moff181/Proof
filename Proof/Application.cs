@@ -4,6 +4,7 @@ using Proof.Core.Logging;
 using Proof.Entities;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
+using Proof.OpenGL;
 using Proof.Render;
 using Proof.Render.Renderer;
 using Proof.Render.Textures;
@@ -45,9 +46,10 @@ namespace Proof
             {
                 Logger.LogInfo("Application starting...");
                 InputManager inputManager = Window.BuildInputManager();
+                IOpenGLApi gl = new OpenGLApi();
 
                 var modelLibrary = new ModelLibrary(Logger);
-                using var renderer = new Renderer(Logger, 50000, 40000);
+                using var renderer = new Renderer(gl, Logger, 50000, 40000);
                 var soundLibrary = new SoundLibrary(Logger);
                 var textureLibrary = new TextureLibrary(Logger);
 

@@ -6,6 +6,7 @@ namespace Proof.Render.Buffers
 {
     public sealed class VertexBuffer : IDisposable
     {
+        private readonly IOpenGLApi _gl;
         private readonly ALogger _logger;
 
         private readonly uint _vaoId;
@@ -13,15 +14,16 @@ namespace Proof.Render.Buffers
 
         private readonly FixedList<float> _vertices;
 
-        public VertexBuffer(ALogger logger, int capacity)
+        public VertexBuffer(IOpenGLApi gl, ALogger logger, int capacity)
         {
+            _gl = gl;
             _logger = logger;
 
             _logger.LogInfo($"Creating vertex buffer with capacity of {capacity}");
 
             _vertices = new FixedList<float>(capacity);
-            _vaoId = GL.glGenVertexArray();
-            _vboId = GL.glGenBuffer();
+            _vaoId = _gl.GenVertexArray();
+            _vboId = _gl.GenBuffer();
 
             _logger.LogInfo($"Vertex buffer generated successfully (VAO ID: {_vaoId}; VBO ID: {_vboId})");
         }
@@ -30,8 +32,8 @@ namespace Proof.Render.Buffers
         {
             _logger.LogInfo($"Disposing of vertex buffer (VAO ID: {_vaoId}; VBO ID: {_vboId})");
 
-            GL.glDeleteBuffer(_vboId);
-            GL.glDeleteVertexArray(_vaoId);
+            _gl.DeleteBuffer(_vboId);
+            _gl.DeleteVertexArray(_vaoId);
 
             _logger.LogInfo("Vertex buffer disposed of.");
         }
@@ -47,7 +49,7 @@ namespace Proof.Render.Buffers
 
             fixed (void* ptr = &_vertices.First())
             {
-                GL.glBufferData(GL.GL_ARRAY_BUFFER, sizeof(float) * _vertices.Index, ptr, GL.GL_STATIC_DRAW);
+                _gl.BufferData(GLConstants.GL_ARRAY_BUFFER, sizeof(float) * _vertices.Index, ptr, GLConstants.GL_STATIC_DRAW);
             }
 
             _vertices.Clear();
@@ -55,15 +57,15 @@ namespace Proof.Render.Buffers
 
         private unsafe void Bind(VertexLayout layout)
         {
-            GL.glBindVertexArray(_vaoId);
-            GL.glBindBuffer(GL.GL_ARRAY_BUFFER, _vboId);
+            _gl.BindVertexArray(_vaoId);
+            _gl.BindBuffer(GLConstants.GL_ARRAY_BUFFER, _vboId);
 
             uint counter = 0;
             int total = 0;
             foreach (int arraySize in layout)
             {
-                GL.glVertexAttribPointer(counter, arraySize, GL.GL_FLOAT, false, layout.Stride(), (void*)(total * sizeof(float)));
-                GL.glEnableVertexAttribArray(counter);
+                _gl.VertexAttribPointer(counter, arraySize, GLConstants.GL_FLOAT, false, layout.Stride(), (void*)(total * sizeof(float)));
+                _gl.EnableVertexAttribArray(counter);
 
                 total += arraySize;
                 counter++;
