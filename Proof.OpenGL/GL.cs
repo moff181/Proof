@@ -16,7 +16,7 @@ namespace Proof.OpenGL
     [System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "InconsistentNaming")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "IdentifierTypo")]
     [SuppressUnmanagedCodeSecurity]
-    public static unsafe partial class GL
+    internal static unsafe partial class GL
     {
         private static string PtrToStringUtf8(IntPtr ptr)
         {
