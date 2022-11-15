@@ -1,20 +1,21 @@
 ﻿using Proof.Core.DataStructures;
 using Proof.Core.Logging;
 using Proof.OpenGL;
-using System;
 
 namespace Proof.Render.Buffers
 {
     public sealed class IndexBuffer : IDisposable
     {
+        private readonly IOpenGLApi _gl;
         private readonly ALogger _logger;
 
         private readonly FixedList<int> _indices;
 
         private int _largestIndex;
 
-        public IndexBuffer(ALogger logger, int capacity)
+        public IndexBuffer(IOpenGLApi gl, ALogger logger, int capacity)
         {
+            _gl = gl;
             _logger = logger;
             _indices = new FixedList<int>(capacity);
             _largestIndex = 0;
@@ -49,7 +50,7 @@ namespace Proof.Render.Buffers
         {
             fixed (void* ptr = &_indices.First())
             {
-                GL.glDrawElements(GL.GL_TRIANGLES, _indices.Index, GL.GL_UNSIGNED_INT, ptr);
+                _gl.DrawElements(GLConstants.GL_TRIANGLES, _indices.Index, GLConstants.GL_UNSIGNED_INT, ptr);
             }
 
             _indices.Clear();

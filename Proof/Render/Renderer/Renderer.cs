@@ -21,7 +21,7 @@ namespace Proof.Render.Renderer
             _logger.LogInfo("Creating renderer...");
 
             _vertexBuffer = new VertexBuffer(gl, logger, vertexBufferCapacity);
-            _indexBuffer = new IndexBuffer(logger, indexBufferCapacity);
+            _indexBuffer = new IndexBuffer(gl, logger, indexBufferCapacity);
             _submitted = new SortedDictionary<int, Layer>();
 
             _logger.LogInfo("Renderer created.");
