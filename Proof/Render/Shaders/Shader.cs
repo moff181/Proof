@@ -11,12 +11,13 @@ namespace Proof.Render.Shaders
     {
         private enum ShaderType
         {
-            Vertex = GL.GL_VERTEX_SHADER,
-            Fragment = GL.GL_FRAGMENT_SHADER,
+            Vertex = GLConstants.GL_VERTEX_SHADER,
+            Fragment = GLConstants.GL_FRAGMENT_SHADER,
         }
 
         private const int UniformNotFound = -1;
 
+        private readonly IOpenGLApi _gl;
         private readonly ALogger _logger;
         private readonly uint _programId;
 
@@ -24,8 +25,9 @@ namespace Proof.Render.Shaders
 
         private readonly VertexLayout _vertexLayout;
 
-        private Shader(ALogger logger, string filePath, string vertexFile, string fragmentFile, VertexLayout vertexLayout)
+        private Shader(IOpenGLApi gl, ALogger logger, string filePath, string vertexFile, string fragmentFile, VertexLayout vertexLayout)
         {
+            _gl = gl;
             _logger = logger;
             _uniformLocations = new Dictionary<string, int?>();
             _vertexLayout = vertexLayout;
@@ -38,15 +40,15 @@ namespace Proof.Render.Shaders
             uint fragmentShaderId = CreateShader(_logger, ShaderType.Fragment, fragmentFile);
 
             _programId = GL.glCreateProgram();
-            GL.glAttachShader(_programId, vertexShaderId);
-            GL.glAttachShader(_programId, fragmentShaderId);
+            _gl.AttachShader(_programId, vertexShaderId);
+            _gl.AttachShader(_programId, fragmentShaderId);
 
-            GL.glLinkProgram(_programId);
+            _gl.LinkProgram(_programId);
 
-            GL.glValidateProgram(_programId);
+            _gl.ValidateProgram(_programId);
 
-            GL.glDeleteShader(vertexShaderId);
-            GL.glDeleteShader(fragmentShaderId);
+            _gl.DeleteShader(vertexShaderId);
+            _gl.DeleteShader(fragmentShaderId);
 
             _logger.LogInfo("Shader created.");
         }
@@ -57,14 +59,14 @@ namespace Proof.Render.Shaders
         {
             _logger.LogInfo("Disposing of shader...");
 
-            GL.glDeleteProgram(_programId);
+            _gl.DeleteProgram(_programId);
 
             _logger.LogInfo("Shader disposed of.");
         }
 
         public void Bind()
         {
-            GL.glUseProgram(_programId);
+            _gl.UseProgram(_programId);
         }
 
         public void LoadUniform(string name, float val)
@@ -75,7 +77,7 @@ namespace Proof.Render.Shaders
                 return;
             }
 
-            GL.glUniform1f(uniformLocation.Value, val);
+            _gl.Uniform1f(uniformLocation.Value, val);
         }
 
         public void LoadUniform(string name, Vector2 val)
@@ -86,7 +88,7 @@ namespace Proof.Render.Shaders
                 return;
             }
 
-            GL.glUniform2f(uniformLocation.Value, val.X, val.Y);
+            _gl.Uniform2f(uniformLocation.Value, val.X, val.Y);
         }
 
         public void LoadUniform(string name, Vector3 val)
@@ -97,7 +99,7 @@ namespace Proof.Render.Shaders
                 return;
             }
 
-            GL.glUniform3f(uniformLocation.Value, val.X, val.Y, val.Z);
+            _gl.Uniform3f(uniformLocation.Value, val.X, val.Y, val.Z);
         }
 
         public void LoadUniform(string name, Vector4 val)
@@ -108,7 +110,7 @@ namespace Proof.Render.Shaders
                 return;
             }
 
-            GL.glUniform4f(uniformLocation.Value, val.X, val.Y, val.Z, val.W);
+            _gl.Uniform4f(uniformLocation.Value, val.X, val.Y, val.Z, val.W);
         }
 
         public unsafe void LoadUniform(string name, Matrix4x4 val)
@@ -120,7 +122,7 @@ namespace Proof.Render.Shaders
             }
 
             // Assumes that values in Matrix4x4 are stored contiguously
-            GL.glUniformMatrix4fv(uniformLocation.Value, 1, false, &val.M11);
+            _gl.UniformMatrix4fv(uniformLocation.Value, 1, false, &val.M11);
         }
 
         public void LoadUniform(string name, int[] vals)
@@ -131,7 +133,7 @@ namespace Proof.Render.Shaders
                 return;
             }
 
-            GL.glUniform1iv(uniformLocation.Value, vals.Length, vals);
+            _gl.Uniform1iv(uniformLocation.Value, vals.Length, vals);
         }
 
         public VertexLayout GetLayout()
@@ -146,7 +148,7 @@ namespace Proof.Render.Shaders
                 return value;
             }
 
-            int uniformLocation = GL.glGetUniformLocation(_programId, name);
+            int uniformLocation = _gl.GetUniformLocation(_programId, name);
             if (uniformLocation == UniformNotFound)
             {
                 _logger.LogWarn($"Could not find uniform in shader: {name}");
@@ -158,7 +160,7 @@ namespace Proof.Render.Shaders
             return uniformLocation;
         }
 
-        private static uint CreateShader(ALogger logger, ShaderType type, string filePath)
+        private uint CreateShader(ALogger logger, ShaderType type, string filePath)
         {
             logger.LogInfo($"Creating {type} shader from {filePath}...");
 
@@ -174,8 +176,8 @@ namespace Proof.Render.Shaders
 
             uint shaderId = GL.glCreateShader((int)type);
 
-            GL.glShaderSource(shaderId, src);
-            GL.glCompileShader(shaderId);
+            _gl.ShaderSource(shaderId, src);
+            _gl.CompileShader(shaderId);
 
             string shaderLog = GL.glGetShaderInfoLog(shaderId);
             if (!string.IsNullOrWhiteSpace(shaderLog))
@@ -186,7 +188,7 @@ namespace Proof.Render.Shaders
             return shaderId;
         }
 
-        public static Shader LoadFromFile(ALogger logger, string filePath)
+        public static Shader LoadFromFile(IOpenGLApi gl, ALogger logger, string filePath)
         {
             logger.LogInfo($"Loading shader from {filePath}...");
 
@@ -223,7 +225,7 @@ namespace Proof.Render.Shaders
 
             VertexLayout vertexLayout = VertexLayout.LoadFromNode(logger, vertexLayoutNode);
 
-            return new Shader(logger, filePath, vertexFileNode.Value, fragmentFileNode.Value, vertexLayout);
+            return new Shader(gl, logger, filePath, vertexFileNode.Value, fragmentFileNode.Value, vertexLayout);
         }
     }
 }

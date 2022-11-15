@@ -2,6 +2,7 @@
 using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
+using Proof.OpenGL;
 using Proof.Render;
 using Proof.Render.Renderer;
 using Proof.Render.Shaders;
@@ -84,6 +85,7 @@ namespace Proof.Entities
         }
 
         public static Scene LoadFromFile(
+            IOpenGLApi gl,
             ALogger logger,
             ModelLibrary modelLibrary,
             Renderer renderer,
@@ -115,7 +117,7 @@ namespace Proof.Entities
                 throw new XmlException("Could not find Shader node while loading scene.");
             }
 
-            var shader = Render.Shaders.Shader.LoadFromFile(logger, shaderNode.Value);
+            var shader = Render.Shaders.Shader.LoadFromFile(gl, logger, shaderNode.Value);
 
             var scene = new Scene(logger, shader, renderer, filePath);
 

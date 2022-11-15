@@ -55,6 +55,7 @@ namespace Proof
                 var textureLibrary = new TextureLibrary(Logger);
 
                 Scene = Scene.LoadFromFile(
+                    _gl,
                     Logger,
                     modelLibrary,
                     renderer,
