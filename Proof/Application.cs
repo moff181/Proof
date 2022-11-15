@@ -33,7 +33,7 @@ namespace Proof
             _scriptLoader = scriptLoader;
 
             _gl = new OpenGLApi();
-            Window = new Window(logger, 1280, 720, title, false, vsync, parentWindow ?? IntPtr.Zero);
+            Window = new Window(_gl, logger, 1280, 720, title, false, vsync, parentWindow ?? IntPtr.Zero);
             GlQueue = new Queue<Action>();
             Scene = null;
         }

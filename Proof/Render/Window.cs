@@ -9,11 +9,13 @@ namespace Proof.Render
 {
     public sealed class Window : IDisposable
     {
+        private readonly IOpenGLApi _gl;
         private readonly ALogger _logger;
         private readonly GLFW.Window _glfwWindow;
 
-        public Window(ALogger logger, int width, int height, string title, bool fullScreen, bool vsync, IntPtr? parent = null)
+        public Window(IOpenGLApi gl, ALogger logger, int width, int height, string title, bool fullScreen, bool vsync, IntPtr? parent = null)
         {
+            _gl = gl;
             _logger = logger;
 
             logger.LogInfo($"Creating window [width: {width}, height: {height}, title: {title}]...");
@@ -40,7 +42,7 @@ namespace Proof.Render
 
                 _logger.LogInfo("Binding GL imports...");
                 Glfw.MakeContextCurrent(_glfwWindow);
-                GL.Import(Glfw.GetProcAddress);
+                _gl.Import(Glfw.GetProcAddress);
                 _logger.LogInfo("GL binding completed.");
 
                 if (vsync)
@@ -73,7 +75,7 @@ namespace Proof.Render
         {
             Glfw.SwapBuffers(_glfwWindow);
             Glfw.PollEvents();
-            GL.glClear(GL.GL_COLOR_BUFFER_BIT);
+            _gl.Clear(GLConstants.GL_COLOR_BUFFER_BIT);
         }
 
         public InputManager BuildInputManager()
@@ -84,7 +86,7 @@ namespace Proof.Render
         public void Resize(int width, int height)
         {
             Glfw.SetWindowSize(_glfwWindow, width, height);
-            GL.glViewport(0, 0, width, height);
+            _gl.Viewport(0, 0, width, height);
         }
 
         public void Move(int x, int y)
