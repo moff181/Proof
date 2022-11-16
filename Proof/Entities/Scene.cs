@@ -69,7 +69,12 @@ namespace Proof.Entities
 
             var scene = new XElement("Scene");
 
-            scene.Add(new XElement("Shader", Shader.FilePath));
+            scene.Add(
+                new XElement(
+                    "Shaders",
+                    new XElement(
+                        "Shader",
+                        Shader.FilePath)));
 
             var entities = new XElement("Entities");
 
@@ -111,13 +116,19 @@ namespace Proof.Entities
                 throw new XmlException("Could not find root node while loading scene.");
             }
 
-            XElement? shaderNode = root.Element("Shader");
-            if(shaderNode == null)
+            XElement? shadersNode = root.Element("Shaders");
+            if (shadersNode == null)
             {
-                throw new XmlException("Could not find Shader node while loading scene.");
+                throw new XmlException("Could not find Shaders node while loading scene.");
             }
 
-            var shader = Render.Shaders.Shader.LoadFromFile(gl, logger, shaderNode.Value);
+            var shadersList = new List<Shader>();
+            foreach (var shaderNode in shadersNode.Elements("Shader"))
+            {
+                shadersList.Add(Render.Shaders.Shader.LoadFromFile(gl, logger, shaderNode.Value));
+            }
+
+            var shader = shadersList.First();
 
             var scene = new Scene(logger, shader, renderer, filePath);
 
