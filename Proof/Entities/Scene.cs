@@ -129,7 +129,6 @@ namespace Proof.Entities
             }
 
             var shader = shaders.First();
-
             var scene = new Scene(logger, shader, renderer, filePath);
 
             XElement? entitiesNode = root.Element("Entities");
@@ -144,7 +143,6 @@ namespace Proof.Entities
             {
                 Entity entity = Entity.LoadFromNode(
                     logger,
-                    shader,
                     shaders.ToArray(),
                     modelLibrary,
                     renderer,

@@ -21,7 +21,6 @@ namespace Proof.Entities.Components
         }
 
         public IComponent LoadFromNode(
-            Shader shader,
             IShader[] shaders,
             ModelLibrary modelLibrary,
             Renderer renderer,
@@ -38,7 +37,7 @@ namespace Proof.Entities.Components
                 case "AudioComponent":
                     return AudioComponent.LoadFromNode(soundLibrary, componentNode);
                 case "CameraComponent":
-                    return CameraComponent.LoadFromNode(_logger, shader, componentNode);
+                    return CameraComponent.LoadFromNode(_logger, shaders, componentNode);
                 case "ColourComponent":
                     return ColourComponent.LoadFromNode(componentNode);
                 case "RenderableComponent":

@@ -1,6 +1,7 @@
 ﻿using Proof.Core.Logging;
 using Proof.Render.Shaders;
 using System.Numerics;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Proof.Entities.Components
@@ -9,11 +10,11 @@ namespace Proof.Entities.Components
     {
         public bool Active { get; set; }
 
-        private readonly IShader _shader;
+        public IShader Shader { get; set; }
         
         public CameraComponent(IShader shader, bool active)
         {
-            _shader = shader;
+            Shader = shader;
             Active = active;
         }
 
@@ -33,17 +34,18 @@ namespace Proof.Entities.Components
             Matrix4x4 translationMat = Matrix4x4.CreateTranslation(position.X, position.Y, 0);
             Matrix4x4 transformationMat = scaleMat * translationMat;
 
-            _shader.LoadUniform("Transformation", transformationMat);
+            Shader.LoadUniform("Transformation", transformationMat);
         }
 
         public XElement ToXml()
         {
             return new XElement(
                 "CameraComponent",
-                new XElement("Active", Active));
+                new XElement("Active", Active),
+                new XElement("Shader", Shader.FilePath));
         }
 
-        public static IComponent LoadFromNode(ALogger logger, Shader shader, XElement componentNode)
+        public static IComponent LoadFromNode(ALogger logger, IShader[] shaders, XElement componentNode)
         {
             XElement? activeNode = componentNode.Element("Active");
             if(activeNode == null)
@@ -52,6 +54,19 @@ namespace Proof.Entities.Components
             }
 
             bool active = bool.Parse(activeNode?.Value ?? "false");
+
+            XElement? shaderNode = componentNode.Element("Shader");
+            if(shaderNode == null)
+            {
+                throw new XmlException("Could not find shader node while parsing CameraComponent.");
+            }
+
+            IShader? shader = shaders.FirstOrDefault(x => x.FilePath == shaderNode.Value);
+            if(shader == null)
+            {
+                throw new IOException($"Could not find Shader specified in CameraComponent: {shaderNode.Value}");
+            }
+
             return new CameraComponent(shader, active);
         }
     }

@@ -134,7 +134,6 @@ namespace Proof.Entities
 
         public static Entity LoadFromNode(
             ALogger logger,
-            Shader shader,
             IShader[] shaders,
             ModelLibrary modelLibrary,
             Renderer renderer,
@@ -164,7 +163,6 @@ namespace Proof.Entities
             {
                 entity.AddComponent(
                     componentLoader.LoadFromNode(
-                        shader,
                         shaders,
                         modelLibrary,
                         renderer,
