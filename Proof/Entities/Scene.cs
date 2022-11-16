@@ -147,7 +147,6 @@ namespace Proof.Entities
                     shader,
                     modelLibrary,
                     renderer,
-                    shader.GetLayout(),
                     inputManager,
                     scriptLoader,
                     soundLibrary,

@@ -24,7 +24,6 @@ namespace Proof.Entities.Components
             Shader shader,
             ModelLibrary modelLibrary,
             Renderer renderer,
-            VertexLayout layout,
             InputManager inputManager,
             ScriptLoader scriptLoader,
             SoundLibrary soundLibrary,
@@ -42,7 +41,7 @@ namespace Proof.Entities.Components
                 case "ColourComponent":
                     return ColourComponent.LoadFromNode(componentNode);
                 case "RenderableComponent":
-                    return RenderableComponent.LoadFromNode(_logger, modelLibrary, renderer, shader, layout, componentNode);
+                    return RenderableComponent.LoadFromNode(_logger, modelLibrary, renderer, shader, componentNode);
                 case "ScriptComponent":
                     return ScriptComponent.LoadFromXml(componentNode, scriptLoader, inputManager);
                 case "TextureComponent":

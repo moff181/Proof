@@ -162,7 +162,6 @@ namespace Proof.DevEnv.Components
                     _entity.AddComponent(
                         new RenderableComponent(
                             _scene.Renderer,
-                            _scene.Shader.GetLayout(),
                             _modelLibrary.Get("res/models/Square.model") ?? throw new IOException("Could not find Square.model"),
                             0,
                             _scene.Shader));

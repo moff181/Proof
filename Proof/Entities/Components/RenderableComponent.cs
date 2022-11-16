@@ -23,14 +23,13 @@ namespace Proof.Entities.Components
 
         public RenderableComponent(
             IRenderer renderer,
-            VertexLayout layout,
             Model model,
             int layer,
             IShader shader)
         {
             _renderer = renderer;
             _shader = shader;
-            _layout = layout;
+            _layout = shader.GetLayout();
 
             _previousPosition = Vector2.Zero;
             _previousScale = Vector2.One;
@@ -120,7 +119,6 @@ namespace Proof.Entities.Components
             ModelLibrary modelLibrary,
             Renderer renderer,
             IShader shader,
-            VertexLayout layout,
             XElement componentNode)
         {
             XElement? modelNode = componentNode.Element("Model");
@@ -143,7 +141,7 @@ namespace Proof.Entities.Components
 
             int layer = int.Parse(layerNode?.Value ?? "0");
 
-            return new RenderableComponent(renderer, layout, model, layer, shader);
+            return new RenderableComponent(renderer, model, layer, shader);
         }
     }
 }
