@@ -1,6 +1,7 @@
 ﻿using Proof.Core.Logging;
 using Proof.OpenGL;
 using Proof.Render.Buffers;
+using Proof.Render.Shaders;
 using Proof.Render.Textures;
 
 namespace Proof.Render.Renderer
@@ -27,7 +28,7 @@ namespace Proof.Render.Renderer
             _logger.LogInfo("Renderer created.");
         }
 
-        public void Submit(float[] vertices, int[] indices, int layerIndex, ITexture texture)
+        public void Submit(float[] vertices, int[] indices, int layerIndex, ITexture texture, IShader shader)
         {
             var renderData = new RenderData
             {
@@ -37,12 +38,12 @@ namespace Proof.Render.Renderer
 
             if (_submitted.TryGetValue(layerIndex, out Layer? layer))
             {
-                layer.Add(renderData, texture);
+                layer.Add(renderData, texture, shader);
             }
             else
             {
                 var newLayer = new Layer();
-                newLayer.Add(renderData, texture);
+                newLayer.Add(renderData, texture, shader);
                 _submitted.Add(layerIndex, newLayer);
             }
         }

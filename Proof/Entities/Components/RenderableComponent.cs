@@ -2,6 +2,7 @@
 using Proof.Render;
 using Proof.Render.Buffers;
 using Proof.Render.Renderer;
+using Proof.Render.Shaders;
 using Proof.Render.Textures;
 using System.Numerics;
 using System.Xml;
@@ -12,6 +13,7 @@ namespace Proof.Entities.Components
     public class RenderableComponent : IComponent
     {
         private readonly IRenderer _renderer;
+        private readonly IShader _shader;
         private readonly VertexLayout _layout;
 
         private float[] _verticesBuffer;
@@ -19,9 +21,15 @@ namespace Proof.Entities.Components
         private Vector2 _previousScale;
         private Vector3 _previousColour;
 
-        public RenderableComponent(IRenderer renderer, VertexLayout layout, Model model, int layer)
+        public RenderableComponent(
+            IRenderer renderer,
+            VertexLayout layout,
+            Model model,
+            int layer,
+            IShader shader)
         {
             _renderer = renderer;
+            _shader = shader;
             _layout = layout;
 
             _previousPosition = Vector2.Zero;
@@ -86,7 +94,7 @@ namespace Proof.Entities.Components
             TextureComponent? textureComponent = entity.GetComponent<TextureComponent>();
             ITexture texture = textureComponent?.Texture ?? (ITexture)NoTexture.Instance;
 
-            _renderer.Submit(_verticesBuffer, Model.Indices, Layer, texture);
+            _renderer.Submit(_verticesBuffer, Model.Indices, Layer, texture, _shader);
         }
 
         public XElement ToXml()
@@ -111,6 +119,7 @@ namespace Proof.Entities.Components
             ALogger logger,
             ModelLibrary modelLibrary,
             Renderer renderer,
+            IShader shader,
             VertexLayout layout,
             XElement componentNode)
         {
@@ -134,7 +143,7 @@ namespace Proof.Entities.Components
 
             int layer = int.Parse(layerNode?.Value ?? "0");
 
-            return new RenderableComponent(renderer, layout, model, layer);
+            return new RenderableComponent(renderer, layout, model, layer, shader);
         }
     }
 }

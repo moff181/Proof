@@ -164,7 +164,8 @@ namespace Proof.DevEnv.Components
                             _scene.Renderer,
                             _scene.Shader.GetLayout(),
                             _modelLibrary.Get("res/models/Square.model") ?? throw new IOException("Could not find Square.model"),
-                            0));
+                            0,
+                            _scene.Shader));
                     break;
                 case "Script Component":
                     _entity.AddComponent(new ScriptComponent("Please enter a script name.", _scriptLoader, _inputManager, new XElement("Temp")));

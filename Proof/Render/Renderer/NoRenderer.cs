@@ -1,4 +1,5 @@
 ﻿using Proof.Render.Buffers;
+using Proof.Render.Shaders;
 using Proof.Render.Textures;
 
 namespace Proof.Render.Renderer
@@ -15,7 +16,7 @@ namespace Proof.Render.Renderer
             throw new NotImplementedException();
         }
 
-        public void Submit(float[] vertices, int[] indices, int layerIndex, ITexture texture)
+        public void Submit(float[] vertices, int[] indices, int layerIndex, ITexture texture, IShader shader)
         {
             throw new NotImplementedException();
         }
