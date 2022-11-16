@@ -101,7 +101,8 @@ namespace Proof.Entities.Components
             return new XElement(
                 "RenderableComponent",
                 new XElement("Model", Model.Path),
-                new XElement("Layer", Layer));
+                new XElement("Layer", Layer),
+                new XElement("Shader", _shader.FilePath));
         }
 
         private bool TransformChanged(TransformComponent? transformComponent)
