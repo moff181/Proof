@@ -23,7 +23,10 @@ namespace Proof.Render.Textures
                 return result;
             }
 
-            return new Texture(_gl, _logger, path);
+            var newResult = new Texture(_gl, _logger, path);
+            _textures[path] = newResult;
+
+            return newResult;
         }
     }
 }
