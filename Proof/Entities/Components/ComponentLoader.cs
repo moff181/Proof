@@ -22,6 +22,7 @@ namespace Proof.Entities.Components
 
         public IComponent LoadFromNode(
             Shader shader,
+            IShader[] shaders,
             ModelLibrary modelLibrary,
             Renderer renderer,
             InputManager inputManager,
@@ -41,7 +42,7 @@ namespace Proof.Entities.Components
                 case "ColourComponent":
                     return ColourComponent.LoadFromNode(componentNode);
                 case "RenderableComponent":
-                    return RenderableComponent.LoadFromNode(_logger, modelLibrary, renderer, shader, componentNode);
+                    return RenderableComponent.LoadFromNode(_logger, modelLibrary, renderer, shaders, componentNode);
                 case "ScriptComponent":
                     return ScriptComponent.LoadFromXml(componentNode, scriptLoader, inputManager);
                 case "TextureComponent":

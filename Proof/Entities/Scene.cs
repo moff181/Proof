@@ -122,13 +122,13 @@ namespace Proof.Entities
                 throw new XmlException("Could not find Shaders node while loading scene.");
             }
 
-            var shadersList = new List<Shader>();
+            var shaders = new List<Shader>();
             foreach (var shaderNode in shadersNode.Elements("Shader"))
             {
-                shadersList.Add(Render.Shaders.Shader.LoadFromFile(gl, logger, shaderNode.Value));
+                shaders.Add(Render.Shaders.Shader.LoadFromFile(gl, logger, shaderNode.Value));
             }
 
-            var shader = shadersList.First();
+            var shader = shaders.First();
 
             var scene = new Scene(logger, shader, renderer, filePath);
 
@@ -145,6 +145,7 @@ namespace Proof.Entities
                 Entity entity = Entity.LoadFromNode(
                     logger,
                     shader,
+                    shaders.ToArray(),
                     modelLibrary,
                     renderer,
                     inputManager,
