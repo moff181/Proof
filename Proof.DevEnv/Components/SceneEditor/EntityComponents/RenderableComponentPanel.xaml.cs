@@ -27,6 +27,7 @@ namespace Proof.DevEnv.Components.EntityComponents
 
             Model.Text = _renderableComponent.Model.Path;
             Layer.Value = _renderableComponent.Layer;
+            Shader.Text = _renderableComponent.Shader.FilePath;
         }
 
         public void Layer_OnValueChange()
@@ -43,7 +44,7 @@ namespace Proof.DevEnv.Components.EntityComponents
         private void Model_LostFocus(object sender, System.Windows.RoutedEventArgs e)
         {
             Model? model = _modelLibrary.Get(Model.Text);
-            if(model == null)
+            if (model == null)
             {
                 Model.Text = _renderableComponent.Model.Path;
                 return;
@@ -51,6 +52,11 @@ namespace Proof.DevEnv.Components.EntityComponents
 
             _changeHistory.RegisterChange();
             _renderableComponent.SetModel(model);
-         }
+        }
+
+        private void Shader_LostFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            // TODO
+        }
     }
 }

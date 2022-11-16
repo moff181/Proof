@@ -13,7 +13,6 @@ namespace Proof.Entities.Components
     public class RenderableComponent : IComponent
     {
         private readonly IRenderer _renderer;
-        private readonly IShader _shader;
         private readonly VertexLayout _layout;
 
         private float[] _verticesBuffer;
@@ -28,7 +27,7 @@ namespace Proof.Entities.Components
             IShader shader)
         {
             _renderer = renderer;
-            _shader = shader;
+            Shader = shader;
             _layout = shader.GetLayout();
 
             _previousPosition = Vector2.Zero;
@@ -44,6 +43,7 @@ namespace Proof.Entities.Components
 
         public Model Model { get; private set; }
         public int Layer { get; set; }
+        public IShader Shader { get; set; }
 
         public void SetModel(Model model)
         {
@@ -93,7 +93,7 @@ namespace Proof.Entities.Components
             TextureComponent? textureComponent = entity.GetComponent<TextureComponent>();
             ITexture texture = textureComponent?.Texture ?? (ITexture)NoTexture.Instance;
 
-            _renderer.Submit(_verticesBuffer, Model.Indices, Layer, texture, _shader);
+            _renderer.Submit(_verticesBuffer, Model.Indices, Layer, texture, Shader);
         }
 
         public XElement ToXml()
@@ -102,7 +102,7 @@ namespace Proof.Entities.Components
                 "RenderableComponent",
                 new XElement("Model", Model.Path),
                 new XElement("Layer", Layer),
-                new XElement("Shader", _shader.FilePath));
+                new XElement("Shader", Shader.FilePath));
         }
 
         private bool TransformChanged(TransformComponent? transformComponent)
