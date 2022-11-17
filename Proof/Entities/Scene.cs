@@ -117,7 +117,7 @@ namespace Proof.Entities
             var shaders = new List<Shader>();
             foreach (var shaderNode in shadersNode.Elements("Shader"))
             {
-                shaders.Add(Render.Shaders.Shader.LoadFromFile(gl, logger, shaderNode));
+                shaders.Add(Render.Shaders.Shader.LoadFromFile(gl, logger, shaderNode.Value));
             }
 
             var shader = shaders.First();
