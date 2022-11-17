@@ -18,6 +18,7 @@ namespace Proof.DevEnv.Components.EntityComponents
             _changeHistory = changeHistory;
             _onRemove = onRemove;
             SetActive(cameraComponent.Active);
+            Shader.Text = _cameraComponent.Shader.FilePath;
         }
 
         private void Active_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -35,6 +36,11 @@ namespace Proof.DevEnv.Components.EntityComponents
         {
             _cameraComponent.Active = active;
             Active.Content = active ? "Deactivate" : "Activate";
+        }
+
+        private void Shader_LostFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            // TODO
         }
     }
 }
