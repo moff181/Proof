@@ -50,14 +50,6 @@ namespace Proof.Entities
             {
                 e.Update();
             }
-
-            // TODO: This probably shouldn't be here/should be more generic
-            int[] vals = new int[8];
-            for(int i = 0; i < vals.Length; i++)
-            {
-                vals[i] = i;
-            }
-            Shader.LoadUniform("Textures", vals);
             
             Renderer.Flush(Shader.GetLayout());
         }
@@ -125,7 +117,7 @@ namespace Proof.Entities
             var shaders = new List<Shader>();
             foreach (var shaderNode in shadersNode.Elements("Shader"))
             {
-                shaders.Add(Render.Shaders.Shader.LoadFromFile(gl, logger, shaderNode.Value));
+                shaders.Add(Render.Shaders.Shader.LoadFromFile(gl, logger, shaderNode));
             }
 
             var shader = shaders.First();

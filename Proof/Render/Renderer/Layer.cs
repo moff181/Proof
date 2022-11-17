@@ -43,6 +43,7 @@ namespace Proof.Render.Renderer
             foreach (IShader shader in _renderables.Keys)
             {
                 shader.Bind();
+                shader.PrepareTextureUniform();
                 foreach (ITexture texture in _renderables[shader].Keys)
                 {
                     bool isNoTexture = texture == NoTexture.Instance;

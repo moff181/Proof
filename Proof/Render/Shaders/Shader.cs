@@ -20,17 +20,26 @@ namespace Proof.Render.Shaders
         private readonly IOpenGLApi _gl;
         private readonly ALogger _logger;
         private readonly uint _programId;
+        private readonly int _textureSlots;
 
         private readonly Dictionary<string, int?> _uniformLocations;
 
         private readonly VertexLayout _vertexLayout;
 
-        private Shader(IOpenGLApi gl, ALogger logger, string filePath, string vertexFile, string fragmentFile, VertexLayout vertexLayout)
+        private Shader(
+            IOpenGLApi gl,
+            ALogger logger,
+            string filePath,
+            string vertexFile,
+            string fragmentFile,
+            VertexLayout vertexLayout,
+            int textureSlots)
         {
             _gl = gl;
             _logger = logger;
             _uniformLocations = new Dictionary<string, int?>();
             _vertexLayout = vertexLayout;
+            _textureSlots = textureSlots;
 
             FilePath = filePath;
 
@@ -136,6 +145,21 @@ namespace Proof.Render.Shaders
             _gl.Uniform1iv(uniformLocation.Value, vals.Length, vals);
         }
 
+        public void PrepareTextureUniform()
+        {
+            if(_textureSlots == 0)
+            {
+                return;
+            }
+
+            int[] vals = new int[_textureSlots];
+            for (int i = 0; i < vals.Length; i++)
+            {
+                vals[i] = i;
+            }
+            LoadUniform("Textures", vals);
+        }
+
         public VertexLayout GetLayout()
         {
             return _vertexLayout;
@@ -188,8 +212,19 @@ namespace Proof.Render.Shaders
             return shaderId;
         }
 
-        public static Shader LoadFromFile(IOpenGLApi gl, ALogger logger, string filePath)
+        public static Shader LoadFromFile(IOpenGLApi gl, ALogger logger, XElement node)
         {
+            XElement? filePathNode = node.Element("FilePath");
+            if (filePathNode == null)
+            {
+                throw new XmlException("Could not find FilePath node while loading Shader");
+            }
+
+            string filePath = filePathNode.Value;
+
+            XElement? textureSlotsNode = node.Element("TextureSlots");
+            int textureSlots = int.Parse(textureSlotsNode?.Value ?? "0");
+
             logger.LogInfo($"Loading shader from {filePath}...");
 
             if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
@@ -225,7 +260,7 @@ namespace Proof.Render.Shaders
 
             VertexLayout vertexLayout = VertexLayout.LoadFromNode(logger, vertexLayoutNode);
 
-            return new Shader(gl, logger, filePath, vertexFileNode.Value, fragmentFileNode.Value, vertexLayout);
+            return new Shader(gl, logger, filePath, vertexFileNode.Value, fragmentFileNode.Value, vertexLayout, textureSlots);
         }
     }
 }

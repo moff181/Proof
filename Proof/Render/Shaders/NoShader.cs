@@ -56,5 +56,10 @@ namespace Proof.Render.Shaders
         {
             // Do nothing
         }
+
+        public void PrepareTextureUniform()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
