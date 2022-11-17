@@ -45,17 +45,6 @@ namespace Proof.Entities.Components
         public int Layer { get; set; }
         public IShader Shader { get; set; }
 
-        public void SetModel(Model model)
-        {
-            Model = model;
-
-            _verticesBuffer = new float[model.Vertices.Length];
-            Array.Copy(Model.Vertices, _verticesBuffer, _verticesBuffer.Length);
-
-            // Update _previousPosition to make it recalculate
-            _previousPosition = new Vector2(float.MaxValue, float.MaxValue);
-        }
-
         public void Update(Entity entity)
         {
             TransformComponent? transformComponent = entity.GetComponent<TransformComponent>();
@@ -67,26 +56,12 @@ namespace Proof.Entities.Components
 
                 if (transformComponent != null)
                 {
-                    for (int i = _layout.PositionIndex; i < _verticesBuffer.Length; i += _layout.SumOfElements())
-                    {
-                        _verticesBuffer[i] = transformComponent.Scale.X * _verticesBuffer[i] + transformComponent.Position.X;
-                        _verticesBuffer[i + 1] = transformComponent.Scale.Y * _verticesBuffer[i + 1] + transformComponent.Position.Y;
-                    }
-
-                    _previousPosition = transformComponent.Position;
-                    _previousScale = transformComponent.Scale;
+                    HandleTransform(transformComponent);
                 }
 
                 if (_layout.ColourIndex != null && colourComponent != null)
                 {
-                    for (int i = _layout.ColourIndex.Value; i < _verticesBuffer.Length; i += _layout.SumOfElements())
-                    {
-                        _verticesBuffer[i] = colourComponent.Colour.X;
-                        _verticesBuffer[i + 1] = colourComponent.Colour.Y;
-                        _verticesBuffer[i + 2] = colourComponent.Colour.Z;
-                    }
-
-                    _previousColour = colourComponent.Colour;
+                    HandleColour(colourComponent, _layout.ColourIndex.Value);
                 }
             }
 
@@ -94,6 +69,17 @@ namespace Proof.Entities.Components
             ITexture texture = textureComponent?.Texture ?? (ITexture)NoTexture.Instance;
 
             _renderer.Submit(_verticesBuffer, Model.Indices, Layer, texture, Shader);
+        }
+
+        public void SetModel(Model model)
+        {
+            Model = model;
+
+            _verticesBuffer = new float[model.Vertices.Length];
+            Array.Copy(Model.Vertices, _verticesBuffer, _verticesBuffer.Length);
+
+            // Update _previousPosition to make it recalculate
+            _previousPosition = new Vector2(float.MaxValue, float.MaxValue);
         }
 
         public XElement ToXml()
@@ -113,6 +99,30 @@ namespace Proof.Entities.Components
         private bool ColourChanged(ColourComponent? colourComponent)
         {
             return colourComponent != null && colourComponent.Colour != _previousColour;
+        }
+
+        private void HandleTransform(TransformComponent transformComponent)
+        {
+            for (int i = _layout.PositionIndex; i < _verticesBuffer.Length; i += _layout.SumOfElements())
+            {
+                _verticesBuffer[i] = transformComponent.Scale.X * _verticesBuffer[i] + transformComponent.Position.X;
+                _verticesBuffer[i + 1] = transformComponent.Scale.Y * _verticesBuffer[i + 1] + transformComponent.Position.Y;
+            }
+
+            _previousPosition = transformComponent.Position;
+            _previousScale = transformComponent.Scale;
+        }
+
+        private void HandleColour(ColourComponent colourComponent, int colourIndex)
+        {
+            for (int i = colourIndex; i < _verticesBuffer.Length; i += _layout.SumOfElements())
+            {
+                _verticesBuffer[i] = colourComponent.Colour.X;
+                _verticesBuffer[i + 1] = colourComponent.Colour.Y;
+                _verticesBuffer[i + 2] = colourComponent.Colour.Z;
+            }
+
+            _previousColour = colourComponent.Colour;
         }
 
         public static IComponent LoadFromNode(
