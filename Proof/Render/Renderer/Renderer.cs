@@ -53,11 +53,9 @@ namespace Proof.Render.Renderer
             int textureSlot = 0;
             foreach(Layer layer in _submitted.Values)
             {
-                layer.Render(layout, _vertexBuffer, _indexBuffer, ref textureSlot);
+                layer.Render(_vertexBuffer, _indexBuffer, ref textureSlot);
             }
 
-            _vertexBuffer.Flush(layout);
-            _indexBuffer.Flush();
             _submitted.Clear();
         }
 

@@ -38,7 +38,7 @@ namespace Proof.Render.Renderer
             _renderables.Add(shader, newTextureGroup);
         }
 
-        public void Render(VertexLayout layout, VertexBuffer vertexBuffer, IndexBuffer indexBuffer, ref int textureSlot)
+        public void Render(VertexBuffer vertexBuffer, IndexBuffer indexBuffer, ref int textureSlot)
         {
             foreach (IShader shader in _renderables.Keys)
             {
@@ -54,12 +54,15 @@ namespace Proof.Render.Renderer
                     int localTextureSlot = isNoTexture ? -1 : textureSlot;
                     foreach (RenderData renderData in _renderables[shader][texture])
                     {
-                        UpdateTexSlot(layout, renderData.Vertices, localTextureSlot);
+                        UpdateTexSlot(shader.GetLayout(), renderData.Vertices, localTextureSlot);
                         vertexBuffer.Submit(renderData.Vertices);
                         indexBuffer.Submit(renderData.Indices);
                     }
                     textureSlot++;
                 }
+
+                vertexBuffer.Flush(shader.GetLayout());
+                indexBuffer.Flush();
             }
         }
 
