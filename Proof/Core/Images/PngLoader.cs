@@ -1,4 +1,5 @@
 ﻿using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
+using System;
 
 namespace Proof.Core.Images
 {
@@ -45,7 +46,7 @@ namespace Proof.Core.Images
             int index = HeaderLength;
             CoreImageData coreImageData = ProcessIhdr(bytes, ref index);
 
-            byte[]? result = null;
+            var idatCombined = new List<byte>();
 
             while(index < bytes.Length)
             {
@@ -57,7 +58,7 @@ namespace Proof.Core.Images
                 }
                 else if (IsIdat(bytes, index))
                 {
-                    result = ProcessIdat(bytes, ref index, length, coreImageData.Width, coreImageData.Height);
+                    idatCombined.AddRange(ProcessIdat(bytes, ref index, length, coreImageData.Width, coreImageData.Height));
                 }
                 else if (IEnd(bytes, index))
                 {
@@ -71,6 +72,8 @@ namespace Proof.Core.Images
                 // chunk type + length + CRC
                 index += ChunkTypeLength + length + CrcLength;
             }
+
+            byte[] result = ProcessImageBytes(idatCombined.ToArray(), coreImageData.Width, coreImageData.Height);
 
             if(result == null)
             {
@@ -124,6 +127,11 @@ namespace Proof.Core.Images
             var buffer = new byte[length];
             Array.Copy(bytes, index + ChunkTypeLength, buffer, 0, length);
 
+            return buffer;
+        }
+
+        private static byte[] ProcessImageBytes(byte[] buffer, int width, int height)
+        {
             byte[] decompressedData = new byte[width * height * 3 + height];
             using (var memory = new MemoryStream(buffer))
             {
@@ -136,10 +144,10 @@ namespace Proof.Core.Images
             byte[] extractedData = new byte[decompressedData.Length - height];
 
             int bytesPerLine = width * 3 + 1;
-            for(int line = 0; line < height; line++)
+            for (int line = 0; line < height; line++)
             {
                 // Filter byte before this
-                for(int i = 1; i < bytesPerLine; i++)
+                for (int i = 1; i < bytesPerLine; i++)
                 {
                     extractedData[(height - line - 1) * (bytesPerLine - 1) + i - 1] = decompressedData[line * bytesPerLine + i];
                 }
