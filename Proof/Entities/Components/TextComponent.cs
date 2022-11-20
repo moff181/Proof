@@ -2,7 +2,6 @@
 using Proof.Render;
 using Proof.Render.Renderer;
 using Proof.Render.Shaders;
-using Proof.Render.Textures;
 using System.Numerics;
 using System.Xml.Linq;
 
@@ -47,6 +46,13 @@ namespace Proof.Entities.Components
 
             foreach (char c in Text)
             {
+                if(c == '\n')
+                {
+                    position.X = transform?.Position.X ?? 0;
+                    position.Y -= _font.LineHeight / (float)_font.TextureHeight;
+                    continue;
+                }
+
                 float[] verticesBuffer = new float[Model.Vertices.Length];
                 Array.Copy(Model.Vertices, verticesBuffer, verticesBuffer.Length);
 
