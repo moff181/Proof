@@ -1,6 +1,4 @@
 ﻿using Proof.Render.Textures;
-using System;
-using System.Drawing;
 using System.Text.RegularExpressions;
 
 namespace Proof.Core.Text
@@ -9,8 +7,17 @@ namespace Proof.Core.Text
     {
         private readonly Dictionary<int, FontCharacter> _characters;
 
-        private Font(string name, int lineHeight, Texture texture, Dictionary<int, FontCharacter> characters, int textureWidth, int textureHeight, int baseVal)
+        private Font(
+            string filePath,
+            string name,
+            int lineHeight,
+            Texture texture,
+            Dictionary<int, FontCharacter> characters,
+            int textureWidth,
+            int textureHeight,
+            int baseVal)
         {
+            FilePath = filePath;
             Name = name;
             LineHeight = lineHeight;
             Texture = texture;
@@ -20,6 +27,7 @@ namespace Proof.Core.Text
             Base = baseVal;
         }
 
+        public string FilePath { get; }
         public string Name { get; }
         public int LineHeight { get; }
         public Texture Texture { get; }
@@ -71,6 +79,7 @@ namespace Proof.Core.Text
             }
 
             return new Font(
+                filePath,
                 name,
                 lineHeight,
                 GetTexture(filePath, textureFile, textureLibrary),

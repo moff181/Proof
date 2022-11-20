@@ -147,7 +147,13 @@ namespace Proof.Entities.Components
 
         public XElement ToXml()
         {
-            throw new NotImplementedException();
+            return new XElement(
+                "TextComponent",
+                new XElement("Layer", Layer),
+                new XElement("Model", Model.Path),
+                new XElement("Shader", Shader.FilePath),
+                new XElement("Text", Text),
+                new XElement("Font", _font.FilePath));
         }
     }
 }
