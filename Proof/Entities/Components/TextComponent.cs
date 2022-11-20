@@ -82,7 +82,7 @@ namespace Proof.Entities.Components
 
             for (int i = 0; i < verticesBuffer.Length; i += layout.SumOfElements())
             {
-                verticesBuffer[i + layout.PositionIndex] = verticesBuffer[i + layout.PositionIndex] * xScale + position.X;
+                verticesBuffer[i + layout.PositionIndex] = verticesBuffer[i + layout.PositionIndex] * xScale + position.X + xOffset;
                 verticesBuffer[i + layout.PositionIndex + 1] = verticesBuffer[i + layout.PositionIndex + 1] * yScale + yOffset + position.Y + lineAdjust;
             }
         }

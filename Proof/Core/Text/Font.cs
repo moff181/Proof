@@ -61,7 +61,7 @@ namespace Proof.Core.Text
                 }
                 else if(i == 2)
                 {
-                    textureFile = GetSpaceIndexedInformation(line, "file").Replace("\"", ""); ;
+                    textureFile = GetSpaceIndexedInformation(line, "file").Replace("\"", "");
                 }
                 else if(i != 3)
                 {
