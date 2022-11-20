@@ -1,5 +1,4 @@
-﻿using Proof.Render.Buffers;
-using Proof.Render.Shaders;
+﻿using Proof.Render.Shaders;
 using Proof.Render.Textures;
 
 namespace Proof.Render.Renderer
@@ -11,7 +10,7 @@ namespace Proof.Render.Renderer
             throw new NotImplementedException();
         }
 
-        public void Flush(VertexLayout layout)
+        public void Flush()
         {
             throw new NotImplementedException();
         }

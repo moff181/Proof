@@ -34,6 +34,7 @@ namespace Proof.Entities.Components
             Matrix4x4 translationMat = Matrix4x4.CreateTranslation(position.X, position.Y, 0);
             Matrix4x4 transformationMat = scaleMat * translationMat;
 
+            Shader.Bind();
             Shader.LoadUniform("Transformation", transformationMat);
         }
 

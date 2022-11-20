@@ -50,7 +50,7 @@ namespace Proof.Render.Renderer
             }
         }
 
-        public void Flush(VertexLayout layout)
+        public void Flush()
         {
             int textureSlot = 0;
             foreach(Layer layer in _submitted.Values)

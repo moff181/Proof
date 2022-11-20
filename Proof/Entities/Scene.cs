@@ -38,21 +38,17 @@ namespace Proof.Entities
 
         public void Dispose()
         {
-            _logger.LogInfo("Disposing of scene...");
-            Shader.Dispose();
             _logger.LogInfo("Scene disposed of.");
         }
 
         public void Update()
         {
-            Shader.Bind();
-
             foreach (Entity e in Entities)
             {
                 e.Update();
             }
             
-            Renderer.Flush(Shader.GetLayout());
+            Renderer.Flush();
         }
 
         public void Save(string filePath)
