@@ -9,17 +9,21 @@ namespace Proof.Core.Text
     {
         private readonly Dictionary<int, FontCharacter> _characters;
 
-        private Font(string name, int lineHeight, Texture texture, Dictionary<int, FontCharacter> characters)
+        private Font(string name, int lineHeight, Texture texture, Dictionary<int, FontCharacter> characters, int textureWidth, int textureHeight)
         {
             Name = name;
             LineHeight = lineHeight;
             Texture = texture;
             _characters = characters;
+            TextureWidth = textureWidth;
+            TextureHeight = textureHeight;
         }
 
         public string Name { get; }
         public int LineHeight { get; }
         public Texture Texture { get; }
+        public int TextureWidth { get; }
+        public int TextureHeight { get; }
 
         public FontCharacter GetCharacterInformation(char c)
         {
@@ -34,6 +38,8 @@ namespace Proof.Core.Text
             int lineHeight = 0;
             string textureFile = string.Empty;
             var characters = new Dictionary<int, FontCharacter>();
+            int textureWidth = 0;
+            int textureHeight = 0;
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -46,6 +52,8 @@ namespace Proof.Core.Text
                 else if(i == 1)
                 {
                     lineHeight = int.Parse(GetSpaceIndexedInformation(line, "lineHeight"));
+                    textureWidth = int.Parse(GetSpaceIndexedInformation(line, "scaleW"));
+                    textureHeight = int.Parse(GetSpaceIndexedInformation(line, "scaleH"));
                 }
                 else if(i == 2)
                 {
@@ -62,7 +70,9 @@ namespace Proof.Core.Text
                 name,
                 lineHeight,
                 GetTexture(filePath, textureFile, textureLibrary),
-                characters);
+                characters,
+                textureWidth,
+                textureHeight);
         }
 
         private static FontCharacter ParseCharacter(string line)
