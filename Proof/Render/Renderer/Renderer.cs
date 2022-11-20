@@ -24,6 +24,8 @@ namespace Proof.Render.Renderer
             _vertexBuffer = new VertexBuffer(gl, logger, vertexBufferCapacity);
             _indexBuffer = new IndexBuffer(gl, logger, indexBufferCapacity);
             _submitted = new SortedDictionary<int, Layer>();
+            gl.Enable(GLConstants.GL_BLEND);
+            gl.BlendFunc(GLConstants.GL_SRC_ALPHA, GLConstants.GL_ONE_MINUS_SRC_ALPHA);
 
             _logger.LogInfo("Renderer created.");
         }

@@ -34,11 +34,11 @@ namespace Proof.Render.Textures
             _gl.TexImage2D(
                 GLConstants.GL_TEXTURE_2D,
                 0,
-                GLConstants.GL_RGB8,
+                image.CoreImageData.ColourType == ColourType.Rgb ? GLConstants.GL_RGB8 : GLConstants.GL_RGBA8,
                 image.CoreImageData.Width,
                 image.CoreImageData.Height,
                 0,
-                GLConstants.GL_RGB,
+                image.CoreImageData.ColourType == ColourType.Rgb ? GLConstants.GL_RGB : GLConstants.GL_RGBA,
                 GLConstants.GL_UNSIGNED_BYTE,
                 ptr);
 

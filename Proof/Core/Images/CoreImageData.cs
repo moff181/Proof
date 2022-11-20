@@ -3,9 +3,9 @@
     public record class CoreImageData(
         int Width,
         int Height,
-        byte bitDepth,
-        ColourType colourType,
-        CompressionMethod compressionMethod,
-        FilterMethod filterMethod,
-        InterlaceMethod interlaceMethod);
+        byte BitDepth,
+        ColourType ColourType,
+        CompressionMethod CompressionMethod,
+        FilterMethod FilterMethod,
+        InterlaceMethod InterlaceMethod);
 }

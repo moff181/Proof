@@ -1,5 +1,7 @@
 ﻿using Proof.Audio;
 using Proof.Core.Logging;
+using Proof.Core.Text;
+using Proof.Entities.Components;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.OpenGL;
@@ -7,6 +9,7 @@ using Proof.Render;
 using Proof.Render.Renderer;
 using Proof.Render.Shaders;
 using Proof.Render.Textures;
+using System.Numerics;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -146,6 +149,17 @@ namespace Proof.Entities
 
                 scene.Entities.Add(entity);
             }
+
+            var textTest = new Entity("TextTest");
+            textTest.AddComponent(new TextComponent(
+                "yello, world!",
+                Font.LoadFromFile("res/fonts/calibri.fnt", textureLibrary),
+                renderer,
+                modelLibrary.Get("res/models/UISquare.model"),
+                1,
+                shaders[1]));
+            textTest.AddComponent(new TransformComponent(new Vector2(-1, 0), new Vector2(1, 1)));
+            scene.Entities.Add(textTest);
 
             logger.LogInfo($"Scene took {(DateTime.Now - start).TotalMilliseconds}ms to load.");
 

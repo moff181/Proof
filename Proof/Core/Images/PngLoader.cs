@@ -58,7 +58,7 @@ namespace Proof.Core.Images
                 }
                 else if (IsIdat(bytes, index))
                 {
-                    idatCombined.AddRange(ProcessIdat(bytes, ref index, length, coreImageData.Width, coreImageData.Height));
+                    idatCombined.AddRange(ProcessIdat(bytes, ref index, length));
                 }
                 else if (IEnd(bytes, index))
                 {
@@ -73,7 +73,7 @@ namespace Proof.Core.Images
                 index += ChunkTypeLength + length + CrcLength;
             }
 
-            byte[] result = ProcessImageBytes(idatCombined.ToArray(), coreImageData.Width, coreImageData.Height);
+            byte[] result = ProcessImageBytes(idatCombined.ToArray(), coreImageData.Width, coreImageData.Height, coreImageData.ColourType);
 
             if(result == null)
             {
@@ -122,7 +122,7 @@ namespace Proof.Core.Images
             throw new NotImplementedException();
         }
 
-        private static byte[] ProcessIdat(byte[] bytes, ref int index, int length, int width, int height)
+        private static byte[] ProcessIdat(byte[] bytes, ref int index, int length)
         {
             var buffer = new byte[length];
             Array.Copy(bytes, index + ChunkTypeLength, buffer, 0, length);
@@ -130,9 +130,11 @@ namespace Proof.Core.Images
             return buffer;
         }
 
-        private static byte[] ProcessImageBytes(byte[] buffer, int width, int height)
+        private static byte[] ProcessImageBytes(byte[] buffer, int width, int height, ColourType colourType)
         {
-            byte[] decompressedData = new byte[width * height * 3 + height];
+            int bytesPerPixel = GetBytesPerPixel(colourType);
+
+            byte[] decompressedData = new byte[width * height * bytesPerPixel + height];
             using (var memory = new MemoryStream(buffer))
             {
                 using (var inflater = new InflaterInputStream(memory))
@@ -142,8 +144,8 @@ namespace Proof.Core.Images
             }
 
             byte[] extractedData = new byte[decompressedData.Length - height];
+            int bytesPerLine = width * bytesPerPixel + 1;
 
-            int bytesPerLine = width * 3 + 1;
             for (int line = 0; line < height; line++)
             {
                 // Filter byte before this
@@ -154,6 +156,22 @@ namespace Proof.Core.Images
             }
 
             return extractedData;
+        }
+
+        private static int GetBytesPerPixel(ColourType colourType)
+        {
+            switch (colourType)
+            {
+                case ColourType.Rgb:
+                    return 3;
+                case ColourType.Rgba:
+                    return 4;
+                case ColourType.Palette:
+                case ColourType.Greyscale:
+                case ColourType.GreyscaleAlpha:
+                default:
+                    throw new NotImplementedException($"PngLoader does not currently support colour type: {colourType}");
+            }
         }
 
         private static bool IsPlte(byte[] bytes, int index)
