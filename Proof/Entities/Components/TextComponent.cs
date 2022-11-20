@@ -41,15 +41,40 @@ namespace Proof.Entities.Components
 
         public void Update(Entity entity)
         {
+            TransformComponent? transform = entity.GetComponent<TransformComponent>();
+            Vector2 position = transform?.Position ?? Vector2.Zero;
+            Vector2 scale = transform?.Scale ?? Vector2.One;
+
             foreach (char c in Text)
             {
                 float[] verticesBuffer = new float[Model.Vertices.Length];
                 Array.Copy(Model.Vertices, verticesBuffer, verticesBuffer.Length);
 
                 FontCharacter fontCharacter = _font.GetCharacterInformation(c);
+                UpdateTransform(verticesBuffer, position, scale, fontCharacter);
                 UpdateTextureCoords(verticesBuffer, fontCharacter);
 
                 _renderer.Submit(verticesBuffer, Model.Indices, Layer, _font.Texture, Shader);
+
+                position.X += fontCharacter.XAdvance / (float)_font.TextureWidth * scale.X;
+            }
+        }
+
+        private void UpdateTransform(float[] verticesBuffer, Vector2 position, Vector2 scale, FontCharacter fontCharacter)
+        {
+            var layout = Shader.GetLayout();
+            if (layout == null)
+            {
+                throw new InvalidOperationException("Vertex Layout can not be null");
+            }
+
+            float xScale = fontCharacter.Width / (float)_font.TextureWidth * scale.X;
+            float yScale = fontCharacter.Height / (float)_font.TextureHeight * scale.Y;
+
+            for (int i = 0; i < verticesBuffer.Length; i += layout.SumOfElements())
+            {
+                verticesBuffer[i + layout.PositionIndex] = verticesBuffer[i + layout.PositionIndex] * xScale + position.X;
+                verticesBuffer[i + layout.PositionIndex + 1] = verticesBuffer[i + layout.PositionIndex + 1] * yScale + position.Y;
             }
         }
 
@@ -71,8 +96,7 @@ namespace Proof.Entities.Components
             var positions = new List<Vector2>();
             for(int i = 0; i < verticesBuffer.Length; i += layout.SumOfElements())
             {
-                positions.Add(new Vector2(verticesBuffer[layout.PositionIndex + i]));
-                positions.Add(new Vector2(verticesBuffer[layout.PositionIndex + i + 1]));
+                positions.Add(new Vector2(verticesBuffer[layout.PositionIndex + i], verticesBuffer[layout.PositionIndex + i + 1]));
             }
 
             Vector2 bottomLeft = new Vector2(positions.Min(x => x.X), positions.Min(x => x.Y));
