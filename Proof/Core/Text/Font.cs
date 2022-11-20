@@ -9,7 +9,7 @@ namespace Proof.Core.Text
     {
         private readonly Dictionary<int, FontCharacter> _characters;
 
-        private Font(string name, int lineHeight, Texture texture, Dictionary<int, FontCharacter> characters, int textureWidth, int textureHeight)
+        private Font(string name, int lineHeight, Texture texture, Dictionary<int, FontCharacter> characters, int textureWidth, int textureHeight, int baseVal)
         {
             Name = name;
             LineHeight = lineHeight;
@@ -17,6 +17,7 @@ namespace Proof.Core.Text
             _characters = characters;
             TextureWidth = textureWidth;
             TextureHeight = textureHeight;
+            Base = baseVal;
         }
 
         public string Name { get; }
@@ -24,6 +25,7 @@ namespace Proof.Core.Text
         public Texture Texture { get; }
         public int TextureWidth { get; }
         public int TextureHeight { get; }
+        public int Base { get; }
 
         public FontCharacter GetCharacterInformation(char c)
         {
@@ -40,6 +42,7 @@ namespace Proof.Core.Text
             var characters = new Dictionary<int, FontCharacter>();
             int textureWidth = 0;
             int textureHeight = 0;
+            int baseVal = 0;
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -54,6 +57,7 @@ namespace Proof.Core.Text
                     lineHeight = int.Parse(GetSpaceIndexedInformation(line, "lineHeight"));
                     textureWidth = int.Parse(GetSpaceIndexedInformation(line, "scaleW"));
                     textureHeight = int.Parse(GetSpaceIndexedInformation(line, "scaleH"));
+                    baseVal = int.Parse(GetSpaceIndexedInformation(line, "base"));
                 }
                 else if(i == 2)
                 {
@@ -72,7 +76,8 @@ namespace Proof.Core.Text
                 GetTexture(filePath, textureFile, textureLibrary),
                 characters,
                 textureWidth,
-                textureHeight);
+                textureHeight,
+                baseVal);
         }
 
         private static FontCharacter ParseCharacter(string line)

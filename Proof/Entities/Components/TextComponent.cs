@@ -68,13 +68,16 @@ namespace Proof.Entities.Components
                 throw new InvalidOperationException("Vertex Layout can not be null");
             }
 
+            float lineAdjust = _font.Base / (float)_font.TextureHeight * scale.Y;
             float xScale = fontCharacter.Width / (float)_font.TextureWidth * scale.X;
             float yScale = fontCharacter.Height / (float)_font.TextureHeight * scale.Y;
+            float xOffset = fontCharacter.XOffset / (float)_font.TextureWidth * scale.X;
+            float yOffset = (-fontCharacter.Height-fontCharacter.YOffset) / (float)_font.TextureHeight * scale.Y;
 
             for (int i = 0; i < verticesBuffer.Length; i += layout.SumOfElements())
             {
                 verticesBuffer[i + layout.PositionIndex] = verticesBuffer[i + layout.PositionIndex] * xScale + position.X;
-                verticesBuffer[i + layout.PositionIndex + 1] = verticesBuffer[i + layout.PositionIndex + 1] * yScale + position.Y;
+                verticesBuffer[i + layout.PositionIndex + 1] = verticesBuffer[i + layout.PositionIndex + 1] * yScale + yOffset + position.Y + lineAdjust;
             }
         }
 
