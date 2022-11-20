@@ -1,5 +1,6 @@
 ﻿using Proof.Audio;
 using Proof.Core.Logging;
+using Proof.Core.Text;
 using Proof.Entities.Components;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
@@ -141,6 +142,7 @@ namespace Proof.Entities
             ScriptLoader scriptLoader,
             SoundLibrary soundLibrary,
             TextureLibrary textureLibrary,
+            FontLibrary fontLibrary,
             XElement node)
         {
             XElement? nameNode = node.Element("Name");
@@ -170,6 +172,7 @@ namespace Proof.Entities
                         scriptLoader,
                         soundLibrary,
                         textureLibrary,
+                        fontLibrary,
                         componentNode));
             }
 

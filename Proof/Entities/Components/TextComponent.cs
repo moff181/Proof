@@ -1,8 +1,10 @@
-﻿using Proof.Core.Text;
+﻿using Proof.Core.Logging;
+using Proof.Core.Text;
 using Proof.Render;
 using Proof.Render.Renderer;
 using Proof.Render.Shaders;
 using System.Numerics;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Proof.Entities.Components
@@ -154,6 +156,57 @@ namespace Proof.Entities.Components
                 new XElement("Shader", Shader.FilePath),
                 new XElement("Text", Text),
                 new XElement("Font", _font.FilePath));
+        }
+
+        public static IComponent LoadFromNode(
+            ALogger logger,
+            FontLibrary fontLibrary,
+            ModelLibrary modelLibrary,
+            IShader[] shaders,
+            IRenderer renderer,
+            XElement componentNode)
+        {
+            XElement? textElement = componentNode.Element("Text");
+            if(textElement == null)
+            {
+                logger.LogWarn("Could not find Text node while loading TextComponent. Assuming empty string");
+            }
+
+            string text = textElement?.Value ?? string.Empty;
+
+            XElement? fontNode = componentNode.Element("Font");
+            if (fontNode == null)
+            {
+                throw new XmlException("Could not find Font node while loading TextComponent.");
+            }
+
+            Font font = fontLibrary.Get(fontNode.Value);
+
+            XElement? modelNode = componentNode.Element("Model");
+            if (modelNode == null)
+            {
+                throw new XmlException("Could not find Model node while loading TextComponent.");
+            }
+
+            Model model = modelLibrary.Get(modelNode.Value) ?? throw new XmlException("Invalid Model in TextComponent.");
+
+            XElement? layerNode = componentNode.Element("Layer");
+            if(layerNode == null)
+            {
+                logger.LogWarn("Could not find Layer node while loading TextComponent. Assuming 0.");
+            }
+
+            int layer = int.Parse(layerNode?.Value ?? "0");
+
+            XElement? shaderNode = componentNode.Element("Shader");
+            if(shaderNode == null)
+            {
+                throw new XmlException("Could not find Shader node while loading TextComponent.");
+            }
+
+            IShader shader = shaders.First(x => x.FilePath == shaderNode.Value);
+
+            return new TextComponent(text, font, renderer, model, layer, shader);
         }
     }
 }

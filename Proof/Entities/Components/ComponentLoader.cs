@@ -1,5 +1,6 @@
 ﻿using Proof.Audio;
 using Proof.Core.Logging;
+using Proof.Core.Text;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
@@ -28,6 +29,7 @@ namespace Proof.Entities.Components
             ScriptLoader scriptLoader,
             SoundLibrary soundLibrary,
             TextureLibrary textureLibrary,
+            FontLibrary fontLibrary,
             XElement componentNode)
         {
             string name = componentNode.Name.LocalName;
@@ -44,12 +46,14 @@ namespace Proof.Entities.Components
                     return RenderableComponent.LoadFromNode(_logger, modelLibrary, renderer, shaders, componentNode);
                 case "ScriptComponent":
                     return ScriptComponent.LoadFromXml(componentNode, scriptLoader, inputManager);
+                case "TextComponent":
+                    return TextComponent.LoadFromNode(_logger, fontLibrary, modelLibrary, shaders, renderer, componentNode);
                 case "TextureComponent":
                     return TextureComponent.LoadFromXml(textureLibrary, componentNode);
                 case "TransformComponent":
                     return TransformComponent.LoadFromNode(_logger, componentNode);
                 default:
-                    throw new NotSupportedException($"Unable to load component node with name: {componentNode}");
+                    throw new NotSupportedException($"Unable to load component node with name: {componentNode.Name}");
             }
         }
     }

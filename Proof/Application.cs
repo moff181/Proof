@@ -1,6 +1,7 @@
 ﻿using Proof.Audio;
 using Proof.Core.DataStructures;
 using Proof.Core.Logging;
+using Proof.Core.Text;
 using Proof.Entities;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
@@ -53,6 +54,7 @@ namespace Proof
                 using var renderer = new Renderer(GL, Logger, 50000, 40000);
                 var soundLibrary = new SoundLibrary(Logger);
                 var textureLibrary = new TextureLibrary(GL, Logger);
+                var fontLibrary = new FontLibrary(textureLibrary);
 
                 Scene = Scene.LoadFromFile(
                     GL,
@@ -63,6 +65,7 @@ namespace Proof
                     _scriptLoader,
                     soundLibrary,
                     textureLibrary,
+                    fontLibrary,
                     startupScene);
 
                 uint frames = 0;
