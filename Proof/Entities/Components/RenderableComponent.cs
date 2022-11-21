@@ -129,7 +129,7 @@ namespace Proof.Entities.Components
             ALogger logger,
             ModelLibrary modelLibrary,
             Renderer renderer,
-            IShader[] shaders,
+            ShaderLibrary shaderLibrary,
             XElement componentNode)
         {
             XElement? modelNode = componentNode.Element("Model");
@@ -158,11 +158,7 @@ namespace Proof.Entities.Components
                 throw new XmlException("Could not find Shader node while loading RenderableComponent.");
             }
 
-            IShader? shader = shaders.FirstOrDefault(x => x.FilePath == shaderNode.Value);
-            if(shader == null)
-            {
-                throw new IOException($"Could not find shader specified in RenderableComponent: {shaderNode.Value}");
-            }
+            IShader shader = shaderLibrary.Get(shaderNode.Value);
 
             return new RenderableComponent(renderer, model, layer, shader);
         }

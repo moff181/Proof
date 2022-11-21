@@ -17,20 +17,17 @@ namespace Proof.Entities
     {
         private readonly ALogger _logger;
 
-        public Scene(ALogger logger, IShader shader, IRenderer renderer, string scenePath)
+        public Scene(ALogger logger, IRenderer renderer, string scenePath)
         {
             _logger = logger;
             Entities = new List<Entity>();
 
             _logger.LogInfo("Scene created.");
-            Shader = shader;
             Renderer = renderer;
             FilePath = scenePath;
         }
 
         public List<Entity> Entities { get; }
-
-        public IShader Shader { get; }
 
         public IRenderer Renderer { get; }
 
@@ -57,14 +54,6 @@ namespace Proof.Entities
             _logger.LogInfo($"Saving scene to {filePath}");
 
             var scene = new XElement("Scene");
-
-            scene.Add(
-                new XElement(
-                    "Shaders",
-                    new XElement(
-                        "Shader",
-                        Shader.FilePath)));
-
             var entities = new XElement("Entities");
 
             foreach(Entity e in Entities)
@@ -81,6 +70,7 @@ namespace Proof.Entities
         public static Scene LoadFromFile(
             IOpenGLApi gl,
             ALogger logger,
+            ShaderLibrary shaderLibrary,
             ModelLibrary modelLibrary,
             Renderer renderer,
             InputManager inputManager,
@@ -106,20 +96,7 @@ namespace Proof.Entities
                 throw new XmlException("Could not find root node while loading scene.");
             }
 
-            XElement? shadersNode = root.Element("Shaders");
-            if (shadersNode == null)
-            {
-                throw new XmlException("Could not find Shaders node while loading scene.");
-            }
-
-            var shaders = new List<Shader>();
-            foreach (var shaderNode in shadersNode.Elements("Shader"))
-            {
-                shaders.Add(Render.Shaders.Shader.LoadFromFile(gl, logger, shaderNode.Value));
-            }
-
-            var shader = shaders.First();
-            var scene = new Scene(logger, shader, renderer, filePath);
+            var scene = new Scene(logger, renderer, filePath);
 
             XElement? entitiesNode = root.Element("Entities");
             if (entitiesNode == null)
@@ -133,7 +110,7 @@ namespace Proof.Entities
             {
                 Entity entity = Entity.LoadFromNode(
                     logger,
-                    shaders.ToArray(),
+                    shaderLibrary,
                     modelLibrary,
                     renderer,
                     inputManager,

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shader>
+	<VertexFile>res/shaders/UI.vertex</VertexFile>
+	<FragmentFile>res/shaders/UI.frag</FragmentFile>
+	<VertexLayout>
+		<AttribArrays>
+			<AttribArray>2</AttribArray>
+			<AttribArray>2</AttribArray>
+			<AttribArray>1</AttribArray>
+		</AttribArrays>
+		<PositionIndex>0</PositionIndex>
+		<TextureCoordsIndex>2</TextureCoordsIndex>
+		<TextureIndex>4</TextureIndex>
+	</VertexLayout>
+	<TextureSlots>8</TextureSlots>
+</Shader>

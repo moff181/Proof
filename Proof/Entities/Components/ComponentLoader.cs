@@ -22,7 +22,7 @@ namespace Proof.Entities.Components
         }
 
         public IComponent LoadFromNode(
-            IShader[] shaders,
+            ShaderLibrary shaderLibrary,
             ModelLibrary modelLibrary,
             Renderer renderer,
             InputManager inputManager,
@@ -39,15 +39,15 @@ namespace Proof.Entities.Components
                 case "AudioComponent":
                     return AudioComponent.LoadFromNode(soundLibrary, componentNode);
                 case "CameraComponent":
-                    return CameraComponent.LoadFromNode(_logger, shaders, componentNode);
+                    return CameraComponent.LoadFromNode(_logger, shaderLibrary, componentNode);
                 case "ColourComponent":
                     return ColourComponent.LoadFromNode(componentNode);
                 case "RenderableComponent":
-                    return RenderableComponent.LoadFromNode(_logger, modelLibrary, renderer, shaders, componentNode);
+                    return RenderableComponent.LoadFromNode(_logger, modelLibrary, renderer, shaderLibrary, componentNode);
                 case "ScriptComponent":
                     return ScriptComponent.LoadFromXml(componentNode, scriptLoader, inputManager);
                 case "TextComponent":
-                    return TextComponent.LoadFromNode(_logger, fontLibrary, modelLibrary, shaders, renderer, componentNode);
+                    return TextComponent.LoadFromNode(_logger, fontLibrary, modelLibrary, shaderLibrary, renderer, componentNode);
                 case "TextureComponent":
                     return TextureComponent.LoadFromXml(textureLibrary, componentNode);
                 case "TransformComponent":

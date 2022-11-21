@@ -5,6 +5,7 @@ using Proof.Entities.Components;
 using Proof.Entities.Components.Scripts;
 using Proof.Input;
 using Proof.Render;
+using Proof.Render.Shaders;
 using Proof.Render.Textures;
 using System;
 using System.IO;
@@ -21,6 +22,7 @@ namespace Proof.DevEnv.Components
         private Application? _application;
         private Scene? _scene;
         private Entity? _entity;
+        private ShaderLibrary? _shaderLibrary;
         private ModelLibrary? _modelLibrary;
         private ScriptLoader? _scriptLoader;
         private InputManager? _inputManager;
@@ -40,6 +42,7 @@ namespace Proof.DevEnv.Components
             Application application,
             Scene scene,
             Entity entity,
+            ShaderLibrary shaderLibrary,
             ModelLibrary modelLibrary,
             ScriptLoader scriptLoader,
             InputManager inputManager,
@@ -51,6 +54,7 @@ namespace Proof.DevEnv.Components
             _application = application;
             _scene = scene;
             _entity = entity;
+            _shaderLibrary = shaderLibrary;
             _modelLibrary = modelLibrary;
             _scriptLoader = scriptLoader;
             _inputManager = inputManager;
@@ -85,7 +89,7 @@ namespace Proof.DevEnv.Components
         {
             if(_application == null ||_entity == null || _scene == null || _modelLibrary == null
                 || _refresh == null || _scriptLoader == null || _inputManager == null
-                || _changeHistory == null || _soundLibrary == null || _textureLibrary == null)
+                || _changeHistory == null || _soundLibrary == null || _textureLibrary == null || _shaderLibrary == null)
             {
                 return;
             }
@@ -96,6 +100,7 @@ namespace Proof.DevEnv.Components
                 _application,
                 _scene,
                 _entity,
+                _shaderLibrary,
                 _modelLibrary,
                 _scriptLoader,
                 _inputManager,
@@ -136,7 +141,7 @@ namespace Proof.DevEnv.Components
 
             if (_application == null || _entity == null || _scene == null || _modelLibrary == null
                 || _refresh == null || _scriptLoader == null || _inputManager == null
-                || _changeHistory == null || _soundLibrary == null || _textureLibrary == null)
+                || _changeHistory == null || _soundLibrary == null || _textureLibrary == null || _shaderLibrary == null)
             {
                 return;
             }
@@ -150,7 +155,7 @@ namespace Proof.DevEnv.Components
                 case "Camera Component":
                     _entity.AddComponent(
                         new CameraComponent(
-                            _scene.Shader,
+                            _shaderLibrary.Get("res/shaders/Static.xml"),
                             !_scene.Entities
                                 .SelectMany(x => x.GetComponents())
                                 .Any(x => x is CameraComponent y && y.Active)));
@@ -164,7 +169,7 @@ namespace Proof.DevEnv.Components
                             _scene.Renderer,
                             _modelLibrary.Get("res/models/Square.model") ?? throw new IOException("Could not find Square.model"),
                             0,
-                            _scene.Shader));
+                            _shaderLibrary.Get("res/shaders/Static.xml")));
                     break;
                 case "Script Component":
                     _entity.AddComponent(new ScriptComponent("Please enter a script name.", _scriptLoader, _inputManager, new XElement("Temp")));
@@ -181,6 +186,7 @@ namespace Proof.DevEnv.Components
                                     _application,
                                     _scene,
                                     _entity,
+                                    _shaderLibrary,
                                     _modelLibrary,
                                     _scriptLoader,
                                     _inputManager,
@@ -203,6 +209,7 @@ namespace Proof.DevEnv.Components
                 _application,
                 _scene,
                 _entity,
+                _shaderLibrary,
                 _modelLibrary,
                 _scriptLoader,
                 _inputManager,

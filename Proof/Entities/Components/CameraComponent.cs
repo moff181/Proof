@@ -46,7 +46,7 @@ namespace Proof.Entities.Components
                 new XElement("Shader", Shader.FilePath));
         }
 
-        public static IComponent LoadFromNode(ALogger logger, IShader[] shaders, XElement componentNode)
+        public static IComponent LoadFromNode(ALogger logger, ShaderLibrary shaderLibrary, XElement componentNode)
         {
             XElement? activeNode = componentNode.Element("Active");
             if(activeNode == null)
@@ -62,11 +62,7 @@ namespace Proof.Entities.Components
                 throw new XmlException("Could not find shader node while parsing CameraComponent.");
             }
 
-            IShader? shader = shaders.FirstOrDefault(x => x.FilePath == shaderNode.Value);
-            if(shader == null)
-            {
-                throw new IOException($"Could not find Shader specified in CameraComponent: {shaderNode.Value}");
-            }
+            IShader shader = shaderLibrary.Get(shaderNode.Value);
 
             return new CameraComponent(shader, active);
         }

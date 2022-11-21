@@ -162,7 +162,7 @@ namespace Proof.Entities.Components
             ALogger logger,
             FontLibrary fontLibrary,
             ModelLibrary modelLibrary,
-            IShader[] shaders,
+            ShaderLibrary shaderLibrary,
             IRenderer renderer,
             XElement componentNode)
         {
@@ -204,7 +204,7 @@ namespace Proof.Entities.Components
                 throw new XmlException("Could not find Shader node while loading TextComponent.");
             }
 
-            IShader shader = shaders.First(x => x.FilePath == shaderNode.Value);
+            IShader shader = shaderLibrary.Get(shaderNode.Value);
 
             return new TextComponent(text, font, renderer, model, layer, shader);
         }

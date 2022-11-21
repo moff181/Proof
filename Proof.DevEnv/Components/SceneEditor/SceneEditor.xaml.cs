@@ -3,6 +3,7 @@ using Proof.Core;
 using Proof.Core.Logging;
 using Proof.Entities.Components.Scripts;
 using Proof.Render;
+using Proof.Render.Shaders;
 using Proof.Render.Textures;
 using System.Collections.Generic;
 using System.IO;
@@ -97,7 +98,8 @@ namespace Proof.DevEnv.Components
                 Tools.Init(_application.Scene, assemblyWrapper, this, _changeHistory);
                 var textureLibrary = new TextureLibrary(_application.GL, new NoLogger());
                 _modelLibrary = new ModelLibrary(new NoLogger());
-                CreateSidePanels(scriptLoader, _application.Window.BuildInputManager(), soundLibrary, textureLibrary);
+                var shaderLibrary = new ShaderLibrary(_application.GL, new NoLogger());
+                CreateSidePanels(scriptLoader, _application.Window.BuildInputManager(), soundLibrary, textureLibrary, shaderLibrary);
             });
 
             _application.Run(scene);
@@ -107,7 +109,8 @@ namespace Proof.DevEnv.Components
             ScriptLoader scriptLoader,
             InputManager inputManager,
             SoundLibrary soundLibrary,
-            TextureLibrary textureLibrary)
+            TextureLibrary textureLibrary,
+            ShaderLibrary shaderLibrary)
         {
             if(_application?.Scene == null || _modelLibrary == null)
             {
@@ -123,13 +126,14 @@ namespace Proof.DevEnv.Components
                             _application,
                             _application.Scene,
                             e,
+                            shaderLibrary,
                             _modelLibrary,
                             scriptLoader,
                             inputManager,
                             soundLibrary,
                             textureLibrary,
                             _changeHistory,
-                            () => CreateSidePanels(scriptLoader, inputManager, soundLibrary, textureLibrary))));
+                            () => CreateSidePanels(scriptLoader, inputManager, soundLibrary, textureLibrary, shaderLibrary))));
         }
 
         private void GridSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)

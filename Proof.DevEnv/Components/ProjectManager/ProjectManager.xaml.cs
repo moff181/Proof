@@ -56,7 +56,7 @@ namespace Proof.DevEnv.Components.ProjectManager
             programFile.Save(Path.Combine(directory, $"{ProjectNameText.Text}.proof"));
 
             string filePath = Path.Combine(directory, programFile.StartupScene);
-            var scene = new Scene(new NoLogger(), new NoShader("res/shaders/Static.xml"), new NoRenderer(), filePath);
+            var scene = new Scene(new NoLogger(), new NoRenderer(), filePath);
             scene.Save(filePath);
 
             CopyAudioFiles(directory);
@@ -120,6 +120,18 @@ namespace Proof.DevEnv.Components.ProjectManager
             File.Copy(
                 Path.Combine("defaults", "Static.xml"),
                 Path.Combine(directory, "res", "shaders", "Static.xml"));
+
+            File.Copy(
+                Path.Combine("defaults", "UI.vertex"),
+                Path.Combine(directory, "res", "shaders", "UI.vertex"));
+
+            File.Copy(
+                Path.Combine("defaults", "UI.frag"),
+                Path.Combine(directory, "res", "shaders", "UI.frag"));
+
+            File.Copy(
+                Path.Combine("defaults", "UI.xml"),
+                Path.Combine(directory, "res", "shaders", "UI.xml"));
         }
 
         private static void CopyTextureFiles(string directory)

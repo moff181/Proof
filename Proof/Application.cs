@@ -8,6 +8,7 @@ using Proof.Input;
 using Proof.OpenGL;
 using Proof.Render;
 using Proof.Render.Renderer;
+using Proof.Render.Shaders;
 using Proof.Render.Textures;
 
 namespace Proof
@@ -50,6 +51,7 @@ namespace Proof
                 Logger.LogInfo("Application starting...");
                 InputManager inputManager = Window.BuildInputManager();
 
+                var shaderLibrary = new ShaderLibrary(GL, Logger);
                 var modelLibrary = new ModelLibrary(Logger);
                 using var renderer = new Renderer(GL, Logger, 50000, 40000);
                 var soundLibrary = new SoundLibrary(Logger);
@@ -59,6 +61,7 @@ namespace Proof
                 Scene = Scene.LoadFromFile(
                     GL,
                     Logger,
+                    shaderLibrary,
                     modelLibrary,
                     renderer,
                     inputManager,
